@@ -54,26 +54,32 @@ const userSchema = new mongoose.Schema({
   },
   weeklySchedule: {
     type: Map,
-    of: [{
-      id: String,
-      sets: Number,
-      reps: String
-    }],
+    of: [
+      {
+        id: String,
+        sets: Number,
+        reps: String
+      }
+    ],
     default: new Map()
   },
   weightLog: {
-    type: [{
-      date: { type: Date, required: true },
-      weight: { type: Number, required: true }
-    }],
+    type: [
+      {
+        date: { type: Date, required: true },
+        weight: { type: Number, required: true }
+      }
+    ],
     default: []
   },
   workoutLog: {
-    type: [{
-      date: { type: Date, required: true },
-      day: { type: String, required: true },
-      completed: { type: Boolean, default: true }
-    }],
+    type: [
+      {
+        date: { type: Date, required: true },
+        day: { type: String, required: true },
+        completed: { type: Boolean, default: true }
+      }
+    ],
     default: []
   },
   currentStreak: {
@@ -83,13 +89,13 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function() {
+userSchema.pre('save', async function () {
   if (!this.isModified('password')) return;
   this.password = await bcrypt.hash(this.password, 12);
 });
 
 // Method to compare password
-userSchema.methods.comparePassword = async function(candidatePassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
   // Check if password is a hash
   if (this.password.startsWith('$2')) {
     return bcrypt.compare(candidatePassword, this.password);

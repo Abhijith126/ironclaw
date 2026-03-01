@@ -1,6 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Cell,
 } from 'recharts';
 import { TrendingUp, Calendar, Flame, Target } from 'lucide-react';
 import { userAPI } from '../services/api';
@@ -31,9 +40,9 @@ function Dashboard({ user }) {
     try {
       const [weightRes, workoutRes] = await Promise.all([
         userAPI.getWeightLog(),
-        userAPI.getWorkoutLog()
+        userAPI.getWorkoutLog(),
       ]);
-      
+
       setWeightLog(weightRes.data.weightLog || []);
       setWorkoutLog(workoutRes.data.workoutLog || []);
       setCurrentStreak(workoutRes.data.currentStreak || 0);
@@ -47,9 +56,12 @@ function Dashboard({ user }) {
   const totalLogs = weightLog.length;
   const weightData = [...weightLog]
     .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .map(entry => ({
-      date: new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      weight: parseFloat(entry.weight)
+    .map((entry) => ({
+      date: new Date(entry.date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+      }),
+      weight: parseFloat(entry.weight),
     }));
 
   // Calculate weekly stats from real workout data
@@ -57,28 +69,28 @@ function Dashboard({ user }) {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const today = new Date();
     const stats = [];
-    
+
     for (let i = 6; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
       const dateStr = date.toDateString();
-      
-      const hasWorkout = workoutLog.some(w => 
-        new Date(w.date).toDateString() === dateStr && w.completed
+
+      const hasWorkout = workoutLog.some(
+        (w) => new Date(w.date).toDateString() === dateStr && w.completed
       );
-      
+
       stats.push({
         week: days[date.getDay()],
         completed: hasWorkout ? 1 : 0,
-        date: dateStr
+        date: dateStr,
       });
     }
-    
+
     return stats;
   };
 
   const weeklyStats = getWeeklyStats();
-  const weekProgress = weeklyStats.filter(d => d.completed > 0).length;
+  const weekProgress = weeklyStats.filter((d) => d.completed > 0).length;
   const latestWeight = weightData.length > 0 ? weightData[weightData.length - 1].weight : null;
   const startWeight = weightData.length > 0 ? weightData[0].weight : null;
   const weightChange = latestWeight && startWeight ? (latestWeight - startWeight).toFixed(1) : null;
@@ -91,7 +103,9 @@ function Dashboard({ user }) {
             <Flame size={18} />
           </div>
           <span className="text-[10px] font-bold uppercase tracking-wider text-silver">Streak</span>
-          <span className="font-display text-2xl font-bold text-white leading-none">{currentStreak}</span>
+          <span className="font-display text-2xl font-bold text-white leading-none">
+            {currentStreak}
+          </span>
           <span className="text-[10px] text-silver">days</span>
         </div>
 
@@ -99,8 +113,12 @@ function Dashboard({ user }) {
           <div className="w-9 h-9 rounded-lg bg-success/15 flex items-center justify-center text-success">
             <TrendingUp size={18} />
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-silver">Weight Log</span>
-          <span className="font-display text-2xl font-bold text-white leading-none">{totalLogs}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-silver">
+            Weight Log
+          </span>
+          <span className="font-display text-2xl font-bold text-white leading-none">
+            {totalLogs}
+          </span>
           <span className="text-[10px] text-silver">entries</span>
         </div>
 
@@ -108,8 +126,12 @@ function Dashboard({ user }) {
           <div className="w-9 h-9 rounded-lg bg-warning/15 flex items-center justify-center text-warning">
             <Calendar size={18} />
           </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-silver">This Week</span>
-          <span className="font-display text-2xl font-bold text-white leading-none">{weekProgress}</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider text-silver">
+            This Week
+          </span>
+          <span className="font-display text-2xl font-bold text-white leading-none">
+            {weekProgress}
+          </span>
           <span className="text-[10px] text-silver">/7 days</span>
         </div>
       </div>
@@ -117,9 +139,13 @@ function Dashboard({ user }) {
       {weightData.length > 0 && (
         <div className="bg-graphite border border-steel rounded-2xl p-5">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver">Weight Progress</h3>
+            <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver">
+              Weight Progress
+            </h3>
             {weightChange && (
-              <span className={`px-2 py-1 rounded text-xs font-semibold ${parseFloat(weightChange) <= 0 ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}>
+              <span
+                className={`px-2 py-1 rounded text-xs font-semibold ${parseFloat(weightChange) <= 0 ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}
+              >
                 {parseFloat(weightChange) <= 0 ? '↓' : '↑'} {Math.abs(weightChange)} kg
               </span>
             )}
@@ -128,26 +154,58 @@ function Dashboard({ user }) {
             <AreaChart data={weightData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="weightGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#c6f135" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#c6f135" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#c6f135" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#c6f135" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" vertical={false} />
-              <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#888888' }} axisLine={{ stroke: '#2a2a2a' }} tickLine={false} dy={10} />
-              <YAxis tick={{ fontSize: 10, fill: '#888888' }} axisLine={false} tickLine={false} domain={['dataMin - 1', 'dataMax + 1']} />
+              <XAxis
+                dataKey="date"
+                tick={{ fontSize: 10, fill: '#888888' }}
+                axisLine={{ stroke: '#2a2a2a' }}
+                tickLine={false}
+                dy={10}
+              />
+              <YAxis
+                tick={{ fontSize: 10, fill: '#888888' }}
+                axisLine={false}
+                tickLine={false}
+                domain={['dataMin - 1', 'dataMax + 1']}
+              />
               <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="weight" stroke="#c6f135" strokeWidth={2} fillOpacity={1} fill="url(#weightGradient)" dot={false} activeDot={{ r: 5, fill: '#c6f135', stroke: '#080808', strokeWidth: 2 }} />
+              <Area
+                type="monotone"
+                dataKey="weight"
+                stroke="#c6f135"
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#weightGradient)"
+                dot={false}
+                activeDot={{
+                  r: 5,
+                  fill: '#c6f135',
+                  stroke: '#080808',
+                  strokeWidth: 2,
+                }}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>
       )}
 
       <div className="bg-graphite border border-steel rounded-2xl p-5">
-        <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">Weekly Activity</h3>
+        <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
+          Weekly Activity
+        </h3>
         <ResponsiveContainer width="100%" height={140}>
           <BarChart data={weeklyStats} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" vertical={false} />
-            <XAxis dataKey="week" tick={{ fontSize: 10, fill: '#888888' }} axisLine={{ stroke: '#2a2a2a' }} tickLine={false} />
+            <XAxis
+              dataKey="week"
+              tick={{ fontSize: 10, fill: '#888888' }}
+              axisLine={{ stroke: '#2a2a2a' }}
+              tickLine={false}
+            />
             <YAxis hide />
             <Bar dataKey="completed" radius={[4, 4, 0, 0]}>
               {weeklyStats.map((entry, index) => (
@@ -164,13 +222,17 @@ function Dashboard({ user }) {
             <Target size={28} />
           </div>
           <h3 className="font-display text-lg font-bold text-chalk mb-2">Start Tracking</h3>
-          <p className="text-sm text-silver">Log your first weight entry in the Progress tab to see your data here.</p>
+          <p className="text-sm text-silver">
+            Log your first weight entry in the Progress tab to see your data here.
+          </p>
         </div>
       )}
 
       <div className="bg-lime/10 border border-lime/20 rounded-xl p-4">
         <p className="text-[10px] font-bold uppercase tracking-wider text-lime mb-1">Pro Tip</p>
-        <p className="text-xs text-silver leading-relaxed">Consistency beats intensity. Log your weight regularly for accurate trend tracking.</p>
+        <p className="text-xs text-silver leading-relaxed">
+          Consistency beats intensity. Log your weight regularly for accurate trend tracking.
+        </p>
       </div>
     </div>
   );

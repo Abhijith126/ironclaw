@@ -18,9 +18,8 @@ router.get('/', async (req, res) => {
 router.get('/category/:category', async (req, res) => {
   try {
     const { category } = req.params;
-    const exercises = await Exercise.find({ category })
-      .sort({ name: 1 });
-    
+    const exercises = await Exercise.find({ category }).sort({ name: 1 });
+
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises by category error:', error);
@@ -32,9 +31,8 @@ router.get('/category/:category', async (req, res) => {
 router.get('/muscle/:muscleGroup', async (req, res) => {
   try {
     const { muscleGroup } = req.params;
-    const exercises = await Exercise.find({ muscleGroup })
-      .sort({ name: 1 });
-    
+    const exercises = await Exercise.find({ muscleGroup }).sort({ name: 1 });
+
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises by muscle group error:', error);
@@ -46,9 +44,8 @@ router.get('/muscle/:muscleGroup', async (req, res) => {
 router.get('/equipment/:equipment', async (req, res) => {
   try {
     const { equipment } = req.params;
-    const exercises = await Exercise.find({ equipment })
-      .sort({ name: 1 });
-    
+    const exercises = await Exercise.find({ equipment }).sort({ name: 1 });
+
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises by equipment error:', error);
@@ -60,11 +57,11 @@ router.get('/equipment/:equipment', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const exercise = await Exercise.findById(req.params.id);
-    
+
     if (!exercise) {
       return res.status(404).json({ message: 'Exercise not found' });
     }
-    
+
     res.json({ exercise });
   } catch (error) {
     console.error('Get exercise error:', error);
@@ -75,7 +72,8 @@ router.get('/:id', async (req, res) => {
 // Create a new exercise (admin only)
 router.post('/', auth, async (req, res) => {
   try {
-    const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } = req.body;
+    const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
+      req.body;
 
     // Check if exercise already exists
     const existingExercise = await Exercise.findOne({ name });
@@ -109,7 +107,8 @@ router.post('/', auth, async (req, res) => {
 // Update an exercise (admin only)
 router.put('/:id', auth, async (req, res) => {
   try {
-    const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } = req.body;
+    const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
+      req.body;
 
     const exercise = await Exercise.findById(req.params.id);
     if (!exercise) {

@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/profile', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password -googleId');
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -72,7 +72,7 @@ router.put('/profile', auth, async (req, res) => {
 router.get('/weekly-schedule', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -152,7 +152,7 @@ router.get('/weight-log', auth, async (req, res) => {
 router.post('/weight-log', auth, async (req, res) => {
   try {
     const { weight, date } = req.body;
-    
+
     if (!weight || weight <= 0) {
       return res.status(400).json({ message: 'Valid weight is required' });
     }
@@ -173,9 +173,9 @@ router.post('/weight-log', auth, async (req, res) => {
     user.weightLog.push(weightEntry);
     await user.save();
 
-    res.status(201).json({ 
-      message: 'Weight logged successfully', 
-      weightLog: user.weightLog 
+    res.status(201).json({
+      message: 'Weight logged successfully',
+      weightLog: user.weightLog
     });
   } catch (error) {
     console.error('Weight log error:', error);
@@ -191,7 +191,7 @@ router.get('/workout-log', auth, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json({ 
+    res.json({
       workoutLog: user.workoutLog || [],
       currentStreak: user.currentStreak || 0
     });
@@ -205,7 +205,7 @@ router.get('/workout-log', auth, async (req, res) => {
 router.post('/workout-log', auth, async (req, res) => {
   try {
     const { day, completed } = req.body;
-    
+
     if (!day) {
       return res.status(400).json({ message: 'Day is required' });
     }
@@ -216,14 +216,14 @@ router.post('/workout-log', auth, async (req, res) => {
     }
 
     const today = new Date().toDateString();
-    
+
     if (!user.workoutLog) {
       user.workoutLog = [];
     }
 
     // Check if already logged today
-    const existingIndex = user.workoutLog.findIndex(w => 
-      new Date(w.date).toDateString() === today && w.day === day
+    const existingIndex = user.workoutLog.findIndex(
+      (w) => new Date(w.date).toDateString() === today && w.day === day
     );
 
     if (existingIndex >= 0) {
@@ -240,11 +240,11 @@ router.post('/workout-log', auth, async (req, res) => {
 
     // Calculate streak
     user.currentStreak = calculateStreak(user.workoutLog);
-    
+
     await user.save();
 
-    res.status(201).json({ 
-      message: 'Workout logged successfully', 
+    res.status(201).json({
+      message: 'Workout logged successfully',
       workoutLog: user.workoutLog,
       currentStreak: user.currentStreak
     });
@@ -256,24 +256,24 @@ router.post('/workout-log', auth, async (req, res) => {
 
 function calculateStreak(workoutLog) {
   if (!workoutLog || workoutLog.length === 0) return 0;
-  
+
   const sorted = [...workoutLog]
-    .filter(w => w.completed)
+    .filter((w) => w.completed)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
-  
+
   if (sorted.length === 0) return 0;
-  
+
   let streak = 0;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  
+
   for (let i = 0; i < sorted.length; i++) {
     const workoutDate = new Date(sorted[i].date);
     workoutDate.setHours(0, 0, 0, 0);
-    
+
     const expectedDate = new Date(today);
     expectedDate.setDate(expectedDate.getDate() - i);
-    
+
     if (workoutDate.getTime() === expectedDate.getTime()) {
       streak++;
     } else if (i === 0 && workoutDate.getTime() === expectedDate.getTime() - 86400000) {
@@ -283,7 +283,7 @@ function calculateStreak(workoutLog) {
       break;
     }
   }
-  
+
   return streak;
 }
 

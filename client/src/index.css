@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --font-display: 'Syne', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
-  
+
   /* Core palette - Industrial Athletic */
   --color-obsidian: #080808;
   --color-carbon: #111111;
@@ -14,12 +14,12 @@
   --color-silver: #888888;
   --color-chalk: #d4d4d4;
   --color-white: #fafafa;
-  
+
   /* Accent - Electric Lime */
   --color-lime: #c6f135;
   --color-lime-dim: #a3cc29;
   --color-lime-glow: rgba(198, 241, 53, 0.15);
-  
+
   /* Semantic */
   --color-success: #22c55e;
   --color-warning: #f59e0b;
@@ -31,7 +31,7 @@
   html {
     font-family: var(--font-body);
   }
-  
+
   body {
     background-color: var(--color-obsidian);
     color: var(--color-chalk);
@@ -74,7 +74,7 @@
 }
 
 /* Input date picker */
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type='date']::-webkit-calendar-picker-indicator {
   filter: invert(0.7);
   cursor: pointer;
 }

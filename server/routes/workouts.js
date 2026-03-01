@@ -45,10 +45,10 @@ router.post('/', auth, async (req, res) => {
       userId: req.user._id,
       name,
       type,
-      exercises: exercises.map(ex => ({
+      exercises: exercises.map((ex) => ({
         exerciseId: ex.exerciseId,
         exerciseName: ex.exerciseName,
-        sets: ex.sets.map(set => ({
+        sets: ex.sets.map((set) => ({
           setNumber: set.setNumber,
           reps: set.reps,
           weight: set.weight,
@@ -87,10 +87,10 @@ router.put('/:id', auth, async (req, res) => {
     if (name) workout.name = name;
     if (type) workout.type = type;
     if (exercises) {
-      workout.exercises = exercises.map(ex => ({
+      workout.exercises = exercises.map((ex) => ({
         exerciseId: ex.exerciseId,
         exerciseName: ex.exerciseName,
-        sets: ex.sets.map(set => ({
+        sets: ex.sets.map((set) => ({
           setNumber: set.setNumber,
           reps: set.reps,
           weight: set.weight,
@@ -157,39 +157,43 @@ router.patch('/:id/complete', auth, async (req, res) => {
 });
 
 // Mark a specific exercise set as completed
-router.patch('/:workoutId/exercises/:exerciseIndex/sets/:setIndex/complete', auth, async (req, res) => {
-  try {
-    const { workoutId, exerciseIndex, setIndex } = req.params;
+router.patch(
+  '/:workoutId/exercises/:exerciseIndex/sets/:setIndex/complete',
+  auth,
+  async (req, res) => {
+    try {
+      const { workoutId, exerciseIndex, setIndex } = req.params;
 
-    const workout = await Workout.findOne({
-      _id: workoutId,
-      userId: req.user._id
-    });
+      const workout = await Workout.findOne({
+        _id: workoutId,
+        userId: req.user._id
+      });
 
-    if (!workout) {
-      return res.status(404).json({ message: 'Workout not found' });
+      if (!workout) {
+        return res.status(404).json({ message: 'Workout not found' });
+      }
+
+      if (!workout.exercises[exerciseIndex] || !workout.exercises[exerciseIndex].sets[setIndex]) {
+        return res.status(404).json({ message: 'Exercise or set not found' });
+      }
+
+      workout.exercises[exerciseIndex].sets[setIndex].completed = true;
+
+      // Check if all sets in the exercise are completed
+      const allSetsCompleted = workout.exercises[exerciseIndex].sets.every((set) => set.completed);
+      workout.exercises[exerciseIndex].completed = allSetsCompleted;
+
+      await workout.save();
+
+      res.json({
+        message: 'Set marked as completed',
+        workout
+      });
+    } catch (error) {
+      console.error('Complete set error:', error);
+      res.status(500).json({ message: 'Server error while marking set as completed' });
     }
-
-    if (!workout.exercises[exerciseIndex] || !workout.exercises[exerciseIndex].sets[setIndex]) {
-      return res.status(404).json({ message: 'Exercise or set not found' });
-    }
-
-    workout.exercises[exerciseIndex].sets[setIndex].completed = true;
-    
-    // Check if all sets in the exercise are completed
-    const allSetsCompleted = workout.exercises[exerciseIndex].sets.every(set => set.completed);
-    workout.exercises[exerciseIndex].completed = allSetsCompleted;
-
-    await workout.save();
-
-    res.json({
-      message: 'Set marked as completed',
-      workout
-    });
-  } catch (error) {
-    console.error('Complete set error:', error);
-    res.status(500).json({ message: 'Server error while marking set as completed' });
   }
-});
+);
 
 module.exports = router;

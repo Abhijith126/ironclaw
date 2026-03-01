@@ -53,7 +53,7 @@ export const workoutAPI = {
   update: (id, workoutData) => api.put(`/workouts/${id}`, workoutData),
   delete: (id) => api.delete(`/workouts/${id}`),
   complete: (id) => api.patch(`/workouts/${id}/complete`),
-  completeSet: (workoutId, exerciseIndex, setIndex) => 
+  completeSet: (workoutId, exerciseIndex, setIndex) =>
     api.patch(`/workouts/${workoutId}/exercises/${exerciseIndex}/sets/${setIndex}/complete`),
 };
 

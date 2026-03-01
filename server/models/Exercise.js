@@ -19,7 +19,16 @@ const exerciseSchema = new mongoose.Schema({
   },
   equipment: {
     type: String,
-    enum: ['bodyweight', 'dumbbells', 'barbell', 'kettlebell', 'machine', 'bands', 'medicine ball', 'none']
+    enum: [
+      'bodyweight',
+      'dumbbells',
+      'barbell',
+      'kettlebell',
+      'machine',
+      'bands',
+      'medicine ball',
+      'none'
+    ]
   },
   difficulty: {
     type: String,
@@ -32,7 +41,7 @@ const exerciseSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
     validate: {
-      validator: function(v) {
+      validator: function (v) {
         return !v || /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i.test(v);
       },
       message: 'Please provide a valid image URL'
@@ -41,8 +50,10 @@ const exerciseSchema = new mongoose.Schema({
   videoUrl: {
     type: String,
     validate: {
-      validator: function(v) {
-        return !v || /^https?:\/\/(www\.)?(youtube\.com|vimeo\.com|\.mp4|youtu\.be)(\/|\?)/i.test(v);
+      validator: function (v) {
+        return (
+          !v || /^https?:\/\/(www\.)?(youtube\.com|vimeo\.com|\.mp4|youtu\.be)(\/|\?)/i.test(v)
+        );
       },
       message: 'Please provide a valid video URL'
     }
@@ -58,7 +69,7 @@ const exerciseSchema = new mongoose.Schema({
 });
 
 // Update the updatedAt field before saving
-exerciseSchema.pre('save', function(next) {
+exerciseSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });

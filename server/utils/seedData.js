@@ -19,7 +19,8 @@ const exercises = [
     muscleGroup: 'back',
     equipment: 'bodyweight',
     difficulty: 'intermediate',
-    description: 'A compound exercise that primarily targets the latissimus dorsi and other back muscles.',
+    description:
+      'A compound exercise that primarily targets the latissimus dorsi and other back muscles.',
     imageUrl: 'https://example.com/pullups.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=eGo4IYlbE5s'
   },
@@ -29,7 +30,8 @@ const exercises = [
     muscleGroup: 'chest',
     equipment: 'barbell',
     difficulty: 'intermediate',
-    description: 'A compound exercise that targets the chest, shoulders, and triceps using a barbell.',
+    description:
+      'A compound exercise that targets the chest, shoulders, and triceps using a barbell.',
     imageUrl: 'https://example.com/benchpress.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=rT7DgCr-3pg'
   },
@@ -59,7 +61,8 @@ const exercises = [
     muscleGroup: 'arms',
     equipment: 'bodyweight',
     difficulty: 'beginner',
-    description: 'An isolation exercise that targets the triceps muscles using parallel bars or a bench.',
+    description:
+      'An isolation exercise that targets the triceps muscles using parallel bars or a bench.',
     imageUrl: 'https://example.com/tricepdips.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=0326dy_-CzM'
   },
@@ -81,7 +84,8 @@ const exercises = [
     muscleGroup: 'legs',
     equipment: 'bodyweight',
     difficulty: 'beginner',
-    description: 'A compound exercise that targets the quadriceps, hamstrings, and glutes unilaterally.',
+    description:
+      'A compound exercise that targets the quadriceps, hamstrings, and glutes unilaterally.',
     imageUrl: 'https://example.com/lunges.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=QOVaHwm-Q6U'
   },
@@ -101,7 +105,8 @@ const exercises = [
     muscleGroup: 'legs',
     equipment: 'machine',
     difficulty: 'beginner',
-    description: 'A compound exercise that targets the quadriceps, hamstrings, and glutes using a leg press machine.',
+    description:
+      'A compound exercise that targets the quadriceps, hamstrings, and glutes using a leg press machine.',
     imageUrl: 'https://example.com/legpress.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=2UpsGdJrL4E'
   },
@@ -123,7 +128,8 @@ const exercises = [
     muscleGroup: 'core',
     equipment: 'bodyweight',
     difficulty: 'beginner',
-    description: 'An isometric exercise that targets the core muscles, including the abdominals and lower back.',
+    description:
+      'An isometric exercise that targets the core muscles, including the abdominals and lower back.',
     imageUrl: 'https://example.com/plank.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=pSHjTRCQxIw'
   },
@@ -165,7 +171,8 @@ const exercises = [
     muscleGroup: 'cardiovascular',
     equipment: 'none',
     difficulty: 'beginner',
-    description: 'A cardiovascular exercise that improves heart health and works the lower body muscles.',
+    description:
+      'A cardiovascular exercise that improves heart health and works the lower body muscles.',
     imageUrl: 'https://example.com/cycling.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=OQ5jsbhAv_M'
   },
@@ -175,7 +182,8 @@ const exercises = [
     muscleGroup: 'cardiovascular',
     equipment: 'none',
     difficulty: 'beginner',
-    description: 'A full-body cardiovascular exercise that increases heart rate and burns calories.',
+    description:
+      'A full-body cardiovascular exercise that increases heart rate and burns calories.',
     imageUrl: 'https://example.com/jumpingjacks.jpg',
     videoUrl: 'https://youtube.com/watch?v=OQ5jsbhAv_M'
   },
@@ -187,7 +195,8 @@ const exercises = [
     muscleGroup: 'full body',
     equipment: 'bodyweight',
     difficulty: 'advanced',
-    description: 'A full-body exercise that combines a squat, push-up, and jump to improve strength and cardiovascular fitness.',
+    description:
+      'A full-body exercise that combines a squat, push-up, and jump to improve strength and cardiovascular fitness.',
     imageUrl: 'https://example.com/burpees.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=auBLPXO8Fww'
   },
@@ -197,7 +206,8 @@ const exercises = [
     muscleGroup: 'full body',
     equipment: 'kettlebell',
     difficulty: 'intermediate',
-    description: 'A full-body exercise that targets the posterior chain and improves cardiovascular fitness.',
+    description:
+      'A full-body exercise that targets the posterior chain and improves cardiovascular fitness.',
     imageUrl: 'https://example.com/kettlebellswings.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=YSxHifyI6s8'
   },
@@ -219,7 +229,8 @@ const exercises = [
     muscleGroup: 'core',
     equipment: 'none',
     difficulty: 'beginner',
-    description: 'A flexibility exercise that improves spinal mobility and stretches the back muscles.',
+    description:
+      'A flexibility exercise that improves spinal mobility and stretches the back muscles.',
     imageUrl: 'https://example.com/catcow.jpg',
     videoUrl: 'https://youtube.com/watch?v=OQ5jsbhAv_M'
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { PlusCircle, Save, Trash2, ChevronDown } from 'lucide-react';
 import { userAPI } from '../services/api';
 
@@ -14,7 +14,7 @@ const EXERCISE_OPTIONS = [
   { id: 'dip', name: 'Dip' },
   { id: 'curl', name: 'Bicep Curl' },
   { id: 'extension', name: 'Tricep Extension' },
-  { id: 'lunge', name: 'Lunge' }
+  { id: 'lunge', name: 'Lunge' },
 ];
 
 export default function ManageWorkouts({ onSave }) {
@@ -32,13 +32,13 @@ export default function ManageWorkouts({ onSave }) {
           setUserWeekly(schedule);
         } else {
           const obj = {};
-          DAYS.forEach(day => obj[day] = []);
+          DAYS.forEach((day) => (obj[day] = []));
           setUserWeekly(obj);
         }
       } catch (error) {
         console.error('Error fetching weekly schedule:', error);
         const obj = {};
-        DAYS.forEach(day => obj[day] = []);
+        DAYS.forEach((day) => (obj[day] = []));
         setUserWeekly(obj);
       }
     };
@@ -57,14 +57,20 @@ export default function ManageWorkouts({ onSave }) {
   const scrollToNewExercise = useCallback(() => {
     setTimeout(() => {
       if (lastExerciseRef.current) {
-        lastExerciseRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        lastExerciseRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
       }
     }, 100);
   }, []);
 
   function addRow() {
     const next = { ...userWeekly };
-    next[selectedDay] = [...(next[selectedDay] || []), { id: EXERCISE_OPTIONS[0]?.id || 'bench', sets: 3, reps: '8-12' }];
+    next[selectedDay] = [
+      ...(next[selectedDay] || []),
+      { id: EXERCISE_OPTIONS[0]?.id || 'bench', sets: 3, reps: '8-12' },
+    ];
     setUserWeekly(next);
     scrollToNewExercise();
   }
@@ -97,18 +103,24 @@ export default function ManageWorkouts({ onSave }) {
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-        {DAYS.map(d => (
+        {DAYS.map((d) => (
           <button
             key={d}
             onClick={() => setSelectedDay(d)}
             className={`flex-shrink-0 flex flex-col items-center gap-0.5 px-3.5 py-2.5 rounded-xl border transition-all min-w-[54px] ${
-              selectedDay === d 
-                ? 'bg-lime border-lime' 
-                : 'bg-muted border-steel active:scale-95'
+              selectedDay === d ? 'bg-lime border-lime' : 'bg-muted border-steel active:scale-95'
             }`}
           >
-            <span className={`text-[10px] font-bold uppercase tracking-wider ${selectedDay === d ? 'text-obsidian' : 'text-silver'}`}>{d.slice(0, 3)}</span>
-            <span className={`text-xs font-bold ${selectedDay === d ? 'text-obsidian' : 'text-chalk'}`}>{(userWeekly[d] || []).length}</span>
+            <span
+              className={`text-[10px] font-bold uppercase tracking-wider ${selectedDay === d ? 'text-obsidian' : 'text-silver'}`}
+            >
+              {d.slice(0, 3)}
+            </span>
+            <span
+              className={`text-xs font-bold ${selectedDay === d ? 'text-obsidian' : 'text-chalk'}`}
+            >
+              {(userWeekly[d] || []).length}
+            </span>
           </button>
         ))}
       </div>
@@ -128,51 +140,62 @@ export default function ManageWorkouts({ onSave }) {
           )}
 
           {dayList.map((row, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               ref={idx === dayList.length - 1 ? lastExerciseRef : null}
               className="bg-muted border border-steel rounded-xl p-4 flex flex-col gap-3"
             >
               <div className="flex flex-col gap-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-silver">Exercise</label>
+                <label className="text-[10px] font-bold uppercase tracking-wider text-silver">
+                  Exercise
+                </label>
                 <div className="relative">
-                  <select 
-                    value={row.id} 
-                    onChange={e => updateRow(idx, 'id', e.target.value)} 
+                  <select
+                    value={row.id}
+                    onChange={(e) => updateRow(idx, 'id', e.target.value)}
                     className="w-full px-3 py-3 bg-graphite border border-steel rounded-lg text-white font-medium appearance-none cursor-pointer focus:border-lime outline-none transition-colors pr-10"
                   >
-                    {EXERCISE_OPTIONS.map(o => (
-                      <option key={o.id} value={o.id}>{o.name}</option>
+                    {EXERCISE_OPTIONS.map((o) => (
+                      <option key={o.id} value={o.id}>
+                        {o.name}
+                      </option>
                     ))}
                   </select>
-                  <ChevronDown size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-silver pointer-events-none" />
+                  <ChevronDown
+                    size={16}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-silver pointer-events-none"
+                  />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-silver">Sets</label>
-                  <input 
-                    type="number" 
-                    value={row.sets} 
-                    onChange={e => updateRow(idx, 'sets', Number(e.target.value))} 
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-silver">
+                    Sets
+                  </label>
+                  <input
+                    type="number"
+                    value={row.sets}
+                    onChange={(e) => updateRow(idx, 'sets', Number(e.target.value))}
                     className="px-3 py-3 bg-graphite border border-steel rounded-lg text-white text-center font-medium focus:border-lime outline-none transition-colors"
                     min="1"
                     max="20"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-silver">Reps</label>
-                  <input 
-                    value={row.reps} 
-                    onChange={e => updateRow(idx, 'reps', e.target.value)} 
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-silver">
+                    Reps
+                  </label>
+                  <input
+                    value={row.reps}
+                    onChange={(e) => updateRow(idx, 'reps', e.target.value)}
                     className="px-3 py-3 bg-graphite border border-steel rounded-lg text-white text-center font-medium focus:border-lime outline-none transition-colors"
                     placeholder="8-12"
                   />
                 </div>
               </div>
 
-              <button 
+              <button
                 onClick={() => removeRow(idx)}
                 className="flex items-center justify-center gap-2 py-2.5 border border-danger/30 rounded-lg text-danger text-sm font-semibold hover:bg-danger/10 transition-colors active:scale-[0.98]"
               >
@@ -185,15 +208,15 @@ export default function ManageWorkouts({ onSave }) {
       </div>
 
       <div className="flex gap-3 pt-2">
-        <button 
+        <button
           onClick={addRow}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors active:scale-[0.98]"
         >
           <PlusCircle size={18} />
           <span>Add Exercise</span>
         </button>
-        
-        <button 
+
+        <button
           onClick={save}
           disabled={isSaving}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-lime text-obsidian font-semibold rounded-xl hover:bg-lime-dim transition-colors active:scale-[0.98] disabled:opacity-70"

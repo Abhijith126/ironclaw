@@ -16,43 +16,47 @@ const workoutSchema = new mongoose.Schema({
     required: [true, 'Workout type is required'],
     enum: ['strength', 'cardio', 'flexibility', 'hiit', 'other']
   },
-  exercises: [{
-    exerciseId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Exercise'
-    },
-    exerciseName: {
-      type: String,
-      required: true
-    },
-    sets: [{
-      setNumber: {
-        type: Number,
+  exercises: [
+    {
+      exerciseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exercise'
+      },
+      exerciseName: {
+        type: String,
         required: true
       },
-      reps: {
-        type: Number,
-        min: 1,
-        max: 100
-      },
-      weight: {
-        type: Number,
-        min: 0
-      },
-      duration: {
-        type: Number,
-        min: 0
-      },
+      sets: [
+        {
+          setNumber: {
+            type: Number,
+            required: true
+          },
+          reps: {
+            type: Number,
+            min: 1,
+            max: 100
+          },
+          weight: {
+            type: Number,
+            min: 0
+          },
+          duration: {
+            type: Number,
+            min: 0
+          },
+          completed: {
+            type: Boolean,
+            default: false
+          }
+        }
+      ],
       completed: {
         type: Boolean,
         default: false
       }
-    }],
-    completed: {
-      type: Boolean,
-      default: false
     }
-  }],
+  ],
   completed: {
     type: Boolean,
     default: false
@@ -72,7 +76,7 @@ const workoutSchema = new mongoose.Schema({
 });
 
 // Update the updatedAt field before saving
-workoutSchema.pre('save', function(next) {
+workoutSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });

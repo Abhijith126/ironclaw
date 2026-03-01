@@ -1,6 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, TrendingDown, TrendingUp, Scale as ScaleIcon } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import {
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Area,
+  AreaChart,
+} from 'recharts';
 import { userAPI } from '../services/api';
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -66,11 +74,15 @@ function WeightTracker({ user, onWeightUpdate }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="bg-graphite border border-steel rounded-2xl p-5">
-        <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">Log Weight</h3>
+        <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
+          Log Weight
+        </h3>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-silver">Weight (kg)</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-silver">
+                Weight (kg)
+              </label>
               <input
                 type="number"
                 step="0.1"
@@ -83,7 +95,9 @@ function WeightTracker({ user, onWeightUpdate }) {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-silver">Date</label>
+              <label className="text-[10px] font-bold uppercase tracking-wider text-silver">
+                Date
+              </label>
               <input
                 type="date"
                 value={inputDate}
@@ -106,12 +120,18 @@ function WeightTracker({ user, onWeightUpdate }) {
       {currentWeight && (
         <div className="flex justify-between items-center bg-gradient-to-br from-graphite to-carbon border border-steel rounded-xl p-5">
           <div className="flex items-baseline gap-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-silver mr-2">Current</span>
-            <span className="font-display text-4xl font-bold text-white leading-none">{currentWeight.toFixed(1)}</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-silver mr-2">
+              Current
+            </span>
+            <span className="font-display text-4xl font-bold text-white leading-none">
+              {currentWeight.toFixed(1)}
+            </span>
             <span className="text-sm text-silver">kg</span>
           </div>
           {trend !== null && (
-            <div className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-semibold ${trend <= 0 ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}>
+            <div
+              className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-semibold ${trend <= 0 ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}
+            >
               {trend <= 0 ? <TrendingDown size={14} /> : <TrendingUp size={14} />}
               <span>{Math.abs(trend).toFixed(1)}</span>
             </div>
@@ -121,23 +141,60 @@ function WeightTracker({ user, onWeightUpdate }) {
 
       {sortedLogs.length > 0 && (
         <div className="bg-graphite border border-steel rounded-2xl p-5">
-          <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">Progress</h3>
+          <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
+            Progress
+          </h3>
           <ResponsiveContainer width="100%" height={180}>
-            <AreaChart data={sortedLogs.map(w => ({
-              date: new Date(w.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-              weight: parseFloat(w.weight)
-            }))} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart
+              data={sortedLogs.map((w) => ({
+                date: new Date(w.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                }),
+                weight: parseFloat(w.weight),
+              }))}
+              margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+            >
               <defs>
                 <linearGradient id="weightGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#c6f135" stopOpacity={0.25}/>
-                  <stop offset="95%" stopColor="#c6f135" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#c6f135" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="#c6f135" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" vertical={false} />
-              <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#888888' }} axisLine={{ stroke: '#2a2a2a' }} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: '#888888' }} axisLine={false} tickLine={false} domain={['dataMin - 0.5', 'dataMax + 0.5']} />
+              <XAxis
+                dataKey="date"
+                tick={{ fontSize: 10, fill: '#888888' }}
+                axisLine={{ stroke: '#2a2a2a' }}
+                tickLine={false}
+              />
+              <YAxis
+                tick={{ fontSize: 10, fill: '#888888' }}
+                axisLine={false}
+                tickLine={false}
+                domain={['dataMin - 0.5', 'dataMax + 0.5']}
+              />
               <Tooltip content={<CustomTooltip />} />
-              <Area type="monotone" dataKey="weight" stroke="#c6f135" strokeWidth={2} fillOpacity={1} fill="url(#weightGrad)" dot={{ r: 3, fill: '#c6f135', stroke: '#080808', strokeWidth: 1.5 }} activeDot={{ r: 5, fill: '#c6f135', stroke: '#080808', strokeWidth: 2 }} />
+              <Area
+                type="monotone"
+                dataKey="weight"
+                stroke="#c6f135"
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#weightGrad)"
+                dot={{
+                  r: 3,
+                  fill: '#c6f135',
+                  stroke: '#080808',
+                  strokeWidth: 1.5,
+                }}
+                activeDot={{
+                  r: 5,
+                  fill: '#c6f135',
+                  stroke: '#080808',
+                  strokeWidth: 2,
+                }}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -145,18 +202,28 @@ function WeightTracker({ user, onWeightUpdate }) {
 
       {recentLogs.length > 0 && (
         <div className="bg-graphite border border-steel rounded-2xl p-5">
-          <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-3">Recent</h3>
+          <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-3">
+            Recent
+          </h3>
           <div className="flex flex-col gap-1">
             {recentLogs.map((entry, idx) => (
               <div key={idx} className="flex justify-between items-center p-3 bg-muted rounded-xl">
                 <div className="flex flex-col">
-                  <span className="font-display font-bold text-white">{parseFloat(entry.weight).toFixed(1)} kg</span>
+                  <span className="font-display font-bold text-white">
+                    {parseFloat(entry.weight).toFixed(1)} kg
+                  </span>
                   <span className="text-[10px] text-silver">
-                    {new Date(entry.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                    {new Date(entry.date).toLocaleDateString('en-US', {
+                      weekday: 'short',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
                   </span>
                 </div>
                 {idx === 0 && trend !== null && (
-                  <span className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold ${trend <= 0 ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}>
+                  <span
+                    className={`flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold ${trend <= 0 ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'}`}
+                  >
                     {trend <= 0 ? <TrendingDown size={12} /> : <TrendingUp size={12} />}
                     {Math.abs(trend).toFixed(1)}
                   </span>
@@ -173,7 +240,9 @@ function WeightTracker({ user, onWeightUpdate }) {
             <ScaleIcon size={28} />
           </div>
           <h3 className="font-display text-lg font-bold text-chalk mb-2">No Data Yet</h3>
-          <p className="text-sm text-silver max-w-[240px] mx-auto">Log your weight above to start tracking your progress over time.</p>
+          <p className="text-sm text-silver max-w-[240px] mx-auto">
+            Log your weight above to start tracking your progress over time.
+          </p>
         </div>
       )}
     </div>

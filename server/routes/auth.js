@@ -28,11 +28,9 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     // Create JWT token
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d'
+    });
 
     res.status(201).json({
       message: 'User registered successfully',
@@ -56,7 +54,7 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     console.log('Login request body:', req.body);
-    
+
     const { email, password } = req.body;
 
     // Validate required fields
@@ -77,7 +75,7 @@ router.post('/login', async (req, res) => {
     // Check password
     const isMatch = await user.comparePassword(password);
     console.log('Password match:', isMatch);
-    
+
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
@@ -92,11 +90,9 @@ router.post('/login', async (req, res) => {
     await user.save();
 
     // Create JWT token
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d'
+    });
 
     res.json({
       message: 'Login successful',
@@ -128,7 +124,7 @@ router.post('/google', async (req, res) => {
     if (!user) {
       // Check if user exists with this email
       user = await User.findOne({ email });
-      
+
       if (user) {
         // Update existing user with Google ID
         user.googleId = googleId;
@@ -141,16 +137,14 @@ router.post('/google', async (req, res) => {
           password: 'google_oauth_placeholder' // This won't be used for Google auth
         });
       }
-      
+
       await user.save();
     }
 
     // Create JWT token
-    const token = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '7d'
+    });
 
     res.json({
       message: 'Google login successful',
@@ -175,14 +169,14 @@ router.post('/google', async (req, res) => {
 router.get('/verify', async (req, res) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
-    
+
     if (!token) {
       return res.status(401).json({ message: 'No token provided' });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.userId);
-    
+
     if (!user) {
       return res.status(401).json({ message: 'Invalid token - user not found' });
     }

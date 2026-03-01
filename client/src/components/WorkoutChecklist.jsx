@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { CheckCircle, Circle, Edit, Check } from 'lucide-react';
 import ManageWorkouts from './ManageWorkouts';
 import { userAPI } from '../services/api';
@@ -10,7 +10,13 @@ function WorkoutChecklist() {
   const [animatingId, setAnimatingId] = useState(null);
 
   const todayName = useMemo(() => new Date().toLocaleDateString('en-US', { weekday: 'long' }), []);
-  const tomorrowName = useMemo(() => new Date(Date.now() + 86400000).toLocaleDateString('en-US', { weekday: 'long' }), []);
+  const tomorrowName = useMemo(
+    () =>
+      new Date(Date.now() + 86400000).toLocaleDateString('en-US', {
+        weekday: 'long',
+      }),
+    []
+  );
 
   useEffect(() => {
     fetchSchedule();
@@ -25,7 +31,9 @@ function WorkoutChecklist() {
         setUserWeekly(schedule);
       } else {
         const empty = {};
-        ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].forEach(day => empty[day] = []);
+        ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(
+          (day) => (empty[day] = [])
+        );
         setUserWeekly(empty);
       }
     } catch (error) {
@@ -37,10 +45,10 @@ function WorkoutChecklist() {
     try {
       const response = await userAPI.getWorkoutLog();
       const workoutLog = response.data.workoutLog || [];
-      
+
       // Convert to completedMap by date
       const map = {};
-      workoutLog.forEach(w => {
+      workoutLog.forEach((w) => {
         const dateKey = new Date(w.date).toDateString();
         if (!map[dateKey]) map[dateKey] = [];
         map[dateKey].push(w.day);
@@ -58,11 +66,11 @@ function WorkoutChecklist() {
 
   function getWorkoutByName(dayName) {
     if (userWeekly && userWeekly[dayName]) {
-      const exList = (userWeekly[dayName] || []).map(e => ({ 
-        id: e.id, 
-        name: getExerciseName(e.id), 
-        sets: e.sets, 
-        reps: e.reps 
+      const exList = (userWeekly[dayName] || []).map((e) => ({
+        id: e.id,
+        name: getExerciseName(e.id),
+        sets: e.sets,
+        reps: e.reps,
       }));
       return { name: dayName, day: dayName, exercises: exList };
     }
@@ -71,10 +79,16 @@ function WorkoutChecklist() {
 
   function getExerciseName(exerciseId) {
     const exerciseNames = {
-      'bench-press': 'Bench Press', 'squat': 'Squat', 'deadlift': 'Deadlift',
-      'overhead-press': 'Overhead Press', 'barbell-row': 'Barbell Row',
-      'pull-up': 'Pull-up', 'dip': 'Dip', 'curl': 'Bicep Curl',
-      'extension': 'Tricep Extension', 'lunge': 'Lunge'
+      'bench-press': 'Bench Press',
+      squat: 'Squat',
+      deadlift: 'Deadlift',
+      'overhead-press': 'Overhead Press',
+      'barbell-row': 'Barbell Row',
+      'pull-up': 'Pull-up',
+      dip: 'Dip',
+      curl: 'Bicep Curl',
+      extension: 'Tricep Extension',
+      lunge: 'Lunge',
     };
     return exerciseNames[exerciseId] || exerciseId;
   }
@@ -84,33 +98,35 @@ function WorkoutChecklist() {
 
   const todayKey = new Date().toDateString();
   const completedToday = completedMap[todayKey] || [];
-  const completedCount = todaysWorkout.exercises.filter(ex => completedToday.includes(ex.id)).length;
+  const completedCount = todaysWorkout.exercises.filter((ex) =>
+    completedToday.includes(ex.id)
+  ).length;
   const totalCount = todaysWorkout.exercises.length;
   const isAllComplete = totalCount > 0 && completedCount === totalCount;
 
   async function toggleExerciseDone(exId) {
     setAnimatingId(exId);
-    
+
     const dayKey = new Date().toDateString();
     const copy = { ...completedMap };
     const list = new Set(copy[dayKey] || []);
-    
+
     if (list.has(exId)) {
       list.delete(exId);
     } else {
       list.add(exId);
     }
-    
+
     copy[dayKey] = Array.from(list);
     setCompletedMap(copy);
-    
+
     // Sync to backend
     try {
       await userAPI.logWorkout(todayName, list.size > 0);
     } catch (error) {
       console.error('Error logging workout:', error);
     }
-    
+
     setTimeout(() => setAnimatingId(null), 300);
   }
 
@@ -118,11 +134,11 @@ function WorkoutChecklist() {
     const dayKey = new Date().toDateString();
     const copy = { ...completedMap };
     const list = new Set(copy[dayKey] || []);
-    
-    todaysWorkout.exercises.forEach(ex => list.add(ex.id));
+
+    todaysWorkout.exercises.forEach((ex) => list.add(ex.id));
     copy[dayKey] = Array.from(list);
     setCompletedMap(copy);
-    
+
     try {
       await userAPI.logWorkout(todayName, true);
     } catch (error) {
@@ -140,11 +156,19 @@ function WorkoutChecklist() {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h2 className="font-display text-xl font-bold text-white">Today</h2>
-                <p className="text-xs text-silver uppercase tracking-wider mt-0.5">{todaysWorkout.name}</p>
+                <p className="text-xs text-silver uppercase tracking-wider mt-0.5">
+                  {todaysWorkout.name}
+                </p>
               </div>
               {totalCount > 0 && (
-                <div className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${isAllComplete ? 'bg-success/15' : 'bg-muted'}`}>
-                  <span className={`font-display font-bold ${isAllComplete ? 'text-success' : 'text-lime'}`}>{completedCount}</span>
+                <div
+                  className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${isAllComplete ? 'bg-success/15' : 'bg-muted'}`}
+                >
+                  <span
+                    className={`font-display font-bold ${isAllComplete ? 'text-success' : 'text-lime'}`}
+                  >
+                    {completedCount}
+                  </span>
                   <span className="text-silver text-sm">/ {totalCount}</span>
                 </div>
               )}
@@ -161,20 +185,32 @@ function WorkoutChecklist() {
                       key={exercise.id}
                       onClick={() => toggleExerciseDone(exercise.id)}
                       className={`flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left w-full ${
-                        isDone 
-                          ? 'bg-success/10 border-success/20' 
+                        isDone
+                          ? 'bg-success/10 border-success/20'
                           : 'bg-muted border-steel active:scale-[0.99]'
                       }`}
                     >
                       <span className={isDone ? 'text-success' : 'text-iron'}>
-                        {isDone ? <CheckCircle size={22} strokeWidth={2.5} /> : <Circle size={22} strokeWidth={1.5} />}
+                        {isDone ? (
+                          <CheckCircle size={22} strokeWidth={2.5} />
+                        ) : (
+                          <Circle size={22} strokeWidth={1.5} />
+                        )}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <p className={`font-medium ${isDone ? 'text-white/60 line-through' : 'text-white'}`}>{exercise.name}</p>
-                        <p className="text-xs text-silver">{exercise.sets} sets × {exercise.reps}</p>
+                        <p
+                          className={`font-medium ${isDone ? 'text-white/60 line-through' : 'text-white'}`}
+                        >
+                          {exercise.name}
+                        </p>
+                        <p className="text-xs text-silver">
+                          {exercise.sets} sets × {exercise.reps}
+                        </p>
                       </div>
                       {isDone && (
-                        <span className="px-2 py-1 bg-success rounded text-[10px] font-bold uppercase tracking-wider text-white">Done</span>
+                        <span className="px-2 py-1 bg-success rounded text-[10px] font-bold uppercase tracking-wider text-white">
+                          Done
+                        </span>
                       )}
                     </button>
                   );
@@ -183,7 +219,7 @@ function WorkoutChecklist() {
             )}
 
             {totalCount > 0 && !isAllComplete && (
-              <button 
+              <button
                 onClick={markAllDone}
                 className="w-full mt-4 flex items-center justify-center gap-2 py-3.5 bg-lime text-obsidian font-semibold rounded-xl hover:bg-lime-dim transition-colors active:scale-[0.98]"
               >
@@ -196,21 +232,29 @@ function WorkoutChecklist() {
           {tomorrowsWorkout.exercises.length > 0 && (
             <div className="bg-graphite border border-steel rounded-xl p-4">
               <div className="flex items-center gap-3 mb-3">
-                <span className="px-2 py-1 bg-steel text-[10px] font-bold uppercase tracking-wider text-silver rounded">Next Up</span>
-                <span className="font-display font-bold text-white text-sm">{tomorrowsWorkout.name}</span>
+                <span className="px-2 py-1 bg-steel text-[10px] font-bold uppercase tracking-wider text-silver rounded">
+                  Next Up
+                </span>
+                <span className="font-display font-bold text-white text-sm">
+                  {tomorrowsWorkout.name}
+                </span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {tomorrowsWorkout.exercises.slice(0, 3).map(ex => (
-                  <span key={ex.id} className="px-3 py-1.5 bg-muted text-xs text-silver rounded-lg">{ex.name}</span>
+                {tomorrowsWorkout.exercises.slice(0, 3).map((ex) => (
+                  <span key={ex.id} className="px-3 py-1.5 bg-muted text-xs text-silver rounded-lg">
+                    {ex.name}
+                  </span>
                 ))}
                 {tomorrowsWorkout.exercises.length > 3 && (
-                  <span className="px-3 py-1.5 text-xs text-lime">+{tomorrowsWorkout.exercises.length - 3} more</span>
+                  <span className="px-3 py-1.5 text-xs text-lime">
+                    +{tomorrowsWorkout.exercises.length - 3} more
+                  </span>
                 )}
               </div>
             </div>
           )}
 
-          <button 
+          <button
             onClick={() => setEditing(true)}
             className="flex items-center justify-center gap-2 py-3 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors active:scale-[0.98]"
           >
@@ -219,8 +263,12 @@ function WorkoutChecklist() {
           </button>
 
           <div className="bg-lime/10 border border-lime/20 rounded-xl p-4">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-lime mb-1">Daily Tip</p>
-            <p className="text-xs text-silver leading-relaxed">Complete your workout and tap each exercise to mark it done.</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-lime mb-1">
+              Daily Tip
+            </p>
+            <p className="text-xs text-silver leading-relaxed">
+              Complete your workout and tap each exercise to mark it done.
+            </p>
           </div>
         </>
       )}
