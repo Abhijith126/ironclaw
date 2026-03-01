@@ -7,10 +7,11 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { LayoutDashboard, Dumbbell, Scale, Menu, X, LogOut, Download, Upload } from 'lucide-react';
+import { LayoutDashboard, Dumbbell, Scale, Menu, X, LogOut, Download, Upload, Cpu } from 'lucide-react';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import WorkoutChecklist from './components/WorkoutChecklist';
+import EquipmentTracker from './components/EquipmentTracker';
 import WeightTracker from './components/WeightTracker';
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -72,6 +73,7 @@ function AppContent({ user, onLogout }) {
   const getActiveTab = () => {
     const path = location.pathname;
     if (path.includes('/checklist') || path.includes('/workout')) return 'workout';
+    if (path.includes('/equipment')) return 'equipment';
     if (path.includes('/weight')) return 'weight';
     return 'dashboard';
   };
@@ -82,6 +84,7 @@ function AppContent({ user, onLogout }) {
     const routes = {
       dashboard: '/dashboard',
       workout: '/checklist',
+      equipment: '/equipment',
       weight: '/weight',
     };
     navigate(routes[tab]);
@@ -192,6 +195,7 @@ function AppContent({ user, onLogout }) {
       path: '/dashboard',
     },
     { id: 'workout', label: 'Workout', icon: Dumbbell, path: '/checklist' },
+    { id: 'equipment', label: 'Equipment', icon: Cpu, path: '/equipment' },
     { id: 'weight', label: 'Progress', icon: Scale, path: '/weight' },
   ];
 
@@ -275,7 +279,9 @@ function AppContent({ user, onLogout }) {
                       ? 'Dashboard'
                       : tab.id === 'workout'
                         ? 'Workout'
-                        : 'Progress'}
+                        : tab.id === 'equipment'
+                          ? 'Equipment'
+                          : 'Progress'}
                   </span>
                 </button>
               ))}
@@ -319,6 +325,7 @@ function AppContent({ user, onLogout }) {
         <div className="max-w-[600px] mx-auto">
           {activeTab === 'dashboard' && <Dashboard user={user} />}
           {activeTab === 'workout' && <WorkoutChecklist />}
+          {activeTab === 'equipment' && <EquipmentTracker />}
           {activeTab === 'weight' && <WeightTracker user={user} />}
         </div>
       </main>

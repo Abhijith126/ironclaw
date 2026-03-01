@@ -11,6 +11,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const workoutRoutes = require('./routes/workouts');
 const exercisesRoutes = require('./routes/exercises');
+const equipmentRoutes = require('./routes/equipment');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,6 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/exercises', exercisesRoutes);
+app.use('/api/equipment', equipmentRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

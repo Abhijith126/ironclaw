@@ -69,6 +69,13 @@ export const exerciseAPI = {
   delete: (id) => api.delete(`/exercises/${id}`),
 };
 
+// Equipment endpoints
+export const equipmentAPI = {
+  getAll: (params) => api.get('/equipment', { params }),
+  getCategories: () => api.get('/equipment/categories'),
+  getById: (id) => api.get(`/equipment/${id}`),
+};
+
 // Shared exercise cache
 let exerciseCache = null;
 let exerciseMapCache = null;
