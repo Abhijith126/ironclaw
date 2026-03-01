@@ -76,7 +76,7 @@ const userSchema = new mongoose.Schema({
     type: [
       {
         date: { type: Date, required: true },
-        day: { type: String, required: true },
+        exerciseId: { type: String, required: true },
         completed: { type: Boolean, default: true }
       }
     ],

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,13 +7,15 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { LayoutDashboard, Dumbbell, Scale, Menu, X, LogOut } from 'lucide-react';
+import { LayoutDashboard, Dumbbell, Scale, Menu, X, LogOut, Download, Upload } from 'lucide-react';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import WorkoutChecklist from './components/WorkoutChecklist';
 import WeightTracker from './components/WeightTracker';
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import { userAPI, getExerciseNameMap } from './services/api';
+import { ConfirmModal, AlertModal } from './components/Modal';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -63,6 +65,9 @@ function AppContent({ user, onLogout }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [importData, setImportData] = useState(null);
+  const [alert, setAlert] = useState({ isOpen: false, type: 'success', title: '', message: '' });
+  const fileInputRef = useRef(null);
 
   const getActiveTab = () => {
     const path = location.pathname;
@@ -89,6 +94,95 @@ function AppContent({ user, onLogout }) {
   };
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleExport = async () => {
+    try {
+      const [scheduleRes, exerciseMap] = await Promise.all([
+        userAPI.getWeeklySchedule(),
+        getExerciseNameMap(),
+      ]);
+      const schedule = scheduleRes.data.weeklySchedule;
+      
+      const scheduleWithNames = {};
+      for (const [day, exercises] of Object.entries(schedule || {})) {
+        scheduleWithNames[day] = (exercises || []).map(ex => ({
+          id: exerciseMap[ex.id]?.name || ex.id,
+          sets: ex.sets,
+          reps: ex.reps,
+        }));
+      }
+      
+      const data = JSON.stringify({ weeklySchedule: scheduleWithNames, exportedAt: new Date().toISOString() }, null, 2);
+      const blob = new Blob([data], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `workout-schedule-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      closeMenu();
+    } catch (err) {
+      console.error('Export failed:', err);
+    }
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleImport = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      
+      if (!data.weeklySchedule || typeof data.weeklySchedule !== 'object') {
+        setAlert({ isOpen: true, type: 'error', title: 'Invalid Format', message: 'Expected a workout schedule JSON file.' });
+        return;
+      }
+
+      const exerciseMap = await getExerciseNameMap();
+      const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const normalized = {};
+      
+      for (const day of validDays) {
+        const exercises = data.weeklySchedule[day];
+        if (Array.isArray(exercises)) {
+          normalized[day] = exercises
+            .filter(ex => ex && ex.id && ex.sets)
+            .map(ex => {
+              const normalizedEx = { ...ex };
+              if (exerciseMap[ex.id.toLowerCase()]) {
+                normalizedEx.id = exerciseMap[ex.id.toLowerCase()].id;
+              }
+              return normalizedEx;
+            });
+        } else {
+          normalized[day] = [];
+        }
+      }
+
+      setImportData(normalized);
+    } catch (err) {
+      console.error('Import failed:', err);
+      setAlert({ isOpen: true, type: 'error', title: 'Import Failed', message: 'Please check the file format.' });
+    }
+    
+    e.target.value = '';
+  };
+
+  const confirmImport = async () => {
+    try {
+      await userAPI.updateWeeklySchedule({ weeklySchedule: importData });
+      setAlert({ isOpen: true, type: 'success', title: 'Success!', message: 'Schedule imported successfully!' });
+      setImportData(null);
+      closeMenu();
+    } catch (err) {
+      setAlert({ isOpen: true, type: 'error', title: 'Import Failed', message: 'Failed to save schedule.' });
+    }
+  };
 
   const tabs = [
     {
@@ -187,7 +281,28 @@ function AppContent({ user, onLogout }) {
               ))}
             </nav>
 
-            <div className="p-3 border-t border-steel">
+            <div className="p-3 border-t border-steel flex flex-col gap-2">
+              <button
+                onClick={handleExport}
+                className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
+              >
+                <Download size={18} />
+                <span>Export Schedule</span>
+              </button>
+              <button
+                onClick={handleImportClick}
+                className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
+              >
+                <Upload size={18} />
+                <span>Import Schedule</span>
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json"
+                onChange={handleImport}
+                className="hidden"
+              />
               <button
                 onClick={handleLogout}
                 className="flex items-center justify-center gap-2 w-full p-3.5 bg-transparent border border-danger rounded-xl text-danger text-sm font-semibold hover:bg-danger hover:text-white transition-colors"
@@ -223,6 +338,24 @@ function AppContent({ user, onLogout }) {
           </button>
         ))}
       </nav>
+
+      <ConfirmModal
+        isOpen={!!importData}
+        onClose={() => setImportData(null)}
+        onConfirm={confirmImport}
+        title="Import Schedule?"
+        message="This will replace your current workout schedule with the imported file."
+        confirmText="Import"
+        danger
+      />
+
+      <AlertModal
+        isOpen={alert.isOpen}
+        onClose={() => setAlert({ ...alert, isOpen: false })}
+        title={alert.title}
+        message={alert.message}
+        type={alert.type}
+      />
     </div>
   );
 }

@@ -1,48 +1,47 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { PlusCircle, Save, Trash2, ChevronDown } from 'lucide-react';
-import { userAPI } from '../services/api';
+import { PlusCircle, Save, Trash2 } from 'lucide-react';
+import { userAPI, transformExercisesForPicker } from '../services/api';
+import ExercisePicker from './ExercisePicker';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-const EXERCISE_OPTIONS = [
-  { id: 'bench-press', name: 'Bench Press' },
-  { id: 'squat', name: 'Squat' },
-  { id: 'deadlift', name: 'Deadlift' },
-  { id: 'overhead-press', name: 'Overhead Press' },
-  { id: 'barbell-row', name: 'Barbell Row' },
-  { id: 'pull-up', name: 'Pull-up' },
-  { id: 'dip', name: 'Dip' },
-  { id: 'curl', name: 'Bicep Curl' },
-  { id: 'extension', name: 'Tricep Extension' },
-  { id: 'lunge', name: 'Lunge' },
-];
 
 export default function ManageWorkouts({ onSave }) {
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [userWeekly, setUserWeekly] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const [exercises, setExercises] = useState({});
   const lastExerciseRef = useRef(null);
 
   useEffect(() => {
-    const fetchSchedule = async () => {
+    const fetchData = async () => {
       try {
-        const response = await userAPI.getWeeklySchedule();
-        const schedule = response.data.weeklySchedule;
+        const [scheduleRes, exercisesData] = await Promise.all([
+          userAPI.getWeeklySchedule(),
+          transformExercisesForPicker(),
+        ]);
+        
+        const schedule = scheduleRes.data.weeklySchedule;
         if (schedule && Object.keys(schedule).length > 0) {
-          setUserWeekly(schedule);
+          const normalized = {};
+          Object.entries(schedule).forEach(([key, value]) => {
+            normalized[key] = value || [];
+          });
+          setUserWeekly(normalized);
         } else {
           const obj = {};
           DAYS.forEach((day) => (obj[day] = []));
           setUserWeekly(obj);
         }
+        
+        setExercises(exercisesData);
       } catch (error) {
-        console.error('Error fetching weekly schedule:', error);
+        console.error('Error fetching data:', error);
         const obj = {};
         DAYS.forEach((day) => (obj[day] = []));
         setUserWeekly(obj);
       }
     };
-    fetchSchedule();
+    fetchData();
   }, []);
 
   const dayList = userWeekly[selectedDay] || [];
@@ -69,7 +68,7 @@ export default function ManageWorkouts({ onSave }) {
     const next = { ...userWeekly };
     next[selectedDay] = [
       ...(next[selectedDay] || []),
-      { id: EXERCISE_OPTIONS[0]?.id || 'bench', sets: 3, reps: '8-12' },
+      { id: 'bench-press', sets: 3, reps: '8-12' },
     ];
     setUserWeekly(next);
     scrollToNewExercise();
@@ -112,7 +111,9 @@ export default function ManageWorkouts({ onSave }) {
             }`}
           >
             <span
-              className={`text-[10px] font-bold uppercase tracking-wider ${selectedDay === d ? 'text-obsidian' : 'text-silver'}`}
+              className={`text-[10px] font-bold uppercase tracking-wider ${
+                selectedDay === d ? 'text-obsidian' : 'text-silver'
+              }`}
             >
               {d.slice(0, 3)}
             </span>
@@ -149,23 +150,11 @@ export default function ManageWorkouts({ onSave }) {
                 <label className="text-[10px] font-bold uppercase tracking-wider text-silver">
                   Exercise
                 </label>
-                <div className="relative">
-                  <select
-                    value={row.id}
-                    onChange={(e) => updateRow(idx, 'id', e.target.value)}
-                    className="w-full px-3 py-3 bg-graphite border border-steel rounded-lg text-white font-medium appearance-none cursor-pointer focus:border-lime outline-none transition-colors pr-10"
-                  >
-                    {EXERCISE_OPTIONS.map((o) => (
-                      <option key={o.id} value={o.id}>
-                        {o.name}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown
-                    size={16}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-silver pointer-events-none"
-                  />
-                </div>
+                <ExercisePicker 
+                  value={row.id} 
+                  onChange={(val) => updateRow(idx, 'id', val)}
+                  exercises={exercises}
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-3">

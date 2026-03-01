@@ -204,10 +204,10 @@ router.get('/workout-log', auth, async (req, res) => {
 // Log workout completion
 router.post('/workout-log', auth, async (req, res) => {
   try {
-    const { day, completed } = req.body;
+    const { exerciseId, completed } = req.body;
 
-    if (!day) {
-      return res.status(400).json({ message: 'Day is required' });
+    if (!exerciseId) {
+      return res.status(400).json({ message: 'Exercise ID is required' });
     }
 
     const user = await User.findById(req.user._id);
@@ -221,24 +221,21 @@ router.post('/workout-log', auth, async (req, res) => {
       user.workoutLog = [];
     }
 
-    // Check if already logged today
     const existingIndex = user.workoutLog.findIndex(
-      (w) => new Date(w.date).toDateString() === today && w.day === day
+      (w) =>
+        new Date(w.date).toDateString() === today && w.exerciseId === exerciseId
     );
 
     if (existingIndex >= 0) {
-      // Update existing
       user.workoutLog[existingIndex].completed = completed;
     } else {
-      // Add new
       user.workoutLog.push({
         date: new Date(),
-        day: day,
+        exerciseId: exerciseId,
         completed: completed !== false
       });
     }
 
-    // Calculate streak
     user.currentStreak = calculateStreak(user.workoutLog);
 
     await user.save();

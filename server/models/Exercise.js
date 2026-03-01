@@ -10,31 +10,22 @@ const exerciseSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Exercise category is required'],
-    enum: ['upper body', 'lower body', 'core', 'cardio', 'full body', 'flexibility']
-  },
-  muscleGroup: {
-    type: String,
-    required: [true, 'Muscle group is required'],
-    enum: ['chest', 'back', 'shoulders', 'arms', 'legs', 'core', 'cardiovascular', 'full body']
+    enum: ['chest', 'back', 'shoulders', 'legs', 'arms', 'core', 'cardio']
   },
   equipment: {
     type: String,
+    required: [true, 'Equipment is required'],
     enum: [
-      'bodyweight',
-      'dumbbells',
       'barbell',
-      'kettlebell',
+      'dumbbell',
+      'cable',
       'machine',
-      'bands',
-      'medicine ball',
-      'none'
+      'bodyweight',
+      'cardio',
+      'other'
     ]
   },
-  difficulty: {
-    type: String,
-    enum: ['beginner', 'intermediate', 'advanced']
-  },
-  description: {
+  imageUrl: {
     type: String,
     maxlength: [500, 'Description cannot exceed 500 characters']
   },

@@ -1,13 +1,14 @@
 import { useEffect, useState, useMemo } from 'react';
 import { CheckCircle, Circle, Edit, Check } from 'lucide-react';
 import ManageWorkouts from './ManageWorkouts';
-import { userAPI } from '../services/api';
+import { userAPI, getExerciseMap } from '../services/api';
 
 function WorkoutChecklist() {
   const [editing, setEditing] = useState(false);
   const [userWeekly, setUserWeekly] = useState(null);
   const [completedMap, setCompletedMap] = useState({});
   const [animatingId, setAnimatingId] = useState(null);
+  const [exerciseMap, setExerciseMap] = useState({});
 
   const todayName = useMemo(() => new Date().toLocaleDateString('en-US', { weekday: 'long' }), []);
   const tomorrowName = useMemo(
@@ -21,14 +22,34 @@ function WorkoutChecklist() {
   useEffect(() => {
     fetchSchedule();
     fetchWorkoutLog();
+    fetchExercises();
   }, []);
+
+  const fetchExercises = async () => {
+    try {
+      const map = await getExerciseMap();
+      setExerciseMap(map);
+    } catch (err) {
+      console.error('Failed to fetch exercises:', err);
+    }
+  };
+
+  useEffect(() => {
+    if (!editing) {
+      fetchWorkoutLog();
+    }
+  }, [editing]);
 
   const fetchSchedule = async () => {
     try {
       const response = await userAPI.getWeeklySchedule();
       const schedule = response.data.weeklySchedule;
       if (schedule && Object.keys(schedule).length > 0) {
-        setUserWeekly(schedule);
+        const normalized = {};
+        Object.entries(schedule).forEach(([key, value]) => {
+          normalized[key] = value || [];
+        });
+        setUserWeekly(normalized);
       } else {
         const empty = {};
         ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(
@@ -46,12 +67,11 @@ function WorkoutChecklist() {
       const response = await userAPI.getWorkoutLog();
       const workoutLog = response.data.workoutLog || [];
 
-      // Convert to completedMap by date
       const map = {};
       workoutLog.forEach((w) => {
         const dateKey = new Date(w.date).toDateString();
         if (!map[dateKey]) map[dateKey] = [];
-        map[dateKey].push(w.day);
+        if (w.completed) map[dateKey].push(w.exerciseId);
       });
       setCompletedMap(map);
     } catch (error) {
@@ -66,31 +86,18 @@ function WorkoutChecklist() {
 
   function getWorkoutByName(dayName) {
     if (userWeekly && userWeekly[dayName]) {
-      const exList = (userWeekly[dayName] || []).map((e) => ({
-        id: e.id,
-        name: getExerciseName(e.id),
-        sets: e.sets,
-        reps: e.reps,
-      }));
+      const exList = (userWeekly[dayName] || []).map((e) => {
+        const exercise = exerciseMap[e.id];
+        return {
+          id: e.id,
+          name: exercise?.name || e.id,
+          sets: e.sets,
+          reps: e.reps,
+        };
+      });
       return { name: dayName, day: dayName, exercises: exList };
     }
     return { name: 'Rest Day', day: dayName, exercises: [] };
-  }
-
-  function getExerciseName(exerciseId) {
-    const exerciseNames = {
-      'bench-press': 'Bench Press',
-      squat: 'Squat',
-      deadlift: 'Deadlift',
-      'overhead-press': 'Overhead Press',
-      'barbell-row': 'Barbell Row',
-      'pull-up': 'Pull-up',
-      dip: 'Dip',
-      curl: 'Bicep Curl',
-      extension: 'Tricep Extension',
-      lunge: 'Lunge',
-    };
-    return exerciseNames[exerciseId] || exerciseId;
   }
 
   const todaysWorkout = getWorkoutByName(todayName);
@@ -120,9 +127,8 @@ function WorkoutChecklist() {
     copy[dayKey] = Array.from(list);
     setCompletedMap(copy);
 
-    // Sync to backend
     try {
-      await userAPI.logWorkout(todayName, list.size > 0);
+      await userAPI.logWorkout(exId, list.size > 0);
     } catch (error) {
       console.error('Error logging workout:', error);
     }
@@ -140,7 +146,10 @@ function WorkoutChecklist() {
     setCompletedMap(copy);
 
     try {
-      await userAPI.logWorkout(todayName, true);
+      // Mark all exercises as complete
+      for (const ex of todaysWorkout.exercises) {
+        await userAPI.logWorkout(ex.id, true);
+      }
     } catch (error) {
       console.error('Error logging workout:', error);
     }
@@ -162,10 +171,14 @@ function WorkoutChecklist() {
               </div>
               {totalCount > 0 && (
                 <div
-                  className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${isAllComplete ? 'bg-success/15' : 'bg-muted'}`}
+                  className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${
+                    isAllComplete ? 'bg-success/15' : 'bg-muted'
+                  }`}
                 >
                   <span
-                    className={`font-display font-bold ${isAllComplete ? 'text-success' : 'text-lime'}`}
+                    className={`font-display font-bold ${
+                      isAllComplete ? 'text-success' : 'text-lime'
+                    }`}
                   >
                     {completedCount}
                   </span>
@@ -199,7 +212,9 @@ function WorkoutChecklist() {
                       </span>
                       <div className="flex-1 min-w-0">
                         <p
-                          className={`font-medium ${isDone ? 'text-white/60 line-through' : 'text-white'}`}
+                          className={`font-medium ${
+                            isDone ? 'text-white/60 line-through' : 'text-white'
+                          }`}
                         >
                           {exercise.name}
                         </p>

@@ -42,7 +42,7 @@ export const userAPI = {
   getWeightLog: () => api.get('/users/weight-log'),
   addWeight: (weight, date) => api.post('/users/weight-log', { weight, date }),
   getWorkoutLog: () => api.get('/users/workout-log'),
-  logWorkout: (day, completed) => api.post('/users/workout-log', { day, completed }),
+  logWorkout: (exerciseId, completed) => api.post('/users/workout-log', { exerciseId, completed }),
 };
 
 // Workout endpoints
@@ -67,6 +67,60 @@ export const exerciseAPI = {
   create: (exerciseData) => api.post('/exercises', exerciseData),
   update: (id, exerciseData) => api.put(`/exercises/${id}`, exerciseData),
   delete: (id) => api.delete(`/exercises/${id}`),
+};
+
+// Shared exercise cache
+let exerciseCache = null;
+let exerciseMapCache = null;
+let exerciseNameMapCache = null;
+
+export const getExercises = async () => {
+  if (exerciseCache) return exerciseCache;
+  const res = await exerciseAPI.getAll();
+  exerciseCache = res.data.exercises;
+  return exerciseCache;
+};
+
+export const getExerciseMap = async () => {
+  if (exerciseMapCache) return exerciseMapCache;
+  const exercises = await getExercises();
+  const map = {};
+  exercises.forEach((ex) => {
+    map[ex._id] = { name: ex.name, equipment: ex.equipment };
+  });
+  exerciseMapCache = map;
+  return map;
+};
+
+export const getExerciseNameMap = async () => {
+  if (exerciseNameMapCache) return exerciseNameMapCache;
+  const exercises = await getExercises();
+  const map = {};
+  exercises.forEach((ex) => {
+    map[ex.name.toLowerCase()] = { id: ex._id, name: ex.name, equipment: ex.equipment };
+  });
+  exerciseNameMapCache = map;
+  return map;
+};
+
+// Helper to transform API response to component format
+export const transformExercisesForPicker = async () => {
+  const exercises = await getExercises();
+  const categories = {};
+  exercises.forEach((ex) => {
+    if (!categories[ex.category]) {
+      categories[ex.category] = {
+        name: ex.category.charAt(0).toUpperCase() + ex.category.slice(1),
+        exercises: [],
+      };
+    }
+    categories[ex.category].exercises.push({
+      id: ex._id,
+      name: ex.name,
+      equipment: ex.equipment,
+    });
+  });
+  return categories;
 };
 
 export default api;
