@@ -3,10 +3,19 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import WorkoutChecklist from './components/WorkoutChecklist';
 import WeightTracker from './components/WeightTracker';
-import { Calendar, Dumbbell, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, Dumbbell, Scale } from 'lucide-react';
+
+// ISO week number helper (Monday-based weeks)
+const getWeekNumber = (date) => {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+};
 
 function App() {
-  const [activeTab, setActiveTab] = useState('workout');
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [workoutData, setWorkoutData] = useState(() => {
     const saved = localStorage.getItem('workout-tracker-data');
     return saved ? JSON.parse(saved) : {
@@ -17,11 +26,11 @@ function App() {
     };
   });
 
-  // Auto-reset weekly (Monday)
   useEffect(() => {
-    const today = new Date().toDateString();
+    const now = new Date();
+    const today = now.toDateString();
     const lastReset = localStorage.getItem('weekly-reset');
-    const currentWeek = new Date().getWeekNumber();
+    const currentWeek = getWeekNumber(now);
 
     if (lastReset !== currentWeek.toString()) {
       setWorkoutData(prev => ({
@@ -33,7 +42,6 @@ function App() {
     }
   }, [workoutData]);
 
-  // Persist data
   useEffect(() => {
     localStorage.setItem('workout-tracker-data', JSON.stringify(workoutData));
   }, [workoutData]);
@@ -50,50 +58,31 @@ function App() {
   };
 
   const tabs = [
-    { id: 'workout', label: 'Workout', icon: Dumbbell },
-    { id: 'dashboard', label: 'Dashboard', icon: TrendingUp },
-    { id: 'weight', label: 'Weight', icon: Calendar }
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'workout', label: 'Workouts', icon: Dumbbell },
+    { id: 'weight', label: 'Weight', icon: Scale }
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <h1 className="text-2xl font-bold text-gray-900">Health & Fitness Tracker</h1>
-          <p className="text-sm text-gray-600 mt-1">Build your habit, track your progress</p>
-        </div>
+    <div className="min-h-dvh flex flex-col bg-gym-black">
+      <header className="shrink-0 px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-4">
+        <h1 className="font-display font-bold text-xl tracking-tight text-white">
+          Workout Tracker
+        </h1>
+        <p className="text-gym-zinc text-sm mt-0.5">Build the habit. Track the gains.</p>
       </header>
 
-      <nav className="bg-white border-b">
-        <div className="max-w-4xl mx-auto px-4 flex space-x-8">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
-                activeTab === tab.id
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              <tab.icon size={18} />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </nav>
+      <main className="flex-1 overflow-auto px-4 pb-24">
+        {activeTab === 'dashboard' && (
+          <Dashboard data={workoutData} />
+        )}
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
         {activeTab === 'workout' && (
           <WorkoutChecklist
             schedule={workoutData.schedule}
             completed={workoutData.completed}
             onComplete={markComplete}
           />
-        )}
-
-        {activeTab === 'dashboard' && (
-          <Dashboard data={workoutData} />
         )}
 
         {activeTab === 'weight' && (
@@ -104,11 +93,24 @@ function App() {
         )}
       </main>
 
-      <footer className="bg-white border-t mt-12">
-        <div className="max-w-4xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
-          Built with zero budget. Your health, your data.
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-gym-charcoal/95 backdrop-blur-md border-t border-gym-steel safe-area-bottom">
+        <div className="max-w-lg mx-auto flex">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 py-3 px-2 transition-all duration-200 ${
+                activeTab === tab.id
+                  ? 'text-gym-accent'
+                  : 'text-gym-zinc hover:text-gym-silver'
+              }`}
+            >
+              <tab.icon size={22} strokeWidth={activeTab === tab.id ? 2.5 : 2} />
+              <span className="text-xs font-medium">{tab.label}</span>
+            </button>
+          ))}
         </div>
-      </footer>
+      </nav>
     </div>
   );
 }

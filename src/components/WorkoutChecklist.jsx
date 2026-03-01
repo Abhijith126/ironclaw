@@ -1,88 +1,181 @@
-import React from 'react';
-import { getTodaysWorkout } from '../data/workoutTypes';
-import { CheckCircle, Circle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { workoutSchedules } from '../data/workoutTypes';
+import { CheckCircle, Circle, Edit, Check, X } from 'lucide-react';
+import ManageWorkouts from './ManageWorkouts';
 
 function WorkoutChecklist({ schedule, completed, onComplete }) {
-  const todaysWorkout = getTodaysWorkout(schedule);
+  const [editing, setEditing] = useState(false);
+  const [userWeekly, setUserWeekly] = useState(null);
+  const [completedMap, setCompletedMap] = useState({});
 
-  if (!todaysWorkout || todaysWorkout.exercises.length === 0) {
-    return (
-      <div className="bg-white rounded-lg shadow p-8 text-center">
-        <div className="text-gray-400 mb-4">
-          <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-          </svg>
-        </div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-2">Rest Day</h3>
-        <p className="text-gray-600">No scheduled workout today. Recovery is key!</p>
-      </div>
-    );
+  useEffect(() => {
+    const saved = localStorage.getItem('user-weekly');
+    setUserWeekly(saved ? JSON.parse(saved) : null);
+
+    const done = JSON.parse(localStorage.getItem('completed-exercises') || '{}');
+    setCompletedMap(done);
+  }, []);
+
+  function saveCallback() {
+    const saved = localStorage.getItem('user-weekly');
+    setUserWeekly(saved ? JSON.parse(saved) : null);
+    setEditing(false);
   }
 
-  const todayKey = new Date().toDateString();
+  const todayName = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+  const tomorrowName = new Date(Date.now() + 86400000).toLocaleDateString('en-US', { weekday: 'long' });
+
+  function getWorkoutByName(dayName) {
+    if (userWeekly && userWeekly[dayName]) {
+      const exList = (userWeekly[dayName] || []).map(e => ({ id: e.id, name: e.id, sets: e.sets, reps: e.reps }));
+      // Try to get names from workoutSchedules
+      exList.forEach(item => {
+        Object.values(workoutSchedules).forEach(sch => {
+          sch.weekly.forEach(d => {
+            const found = (d.exercises || []).find(x => x.id === item.id);
+            if (found) item.name = found.name;
+          });
+        });
+      });
+      return { name: `${dayName} (Custom)`, day: dayName, exercises: exList };
+    }
+
+    // fallback to default schedules
+    const scheduleObj = workoutSchedules[schedule];
+    if (!scheduleObj) return { name: 'Rest Day', day: dayName, exercises: [] };
+    const found = scheduleObj.weekly.find(d => d.day === dayName);
+    return found || { name: 'Rest Day', day: dayName, exercises: [] };
+  }
+
+  const todaysWorkout = getWorkoutByName(todayName);
+  const tomorrowsWorkout = getWorkoutByName(tomorrowName);
+
+  function toggleExerciseDone(exId) {
+    const dayKey = new Date().toDateString();
+    const copy = { ...(completedMap || {}) };
+    const list = new Set(copy[dayKey] || []);
+    if (list.has(exId)) list.delete(exId); else list.add(exId);
+    copy[dayKey] = Array.from(list);
+    setCompletedMap(copy);
+    localStorage.setItem('completed-exercises', JSON.stringify(copy));
+  }
+
+  function markAllDone() {
+    const dayKey = new Date().toDateString();
+    const copy = { ...(completedMap || {}) };
+    const list = new Set(copy[dayKey] || []);
+    
+    // Add all exercises for today to the completed list
+    todaysWorkout.exercises.forEach(ex => {
+      list.add(ex.id);
+    });
+    
+    copy[dayKey] = Array.from(list);
+    setCompletedMap(copy);
+    localStorage.setItem('completed-exercises', JSON.stringify(copy));
+    
+    // Call the onComplete callback if provided
+    if (onComplete) onComplete();
+  }
+  
+  // Check if any exercises are incomplete (at least one unchecked)
+  const hasIncomplete = todaysWorkout.exercises.length > 0 && 
+                        todaysWorkout.exercises.some(ex => 
+                          !(completedMap[new Date().toDateString()] || []).includes(ex.id)
+                        );
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-xl font-bold text-gray-900">{todaysWorkout.name}</h2>
-            <p className="text-sm text-gray-500">{todaysWorkout.day}'s Workout</p>
-          </div>
-          <button
-            onClick={onComplete}
-            disabled={completed}
-            className={`px-4 py-2 rounded-lg font-medium text-sm ${
-              completed
-                ? 'bg-green-100 text-green-700 cursor-default'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
-          >
-            {completed ? '✓ Completed' : 'Mark Complete'}
+    <div className="space-y-5">
+      <div className="flex items-center justify-between gap-3">
+        <div />
+        <div className="flex items-center gap-2">
+          <button onClick={() => setEditing(e => !e)} className="px-3 py-1 rounded bg-gym-muted text-white flex items-center gap-2">
+            {editing ? <X size={16} /> : <Edit size={16} />}
+            {editing ? 'Close Editor' : 'Edit Schedule'}
           </button>
-        </div>
-
-        <div className="space-y-3">
-          {todaysWorkout.exercises.map((exercise, idx) => (
-            <div
-              key={exercise.id}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200"
+          {!editing && (
+            <button
+              onClick={hasIncomplete ? markAllDone : onComplete}
+              disabled={!hasIncomplete}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors flex items-center gap-2 ${
+               hasIncomplete
+                  ? 'bg-[var(--accent)]/20 text-white hover:bg-[var(--accent)]/30'
+                  : 'bg-[var(--success)]/20 text-[var(--success)] cursor-default'
+              }`}
             >
-              <div className="flex items-center gap-3">
-                <span className="text-gray-400">
-                  {completed ? (
-                    <CheckCircle className="text-green-500" size={24} />
-                  ) : (
-                    <Circle size={24} />
-                  )}
-                </span>
-                <div>
-                  <h4 className="font-medium text-gray-900">{exercise.name}</h4>
-                  <p className="text-sm text-gray-500">
-                    {exercise.sets} sets × {exercise.reps} reps
-                  </p>
-                </div>
-              </div>
-              {completed && (
-                <span className="text-green-600 text-sm font-medium">Done</span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 pt-4 border-t border-gray-200">
-          <p className="text-sm text-gray-600">
-            This schedule ({schedule}) will auto-reset every Monday. Stay consistent!
-          </p>
+              <Check size={18} />
+              {hasIncomplete ? 'Mark Complete' : 'Done'}
+            </button>
+          )}
         </div>
       </div>
 
-      <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-        <h3 className="font-medium text-blue-900 mb-2">💡 Pro Tip</h3>
-        <p className="text-sm text-blue-800">
-          Log your weights in the Weight tab to track PR progression over time.
-          Complete your workouts consistently to build streaks on the dashboard.
-        </p>
+      {editing ? (
+        <ManageWorkouts scheduleKey={schedule} onSave={saveCallback} />
+      ) : (
+        <>
+          <div className="bg-gym-charcoal rounded-xl p-5 border border-gym-steel">
+            <div className="flex items-center justify-between mb-5">
+              <div>
+                <h2 className="text-lg font-bold text-white">{todaysWorkout.name}</h2>
+                <p className="text-xs text-gym-zinc uppercase tracking-wider">{todaysWorkout.day}'s Workout</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              {todaysWorkout.exercises.map((exercise) => {
+                const doneList = completedMap[new Date().toDateString()] || [];
+                const isDone = doneList.includes(exercise.id);
+                return (
+                  <div
+                    key={exercise.id}
+                    className="flex items-center justify-between p-4 bg-gym-muted rounded-lg border border-gym-steel"
+                  >
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => toggleExerciseDone(exercise.id)} className="text-gym-zinc">
+                        {isDone ? (
+                          <CheckCircle className="text-gym-success" size={22} />
+                        ) : (
+                          <Circle size={22} className="text-gym-slate" />
+                        )}
+                      </button>
+                      <div>
+                        <h4 className="font-medium text-white">{exercise.name}</h4>
+                        <p className="text-xs text-gym-zinc">{exercise.sets} sets × {exercise.reps} reps</p>
+                      </div>
+                    </div>
+                    {isDone && (
+                      <span className="text-gym-success text-xs font-medium">Done</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <p className="text-xs text-gym-zinc mt-4 pt-4 border-t border-gym-steel">Schedule ({schedule}) resets every Monday.</p>
+          </div>
+
+          <div className="bg-gym-muted rounded-xl p-5 border border-gym-steel">
+            <h3 className="font-medium text-white text-sm mb-2">Next: {tomorrowsWorkout.name}</h3>
+            <div className="space-y-2">
+              {tomorrowsWorkout.exercises.map(ex => (
+                <div key={ex.id} className="flex items-center gap-3 p-3 bg-gym-charcoal rounded">
+                  <Circle size={18} className="text-gym-slate" />
+                  <div>
+                    <div className="text-white text-sm">{ex.name}</div>
+                    <div className="text-xs text-gym-zinc">{ex.sets} sets × {ex.reps} reps</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-gym-zinc mt-3">Next day's workouts are shown for planning and are not editable here.</p>
+          </div>
+        </>
+      )}
+
+      <div className="bg-gym-muted rounded-xl p-4 border border-gym-steel">
+        <h3 className="font-medium text-gym-accent text-sm mb-1">Pro Tip</h3>
+        <p className="text-xs text-gym-silver">Log weights in the Weight tab to track PRs. Complete workouts consistently to build streaks.</p>
       </div>
     </div>
   );
