@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  
+  /* Core palette - Industrial Athletic */
+  --color-obsidian: #080808;
+  --color-carbon: #111111;
+  --color-graphite: #1a1a1a;
+  --color-steel: #2a2a2a;
+  --color-iron: #404040;
+  --color-silver: #888888;
+  --color-chalk: #d4d4d4;
+  --color-white: #fafafa;
+  
+  /* Accent - Electric Lime */
+  --color-lime: #c6f135;
+  --color-lime-dim: #a3cc29;
+  --color-lime-glow: rgba(198, 241, 53, 0.15);
+  
+  /* Semantic */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-muted: #1f1f1f;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+  }
+  
+  body {
+    background-color: var(--color-obsidian);
+    color: var(--color-chalk);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-steel) var(--color-carbon);
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--color-carbon);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-steel);
+    border-radius: 3px;
+  }
+}
+
+/* Selection */
+::selection {
+  background: var(--color-lime);
+  color: var(--color-obsidian);
+}
+
+/* Focus states */
+:focus-visible {
+  outline: 2px solid var(--color-lime);
+  outline-offset: 2px;
+}
+
+/* Input date picker */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
+
+/* Animation utilities */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

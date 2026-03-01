@@ -17,8 +17,8 @@
 | Date utils | date-fns | 4.x |
 
 - Tailwind v4 uses the new `@theme` directive in `src/index.css` (no `tailwind.config.js`).
-- Custom CSS design tokens live in `src/App.css` using `:root` CSS variables.
-- There is **no** component library (no shadcn, no MUI). All UI is hand-built with Tailwind utility classes.
+- All styles use Tailwind utility classes. Minimal custom CSS in `App.css`.
+- There is **no** component library. All UI is hand-built with Tailwind.
 
 ---
 
@@ -26,67 +26,59 @@
 
 ### 2.1 Tailwind Theme Colors (`src/index.css` → `@theme`)
 
-These are the **primary design tokens** referenced via Tailwind classes like `bg-gym-black`, `text-gym-accent`, etc.
+All colors are defined in `@theme` block using CSS variables. Use Tailwind classes like `bg-obsidian`, `text-lime`, `border-steel`, etc.
 
 | Token | CSS Variable | Hex | Usage |
 |---|---|---|---|
-| `gym-black` | `--color-gym-black` | `#0d0d0d` | Page background, app shell |
-| `gym-charcoal` | `--color-gym-charcoal` | `#1a1a1a` | Card backgrounds, nav bar, tooltip bg |
-| `gym-steel` | `--color-gym-steel` | `#2d2d2d` | Borders, grid lines (charts), dividers |
-| `gym-slate` | `--color-gym-slate` | `#404040` | Unchecked circle icons, chart axis strokes |
-| `gym-zinc` | `--color-gym-zinc` | `#71717a` | Muted/secondary text, labels, chart tick text |
-| `gym-silver` | `--color-gym-silver` | `#a1a1aa` | Body text, tooltip label text |
-| `gym-accent` | `--color-gym-accent` | `#f97316` | **Primary accent** – buttons, active tab, chart lines/bars, links, focus rings |
-| `gym-accent-dim` | `--color-gym-accent-dim` | `#ea580c` | Hover state for accent buttons |
-| `gym-success` | `--color-gym-success` | `#22c55e` | Success states, completed checkmarks, positive weight trend |
-| `gym-muted` | `--color-gym-muted` | `#27272a` | Secondary card bg, form input bg, empty-state bg |
+| `obsidian` | `--color-obsidian` | `#080808` | Page background, app shell |
+| `carbon` | `--color-carbon` | `#111111` | Header background, sidebar, tooltips |
+| `graphite` | `--color-graphite` | `#1a1a1a` | Card backgrounds, nav bar |
+| `steel` | `--color-steel` | `#2a2a2a` | Borders, grid lines, dividers |
+| `iron` | `--color-iron` | `#404040` | Unchecked icons, secondary borders |
+| `silver` | `--color-silver` | `#888888` | Muted text, labels, chart ticks |
+| `chalk` | `--color-chalk` | `#d4d4d4` | Body text, secondary content |
+| `white` | `--color-white` | `#fafafa` | Primary text, headings, values |
+| `lime` | `--color-lime` | `#c6f135` | **Primary accent** — buttons, active tabs, highlights |
+| `lime-dim` | `--color-lime-dim` | `#a3cc29` | Hover state for lime buttons |
+| `lime-glow` | `--color-lime-glow` | `rgba(198, 241, 53, 0.15)` | Glow effects, focus rings |
+| `success` | `--color-success` | `#22c55e` | Completed states, positive trends |
+| `warning` | `--color-warning` | `#f59e0b` | Warning states |
+| `danger` | `--color-danger` | `#ef4444` | Delete/remove actions, negative trends |
+| `muted` | `--color-muted` | `#1f1f1f` | Secondary backgrounds, input fields |
 
-### 2.2 CSS Custom Properties (`src/App.css` → `:root`)
+### 2.2 Semantic Color Roles
 
-These are **secondary tokens** used mainly in `ManageWorkouts.jsx` via `var(--accent)` syntax in inline Tailwind classes.
-
-| Variable | Value | Mapped To / Usage |
+| Role | Token | Usage |
 |---|---|---|
-| `--accent` | `#06b6d4` | Cyan accent for schedule editor (day pills, add button) |
-| `--accent-2` | `#ec4899` | Pink accent (used in gradient overlays) |
-| `--success` | `#10b981` | Save button in schedule editor |
-| `--danger` | `#ef4444` | Remove/delete buttons |
-| `--muted-bg` | `rgba(255,255,255,0.02)` | Subtle background tint |
-| `--card-bg` | `rgba(17,24,39,0.6)` | Glass-morphism card bg |
-| `--glass` | `rgba(255,255,255,0.03)` | Glass overlay |
+| Background (page) | `bg-obsidian` | `<body>`, app shell |
+| Background (card) | `bg-graphite` | All cards, sections |
+| Background (input) | `bg-muted` | Form inputs, secondary cards |
+| Border | `border-steel` | All borders, dividers |
+| Text (primary) | `text-white` | Headings, values, exercise names |
+| Text (secondary) | `text-chalk` | Body copy, descriptions |
+| Text (muted) | `text-silver` | Labels, subtitles, timestamps |
+| Primary action | `bg-lime`, `text-lime` | Buttons, active states, highlights |
+| Primary action hover | `hover:bg-lime-dim` | Button hover states |
+| Success | `text-success`, `bg-success/15` | Completed checkmarks, positive trends |
+| Danger | `text-danger`, `border-danger` | Delete/remove buttons |
 
-### 2.3 Hardcoded Hex Values in Components
+### 2.3 Hardcoded Values in Components
 
-These appear directly in Recharts config and component JSX. Keep them in sync with the tokens above.
+Recharts and some inline styles use hardcoded hex values. Keep these in sync:
 
 | Hex | Where Used | Equivalent Token |
 |---|---|---|
-| `#f97316` | Chart strokes, fills, dots (`Dashboard.jsx`, `WeightTracker.jsx`) | `gym-accent` |
-| `#1a1a1a` | Tooltip `backgroundColor` | `gym-charcoal` |
-| `#2d2d2d` | `CartesianGrid` stroke, tooltip border | `gym-steel` |
-| `#71717a` | Chart tick `fill` | `gym-zinc` |
-| `#404040` | Chart axis `stroke` | `gym-slate` |
-| `#a1a1aa` | Tooltip `labelStyle.color` | `gym-silver` |
-| `#27272a` | Bar fill for "Scheduled" bars in Dashboard | `gym-muted` |
-| `#22c55e` | (via class) success states | `gym-success` |
-
-### 2.4 Semantic Color Roles
-
-| Role | Light/Value | Where |
-|---|---|---|
-| **Background (page)** | `#0d0d0d` (gym-black) | `<body>`, app shell |
-| **Background (card)** | `#1a1a1a` (gym-charcoal) | All cards, nav, tooltips |
-| **Background (input/secondary)** | `#27272a` (gym-muted) | Form inputs, secondary cards |
-| **Border** | `#2d2d2d` (gym-steel) | All card borders, dividers, chart grids |
-| **Text (primary)** | `#ffffff` (white) | Headings, values, exercise names |
-| **Text (secondary)** | `#a1a1aa` (gym-silver) | Body copy, descriptions |
-| **Text (muted/label)** | `#71717a` (gym-zinc) | Labels, subtitles, timestamps |
-| **Primary action** | `#f97316` (gym-accent) | Buttons, active states, chart strokes |
-| **Primary action hover** | `#ea580c` (gym-accent-dim) | Button hover |
-| **Success** | `#22c55e` (gym-success) | Completed states, positive trends |
-| **Danger** | `#ef4444` (--danger) | Delete/remove actions |
-| **Editor accent** | `#06b6d4` (--accent cyan) | Schedule editor active pill, add button |
-| **Negative trend** | `red-400` (Tailwind built-in) | Weight gain indicator |
+| `#c6f135` | Chart strokes, fills, dots | `lime` |
+| `#080808` | Body background | `obsidian` |
+| `#111111` | Tooltip bg | `carbon` |
+| `#1a1a1a` | Card bg, chart grid | `graphite` |
+| `#2a2a2a` | Grid lines, borders | `steel` |
+| `#888888` | Chart tick fill | `silver` |
+| `#404040` | Axis strokes | `iron` |
+| `#d4d4d4` | Body text | `chalk` |
+| `#fafafa` | Primary text | `white` |
+| `#22c55e` | Success states | `success` |
+| `#ef4444` | Danger states | `danger` |
 
 ---
 
@@ -96,33 +88,27 @@ These appear directly in Recharts config and component JSX. Keep them in sync wi
 
 | Token | CSS Variable | Font Stack | Usage |
 |---|---|---|---|
-| Display | `--font-display` | `'Syne', system-ui, sans-serif` | Defined in `@theme` but **not loaded via Google Fonts** |
-| Body | `--font-body` | `'DM Sans', system-ui, sans-serif` | Defined in `@theme` but **not loaded via Google Fonts** |
-| (Loaded) Display | — | `'Rubik', 'IBM Plex Sans', system-ui, sans-serif` | `.font-display` class in `App.css`; actually loaded in `index.html` |
-| (Loaded) Body | — | `'IBM Plex Sans', system-ui, -apple-system, sans-serif` | `body` rule in `App.css`; actually loaded in `index.html` |
+| Display | `--font-display` | `'Syne', system-ui, sans-serif` | Headings, titles, app name |
+| Body | `--font-body` | `'DM Sans', system-ui, sans-serif` | Body text, labels, buttons |
 
-> ⚠️ **Note for agents:** The `@theme` declares `Syne` and `DM Sans`, but the Google Fonts `<link>` in `index.html` loads **Rubik** and **IBM Plex Sans**. The CSS in `App.css` overrides `body` and `.font-display` to use the actually-loaded fonts. Respect the **loaded** fonts when adding new components.
-
-**Actually used fonts (from `index.html` Google Fonts link):**
-- **Rubik** — weights: 400, 500, 600, 700, 800 → used for display/headings via `.font-display`
-- **IBM Plex Sans** — weights: 400, 500, 600, 700 → used for body text
+**Google Fonts import** (in `index.css`):
+```css
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Syne:wght@400..800&display=swap');
+```
 
 ### 3.2 Text Sizes & Styles
 
 | Element | Classes | Example |
 |---|---|---|
-| App title | `font-display font-bold text-xl tracking-tight text-white` | "Workout Tracker" |
-| App subtitle | `text-gym-zinc text-sm` | "Build the habit. Track the gains." |
-| Section heading | `text-sm font-semibold text-white uppercase tracking-wider` | "Weight Trend" |
-| Card title | `text-lg font-bold text-white` | Today's workout name |
-| Overline label | `text-xs font-medium text-gym-zinc uppercase tracking-wider` | "Streak", "This Week" |
-| Stat value | `text-2xl font-bold text-white` | "1 days", "0/3" |
-| Body text | `text-sm text-gym-silver` | Descriptions, tips |
-| Small muted text | `text-xs text-gym-zinc` | Timestamps, helper text |
-| Button text | `font-medium text-sm` | "Mark Complete", "Add" |
-| Editor overline | `text-xs text-gym-zinc uppercase tracking-widest font-bold` | "Editing" |
-| Editor day title | `font-display text-2xl text-white` | Day name in editor |
-| Nav label | `text-xs font-medium` | Tab labels |
+| App title | `font-display font-extrabold text-xl tracking-[0.15em] text-lime` | "IRON LOG" |
+| Card title | `font-display text-xl font-bold text-white` | Today's Workout |
+| Section heading | `font-display text-xs font-bold uppercase tracking-wider text-silver` | "WEIGHT PROGRESS" |
+| Stat value | `font-display text-2xl font-bold text-white` | "12", "75.5" |
+| Stat label | `text-[10px] font-bold uppercase tracking-wider text-silver` | "STREAK", "WEIGHT LOG" |
+| Body text | `text-sm text-silver` | Descriptions, tips |
+| Small text | `text-xs text-silver` | Timestamps, helper text |
+| Button text | `font-semibold text-sm` | "Mark Complete", "Add" |
+| Nav label | `text-[10px] font-bold uppercase tracking-wider` | Tab labels |
 
 ---
 
@@ -131,89 +117,76 @@ These appear directly in Recharts config and component JSX. Keep them in sync wi
 ### 4.1 Cards
 
 ```
-bg-gym-charcoal rounded-xl p-5 border border-gym-steel
+bg-graphite border border-steel rounded-2xl p-5
 ```
 
-- All cards use `rounded-xl` (12px radius)
+- All cards use `rounded-2xl` (16px radius)
 - Padding is `p-5` (1.25rem / 20px)
-- Border: 1px solid `gym-steel`
-- No box-shadow (flat dark aesthetic)
+- Border: 1px solid `steel`
 
-### 4.2 Secondary/Muted Cards
+### 4.2 Secondary Cards
 
 ```
-bg-gym-muted rounded-xl p-5 border border-gym-steel
+bg-muted border border-steel rounded-xl p-4
 ```
 
 ### 4.3 Buttons
 
-**Primary action (accent):**
+**Primary action (lime):**
 ```
-px-4 py-2 rounded-lg bg-gym-accent text-white hover:bg-gym-accent-dim font-medium text-sm transition-colors
-```
-
-**Success state button:**
-```
-bg-gym-success/20 text-gym-success cursor-default
+flex items-center justify-center gap-2 py-3.5 bg-lime text-obsidian font-semibold rounded-xl hover:bg-lime-dim transition-colors active:scale-[0.98]
 ```
 
-**Toggle/edit button:**
+**Secondary button:**
 ```
-px-3 py-1 rounded bg-gym-muted text-white
-```
-
-**Icon button (editor):**
-```
-icon-btn px-4 py-3 rounded-lg bg-[var(--accent)]/20 text-[var(--accent)] hover:bg-[var(--accent)]/30 transition-colors
+flex items-center justify-center gap-2 py-3 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors active:scale-[0.98]
 ```
 
-**Danger/remove button:**
+**Danger button:**
 ```
-w-full py-3 rounded-lg bg-[var(--danger)]/20 text-[var(--danger)] font-bold active:scale-95 transition-transform
+flex items-center justify-center gap-2 py-2.5 border border-danger/30 rounded-lg text-danger text-sm font-semibold hover:bg-danger/10 transition-colors active:scale-[0.98]
 ```
 
 ### 4.4 Form Inputs
 
 ```
-w-full px-4 py-2.5 bg-gym-muted border border-gym-steel rounded-lg text-white placeholder-gym-zinc focus:ring-2 focus:ring-gym-accent focus:border-gym-accent outline-none transition
+px-4 py-3.5 bg-muted border border-steel rounded-xl text-white placeholder-silver/50 focus:border-lime focus:ring-2 focus:ring-lime/20 outline-none transition-all
 ```
 
-- Min-height: `2.875rem` (46px) for touch targets
+- Min-height: `3.5rem` (56px) for touch targets
 - Padding: `0.875rem 1rem`
 
 ### 4.5 Bottom Navigation
 
 ```
-fixed bottom-0 left-0 right-0 z-50 bg-gym-charcoal/95 backdrop-blur-md border-t border-gym-steel
+fixed bottom-0 left-0 right-0 z-50 flex justify-around py-2 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] bg-gradient-to-t from-obsidian via-carbon to-transparent border-t border-steel
 ```
 
-- Active tab: `text-gym-accent`, icon `strokeWidth: 2.5`
-- Inactive tab: `text-gym-zinc hover:text-gym-silver`, icon `strokeWidth: 2`
+- Active tab: `text-lime`, indicator bar with glow
+- Inactive tab: `text-silver`
 - Icon size: `22px`
-- Label: `text-xs font-medium`
 
-### 4.6 Exercise Rows
+### 4.6 Exercise Items
 
 ```
-row-gradient p-4 rounded-xl flex flex-col gap-3 exercise-row
+flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left w-full
 ```
 
-Where `row-gradient` is:
-```css
-background: linear-gradient(135deg, rgba(6,182,212,.08), rgba(236,72,153,.04));
-border: 1px solid rgba(6,182,212,.1);
+Completed state:
+```
+bg-success/10 border-success/20
 ```
 
-### 4.7 Day Selector Pills (Schedule Editor)
+### 4.7 Day Selector Pills
 
 Active:
 ```
-bg-gradient-to-r from-[var(--accent)] to-[var(--accent)]/80 text-white shadow-lg shadow-[var(--accent)]/30
+bg-lime border-lime
 ```
 
 Inactive:
 ```
-bg-gym-muted text-gym-zinc hover:bg-gym-charcoal
+bg-muted border-steel active:scale-95
 ```
 
 ---
@@ -224,18 +197,18 @@ All charts follow the same dark theme:
 
 | Property | Value |
 |---|---|
-| `CartesianGrid` stroke | `#2d2d2d` (gym-steel), `strokeDasharray="3 3"` |
-| `XAxis` / `YAxis` stroke | `#404040` (gym-slate) |
-| Tick text | `fontSize: 11, fill: '#71717a'` (gym-zinc) |
-| Tooltip bg | `backgroundColor: '#1a1a1a'` (gym-charcoal) |
-| Tooltip border | `1px solid #2d2d2d` (gym-steel), `borderRadius: '8px'` |
-| Tooltip label color | `#a1a1aa` (gym-silver) |
-| Primary data stroke/fill | `#f97316` (gym-accent) |
-| Area gradient | From `#f97316` opacity 0.4 → 0 |
-| Secondary bar fill | `#27272a` (gym-muted) |
+| `CartesianGrid` stroke | `#2a2a2a` (steel), `strokeDasharray="3 3"` |
+| `XAxis` / `YAxis` stroke | `#2a2a2a` (steel) |
+| Tick text | `fontSize: 10, fill: '#888888'` (silver) |
+| Tooltip bg | `#111111` (carbon) |
+| Tooltip border | `1px solid #2a2a2a` (steel), `borderRadius: '8px'` |
+| Primary data stroke/fill | `#c6f135` (lime) |
+| Area gradient | From `#c6f135` opacity 0.3 → 0 |
+| Bar fill (active) | `#c6f135` (lime) |
+| Bar fill (inactive) | `#2a2a2a` (steel) |
 | Bar radius | `[4, 4, 0, 0]` (top rounded) |
-| Line dot | `r: 4, fill: '#f97316'`, active dot `r: 6` |
-| Chart height | `260px` (dashboard), `280px` (weight tracker) |
+| Line dot | `r: 3, fill: '#c6f135'`, active dot `r: 5` |
+| Chart height | `200px` (dashboard), `180px` (weight tracker) |
 
 ---
 
@@ -243,32 +216,30 @@ All charts follow the same dark theme:
 
 | Concept | Value |
 |---|---|
-| Page horizontal padding | `px-4` (1rem) |
-| Header top padding | `pt-[max(1.5rem,env(safe-area-inset-top))]` |
-| Bottom nav safe area | `padding-bottom: max(1rem, env(safe-area-inset-bottom))` |
-| Content bottom padding | `pb-24` (6rem, clearance for fixed nav) |
-| Section/card gap | `space-y-5` (1.25rem) |
-| Stat card grid | `grid grid-cols-1 sm:grid-cols-3 gap-3` |
-| Border radius (cards) | `rounded-xl` (12px) |
-| Border radius (buttons) | `rounded-lg` (8px) |
-| Border radius (inputs) | `rounded-lg` (8px) |
-| Border radius (exercise row) | `rounded-xl` (12px) or `14px` via `.exercise-row` |
-| Min touch target | `2.875rem` (46px) for buttons/inputs |
+| Page horizontal padding | `px-5` (1.25rem) |
+| Header padding | `px-5 py-3.5` |
+| Bottom nav safe area | `pb-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))]` |
+| Content bottom padding | `pb-24` (6rem) |
+| Card gap | `gap-4` (1rem) |
+| Stat card grid | `grid grid-cols-3 gap-3` |
+| Border radius (cards) | `rounded-2xl` (16px) |
+| Border radius (buttons) | `rounded-xl` (12px) |
+| Border radius (inputs) | `rounded-xl` (12px) |
+| Border radius (small elements) | `rounded-lg` (8px), `rounded` (4px) |
+| Min touch target | `3.5rem` (56px) for buttons/inputs |
 
 ---
 
 ## 7. Animations & Transitions
 
-| Name | CSS | Usage |
+| Effect | Classes | Usage |
 |---|---|---|
-| `popIn` | `opacity 0→1, translateY(10px)→0, scale(.98)→1` over `0.2s` | Card entrance (`.pop-in`) |
-| Exercise row press | `transform: scale(0.99)` on `:active` | Tactile feedback |
-| Button press | `active:scale-95` | Delete buttons |
-| Icon button hover | `transform: scale(0.92)` on `:active` | Icon SVG feedback |
-| Mobile action btn hover | `translateY(-2px)` | Lift effect |
-| Mobile action btn press | `translateY(1px) scale(0.98)` | Press down effect |
-| General transitions | `transition-colors`, `transition-all duration-200` | State changes |
-| Easing | `cubic-bezier(.4,.0,.2,1)` (standard Material easing) | Most transitions |
+| Button press | `active:scale-[0.98]` | Tactile feedback |
+| Card hover | `hover:border-iron` | Subtle lift |
+| Tab switch | `transition-colors duration-200` | State changes |
+| Menu open/close | `transition-transform duration-300`, `transition-opacity duration-300` | Slide menu |
+| Focus ring | `focus:ring-2 focus:ring-lime/20` | Accessibility |
+| Loading spinner | `animate-spin` | Loading states |
 
 ---
 
@@ -276,9 +247,9 @@ All charts follow the same dark theme:
 
 | Property | Value |
 |---|---|
-| `<meta name="theme-color">` | `#0d0d0d` |
-| PWA `theme_color` | `#0d0d0d` |
-| PWA `background_color` | `#0d0d0d` |
+| `<meta name="theme-color">` | `#080808` |
+| PWA `theme_color` | `#080808` |
+| PWA `background_color` | `#080808` |
 | Display mode | `standalone` |
 | Orientation | `portrait` |
 | Viewport | `width=device-width, initial-scale=1.0, viewport-fit=cover` |
@@ -288,23 +259,23 @@ All charts follow the same dark theme:
 ## 9. Icon System
 
 - **Library:** Lucide React
-- **Default size:** `22px` (nav), `28px` (stat cards), `18-20px` (inline/buttons)
+- **Default size:** `22px` (nav), `18px` (buttons), `28px` (stat cards)
 - **Stroke width:** `2` default, `2.5` for active nav tab
-- **Color:** Inherits from parent text color via Tailwind utility classes
-- **Icons used:** `LayoutDashboard`, `Dumbbell`, `Scale`, `TrendingUp`, `TrendingDown`, `Calendar`, `Flame`, `CheckCircle`, `Circle`, `PlusCircle`, `Save`, `Trash2`, `Plus`
+- **Color:** Inherits from parent text color via Tailwind classes
+- **Icons used:** `LayoutDashboard`, `Dumbbell`, `Scale`, `TrendingUp`, `TrendingDown`, `Calendar`, `Flame`, `CheckCircle`, `Circle`, `PlusCircle`, `Save`, `Trash2`, `Plus`, `Menu`, `X`, `LogOut`, `Mail`, `Lock`, `User`, `ArrowRight`, `Target`, `Edit`, `ChevronDown`
 
 ---
 
 ## 10. Dark Theme Rules
 
-This app is **dark-mode only**. There is no light mode toggle or `prefers-color-scheme` media query.
+This app is **dark-mode only**. There is no light mode.
 
-1. **Never use pure white backgrounds.** The lightest background is `gym-muted` (`#27272a`).
-2. **Text hierarchy:** `white` → `gym-silver` → `gym-zinc` (primary → secondary → muted).
-3. **Borders are always subtle:** `gym-steel` (`#2d2d2d`) — barely visible separation.
-4. **Accent is orange** (`#f97316`) for all primary interactive elements.
-5. **Glass/translucency** is used sparingly: nav bar `bg-gym-charcoal/95 backdrop-blur-md`, editor header.
-6. **No drop shadows on cards.** Only the active day pill gets `shadow-lg shadow-[var(--accent)]/30`.
+1. **Never use pure white backgrounds.** The lightest background is `muted` (`#1f1f1f`).
+2. **Text hierarchy:** `white` → `chalk` → `silver` (primary → secondary → muted).
+3. **Borders are always subtle:** `steel` (`#2a2a2a`) — barely visible separation.
+4. **Accent is electric lime** (`#c6f135`) for all primary interactive elements.
+5. **Glow effects** use `lime-glow` for active states.
+6. **No drop shadows on cards.** Only the active tab indicator gets a subtle glow.
 
 ---
 
@@ -312,28 +283,29 @@ This app is **dark-mode only**. There is no light mode toggle or `prefers-color-
 
 | File | Theme Elements |
 |---|---|
-| `index.html` | Google Fonts (Rubik, IBM Plex Sans), theme-color meta `#0d0d0d` |
-| `src/index.css` | `@theme` color tokens, base `html`/`body` styles |
-| `src/App.css` | `:root` CSS variables, `.font-display`, component classes, animations |
-| `src/App.jsx` | Shell layout (`bg-gym-black`), bottom nav, tab colors |
-| `src/components/Dashboard.jsx` | Stat cards, chart configs (hardcoded hex values) |
-| `src/components/WeightTracker.jsx` | Form inputs, chart config, trend colors |
-| `src/components/WorkoutChecklist.jsx` | Exercise list, check states, secondary cards |
-| `src/components/ManageWorkouts.jsx` | Day pills, exercise editor, `var(--accent/success/danger)` |
+| `index.html` | Google Fonts (Syne, DM Sans), theme-color meta `#080808` |
+| `src/index.css` | `@theme` color tokens, font imports, base styles |
+| `src/App.css` | Minimal utilities, Recharts overrides, scrollbar styles |
+| `src/App.jsx` | Shell layout, bottom nav, slide menu |
+| `src/components/AuthForm.jsx` | Login/register form with lime accent |
+| `src/components/Dashboard.jsx` | Stat cards, area/bar charts |
+| `src/components/WeightTracker.jsx` | Form inputs, line chart, trend badges |
+| `src/components/WorkoutChecklist.jsx` | Exercise list, check states |
+| `src/components/ManageWorkouts.jsx` | Day pills, exercise editor |
 
 ---
 
 ## 12. Rules for AI Agents
 
 1. **Read this file before making any UI changes.**
-2. **Use Tailwind `gym-*` classes** for colors — do not introduce new hex values unless absolutely necessary.
+2. **Use Tailwind `*-obsidian/graphite/steel/lime` classes** for colors — do not introduce new hex values unless absolutely necessary.
 3. **If you must use a raw hex**, pick from the palette in Section 2 and document it here.
 4. **Keep Recharts configs consistent** with Section 5 values.
 5. **Maintain the dark-only aesthetic** — no light backgrounds, no white cards.
-6. **Respect touch targets** — minimum `2.875rem` (46px) for interactive elements.
-7. **Use `rounded-xl`** for cards, `rounded-lg` for buttons/inputs.
-8. **Fonts:** Use `font-display` (Rubik) for headings, default body font (IBM Plex Sans) for everything else.
+6. **Respect touch targets** — minimum `3.5rem` (56px) for interactive elements.
+7. **Use `rounded-2xl`** for cards, `rounded-xl` for buttons/inputs.
+8. **Fonts:** Use `font-display` (Syne) for headings, default body font (DM Sans) for everything else.
 9. **Icons:** Use Lucide React. Don't introduce a second icon library.
-10. **New CSS variables** should be added to the `:root` block in `App.css` and documented here.
-11. **New Tailwind theme tokens** should be added to the `@theme` block in `index.css` and documented here.
+10. **New CSS variables** should be added to `@theme` in `index.css`.
+11. **Avoid inline `<style>` tags** — use Tailwind classes instead.
 12. **Update this file** when adding new colors, fonts, or design patterns.
