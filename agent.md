@@ -15,6 +15,7 @@
 | Icons | Lucide React | 0.575+ |
 | PWA | vite-plugin-pwa | 1.x |
 | Date utils | date-fns | 4.x |
+| HTTP client | axios | 1.x |
 
 - Tailwind v4 uses the new `@theme` directive in `src/index.css` (no `tailwind.config.js`).
 - All styles use Tailwind utility classes. Minimal custom CSS in `App.css`.
@@ -262,7 +263,7 @@ All charts follow the same dark theme:
 - **Default size:** `22px` (nav), `18px` (buttons), `28px` (stat cards)
 - **Stroke width:** `2` default, `2.5` for active nav tab
 - **Color:** Inherits from parent text color via Tailwind classes
-- **Icons used:** `LayoutDashboard`, `Dumbbell`, `Scale`, `TrendingUp`, `TrendingDown`, `Calendar`, `Flame`, `CheckCircle`, `Circle`, `PlusCircle`, `Save`, `Trash2`, `Plus`, `Menu`, `X`, `LogOut`, `Mail`, `Lock`, `User`, `ArrowRight`, `Target`, `Edit`, `ChevronDown`
+- **Icons used:** `LayoutDashboard`, `Dumbbell`, `Scale`, `TrendingUp`, `TrendingDown`, `Calendar`, `Flame`, `CheckCircle`, `Circle`, `PlusCircle`, `Save`, `Trash2`, `Plus`, `Menu`, `X`, `LogOut`, `Mail`, `Lock`, `User`, `ArrowRight`, `Target`, `Edit`, `ChevronDown`, `ChevronUp`, `Cpu`, `Download`, `Upload`, `Play`, `Search`
 
 ---
 
@@ -286,12 +287,16 @@ This app is **dark-mode only**. There is no light mode.
 | `index.html` | Google Fonts (Syne, DM Sans), theme-color meta `#080808` |
 | `src/index.css` | `@theme` color tokens, font imports, base styles |
 | `src/App.css` | Minimal utilities, Recharts overrides, scrollbar styles |
-| `src/App.jsx` | Shell layout, bottom nav, slide menu |
+| `src/App.jsx` | Shell layout, bottom nav (4 tabs), slide menu, import/export |
 | `src/components/AuthForm.jsx` | Login/register form with lime accent |
 | `src/components/Dashboard.jsx` | Stat cards, area/bar charts |
 | `src/components/WeightTracker.jsx` | Form inputs, line chart, trend badges |
 | `src/components/WorkoutChecklist.jsx` | Exercise list, check states |
-| `src/components/ManageWorkouts.jsx` | Day pills, exercise editor |
+| `src/components/ManageWorkouts.jsx` | Day pills, exercise editor with ExercisePicker |
+| `src/components/ExercisePicker.jsx` | Searchable dropdown for exercise selection |
+| `src/components/EquipmentTracker.jsx` | Equipment list with categories, search, video modal |
+| `src/components/Modal.jsx` | Reusable Modal, ConfirmModal, AlertModal |
+| `src/services/api.js` | Axios client, auth interceptors, exercise/equipment caches |
 
 ---
 
@@ -309,3 +314,53 @@ This app is **dark-mode only**. There is no light mode.
 10. **New CSS variables** should be added to `@theme` in `index.css`.
 11. **Avoid inline `<style>` tags** — use Tailwind classes instead.
 12. **Update this file** when adding new colors, fonts, or design patterns.
+
+---
+
+## 13. Backend Architecture
+
+### Database Models
+
+| Model | Purpose |
+|-------|---------|
+| `User` | User data, weightLog, workoutLog, weeklySchedule |
+| `Exercise` | Exercise definitions (82 exercises across 7 categories) |
+| `Equipment` | Gym equipment with video URLs (39 items) |
+
+### Routes
+
+| Route File | Endpoints |
+|------------|-----------|
+| `routes/auth.js` | `/register`, `/login`, `/verify` |
+| `routes/users.js` | Profile, weekly schedule, weight log, workout log |
+| `routes/exercises.js` | CRUD for exercises |
+| `routes/equipment.js` | List equipment with search/filter |
+
+### Seed Scripts
+
+```bash
+# Seed exercises to database
+node server/seedExercises.js
+
+# Seed equipment to database  
+node server/seedEquipment.js
+```
+
+---
+
+## 14. Frontend Data Flow
+
+### Exercise Caching
+Exercises are cached in memory after first fetch to prevent duplicate API calls:
+- `exerciseCache` - raw exercise array
+- `exerciseMapCache` - map by MongoDB `_id`
+- `exerciseNameMapCache` - map by exercise name (for import matching)
+
+### Import/Export
+- **Export**: Converts schedule to use exercise names (not IDs) for portability
+- **Import**: Validates JSON, maps names back to local exercise IDs using name lookup
+
+### Navigation
+4 tabs in order: Home → Workout → Equipment → Progress
+- Routes: `/dashboard`, `/checklist`, `/equipment`, `/weight`
+- Bottom nav with active indicator glow

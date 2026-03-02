@@ -1,110 +1,142 @@
-# 💪 Health & Fitness Tracker
+# Iron Log - Workout Tracker
 
-A zero-budget, offline-capable workout and weight tracking PWA built with React + Vite.
+A mobile-first PWA workout tracking application with dark theme and electric lime accent.
 
 ## Features
 
-- **Workout Schedules** - Push/Pull/Legs or Full Body routines with daily checkboxes
-- **Weekly Reset** - Auto-resets every Monday for fresh start
-- **Dashboard Stats** - Streak tracking, completion rates, graphs
-- **Weight Tracker** - Log weight with trend visualization
-- **PWA Ready** - Install on Android/desktop, works offline
-- **Data Persistence** - LocalStorage (no server needed)
-- **Zero Budget** - Free hosting on Vercel/Netlify
+- **User Authentication** - Register/login with email or Google Auth
+- **Workout Scheduling** - Create weekly workout routines with exercises
+- **Exercise Picker** - Searchable dropdown with 60+ exercises across 7 categories
+- **Workout Logging** - Track daily workout completions
+- **Weight Tracking** - Log weight over time with trend charts
+- **Equipment Guide** - Browse gym equipment with tutorial videos
+- **Import/Export** - Share workout schedules via JSON files
+- **PWA Support** - Installable as a mobile app
 
 ## Tech Stack
 
-- React 18 + Vite
-- Recharts (graphs)
-- Lucide React (icons)
-- Vite PWA Plugin (installable app)
-- LocalStorage (data persistence)
+| Layer | Technology | Version |
+|-------|------------|---------|
+| Frontend | React | 19.x |
+| Build tool | Vite | 7.x |
+| Styling | Tailwind CSS v4 | 4.x |
+| HTTP client | Axios | 1.x |
+| Charts | Recharts | 3.x |
+| Routing | React Router | 7.x |
+| Icons | Lucide React | 0.575+ |
+| PWA | vite-plugin-pwa | 1.x |
+| Date utils | date-fns | 4.x |
+| Backend | Express | 5.x |
+| Database | MongoDB/Mongoose | 9.x |
+| Auth | JWT, bcrypt | - |
 
 ## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- MongoDB (local or Atlas)
+
+### Installation
+
+```bash
+# Install dependencies
+npm install
+cd client && npm install && cd ..
+cd server && npm install && cd ..
+
+# Start MongoDB (if local)
+mongod
+```
 
 ### Development
 
 ```bash
-cd workout-tracker
-npm install
-npm run dev
+# Terminal 1 - Start backend
+cd server && npm run dev
+
+# Terminal 2 - Start frontend
+cd client && npm run dev
 ```
 
-Open browser to `http://localhost:5173`
+- Frontend: http://localhost:5175
+- Backend API: http://localhost:3001
 
-### Build for Production
+### Production Build
 
 ```bash
-npm run build
+# Build frontend
+cd client && npm run build
+
+# Preview production build
+cd client && npm run preview
 ```
-
-Production files in `dist/` folder.
-
-### Deploy to Vercel (Recommended)
-
-```bash
-npm i -g vercel
-vercel --prod
-```
-
-Or drag the `dist/` folder to [Vercel](https://vercel.com/import).
 
 ## Project Structure
 
 ```
-src/
-├── App.jsx                 # Main app with tabs & state
-├── App.css                 # Global styles
-├── data/
-│   └── workoutTypes.js    # Workout schedules & routines
-├── components/
-│   ├── WorkoutChecklist.jsx  # Daily workout checklist
-│   ├── Dashboard.jsx         # Stats & charts
-│   └── WeightTracker.jsx     # Weight logging & graph
-└── assets/                # Static assets (icons, etc.)
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/    # UI components
+│   │   ├── services/      # API client
+│   │   ├── data/         # Static data (exercises.js)
+│   │   └── App.jsx       # Main app with routing
+│   └── vite.config.js    # Vite + PWA + Tailwind config
+│
+├── server/                # Express backend
+│   ├── routes/           # API endpoints
+│   ├── models/           # MongoDB schemas
+│   ├── middleware/       # Auth middleware
+│   └── index.js          # Server entry
+│
+└── agent.md              # Design system & guidelines
 ```
 
-## Phase 2 Enhancements (Planned)
+## Environment Variables
 
-- [ ] YouTube exercise guide integration (video embeds)
-- [ ] Image-based exercise instructions
-- [ ] Select from multiple workout programs (starting strength, bro split, custom)
-- [ ] Body measurement tracking (chest, waist, arms, etc.)
-- [ ] Export data as CSV/JSON
-- [ ] Dark mode toggle
-- [ ] Shared workout calendars (Firebase)
-- [ ] PWA push notifications for workout reminders
-- [ ] Exercise library with proper form tips
+### Server (.env)
 
-## Usage
+```
+NODE_ENV=development
+PORT=3001
+MONGODB_URI=mongodb://localhost:27017/workout-tracker
+JWT_SECRET=your_jwt_secret_key_here
+FRONTEND_URL=http://localhost:5175
+```
 
-1. **First Run:** Go to Weight tab, log your starting weight
-2. **Daily:** Check Workout tab, mark exercises complete
-3. **Track:** View Dashboard for trends and stats
-4. **Weekly:** Auto-resets every Monday - keep the streak alive!
+## API Endpoints
 
-## Data Storage
+### Auth
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login
+- `GET /api/auth/verify` - Verify token
 
-All data stored in browser's LocalStorage:
-- `workout-tracker-data` - Main app state (schedule, completion, weight logs)
+### Users
+- `GET /api/users/profile` - Get user profile
+- `PUT /api/users/profile` - Update profile
+- `GET /api/users/weekly-schedule` - Get workout schedule
+- `PUT /api/users/weekly-schedule` - Update schedule
+- `GET /api/users/weight-log` - Get weight history
+- `POST /api/users/weight-log` - Add weight entry
+- `GET /api/users/workout-log` - Get workout completions
+- `POST /api/users/workout-log` - Log workout
 
-To backup: Open browser DevTools → Application → Storage → Local Storage → copy data
+### Exercises
+- `GET /api/exercises` - Get all exercises
 
-## Customization
+### Equipment
+- `GET /api/equipment` - Get all equipment (supports search & category filters)
+- `GET /api/equipment/categories` - Get equipment categories
 
-Edit `src/data/workoutTypes.js` to:
-- Change workout routine
-- Modify exercises/sets/reps
-- Add custom programs
+## Design System
 
-## Browser Support
+See [agent.md](./agent.md) for detailed design guidelines including:
+- Color palette (dark theme with electric lime accent)
+- Typography (Syne + DM Sans)
+- Component patterns
+- Chart theming
+- Spacing & layout conventions
 
-- Chrome/Edge (desktop + Android)
-- Safari (iOS)
-- Firefox
+## License
 
-Works offline after first load (PWA installed).
-
----
-
-**Built with React + Vite. Zero budget, maximum gains. 🏋️**
+MIT
