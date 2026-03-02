@@ -173,25 +173,36 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
       const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
       const normalized = {};
       
+      // Also create a reverse map from ID (kebab-case) to MongoDB ID
+      const idToMongoId = {};
+      Object.entries(exerciseMap).forEach(([name, info]) => {
+        const kebabName = name.replace(/\s+/g, '-').toLowerCase();
+        idToMongoId[kebabName] = info.id;
+      });
+      
       for (const day of validDays) {
         const exercises = data.weeklySchedule[day];
         if (Array.isArray(exercises)) {
           normalized[day] = exercises
             .filter(ex => ex && ex.id && ex.sets)
             .map(ex => {
-              // Try to find exercise by name (case insensitive) from seeded data
-              const exerciseKey = ex.id.toLowerCase();
+              const exerciseKey = ex.id.toLowerCase().trim();
               let matchedId = null;
               
-              // Check if it's already a valid MongoDB ObjectId
+              // Check if it's already a valid MongoDB ObjectId (24 hex chars)
               if (exerciseKey.match(/^[0-9a-f]{24}$/)) {
                 matchedId = exerciseKey;
               } else {
-                // Try to find by name
-                for (const [name, info] of Object.entries(exerciseMap)) {
-                  if (name === exerciseKey || name.includes(exerciseKey) || exerciseKey.includes(name)) {
-                    matchedId = info.id;
-                    break;
+                // Try to find by kebab-case ID first
+                matchedId = idToMongoId[exerciseKey];
+                
+                // Try by name (case insensitive)
+                if (!matchedId) {
+                  for (const [name, info] of Object.entries(exerciseMap)) {
+                    if (name === exerciseKey || name.replace(/\s+/g, '-') === exerciseKey) {
+                      matchedId = info.id;
+                      break;
+                    }
                   }
                 }
               }

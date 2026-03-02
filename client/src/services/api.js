@@ -85,7 +85,7 @@ let exerciseNameMapCache = null;
 export const getExercises = async () => {
   if (exerciseCache) return exerciseCache;
   const res = await exerciseAPI.getAll();
-  exerciseCache = res.data.exercises;
+  exerciseCache = res.data.exercises || res.data || [];
   return exerciseCache;
 };
 
@@ -104,7 +104,7 @@ export const getExerciseNameMap = async () => {
   if (exerciseNameMapCache) return exerciseNameMapCache;
   const exercises = await getExercises();
   const map = {};
-  exercises.forEach((ex) => {
+  (exercises || []).forEach((ex) => {
     map[ex.name.toLowerCase()] = { id: ex._id, name: ex.name, equipment: ex.equipment };
   });
   exerciseNameMapCache = map;
