@@ -356,10 +356,10 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
 
       <main className="flex-1 px-5 py-5 pb-24">
         <div className="max-w-[600px] mx-auto">
-          {activeTab === 'dashboard' && <Dashboard user={user} />}
+          {activeTab === 'dashboard' && <Dashboard />}
           {activeTab === 'workout' && <WorkoutChecklist />}
           {activeTab === 'equipment' && <EquipmentTracker />}
-          {activeTab === 'weight' && <WeightTracker user={user} />}
+          {activeTab === 'weight' && <WeightTracker />}
           {activeTab === 'settings' && <Settings user={user} setUser={setUser} />}
         </div>
       </main>

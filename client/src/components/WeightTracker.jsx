@@ -23,7 +23,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-function WeightTracker({ user, onWeightUpdate }) {
+function WeightTracker() {
   const [inputWeight, setInputWeight] = useState('');
   const [inputDate, setInputDate] = useState(new Date().toISOString().split('T')[0]);
   const [weightLog, setWeightLog] = useState([]);

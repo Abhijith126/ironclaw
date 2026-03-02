@@ -26,7 +26,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-function Dashboard({ user }) {
+function Dashboard() {
   const [weightLog, setWeightLog] = useState([]);
   const [workoutLog, setWorkoutLog] = useState([]);
   const [currentStreak, setCurrentStreak] = useState(0);

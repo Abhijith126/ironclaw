@@ -53,8 +53,6 @@ router.post('/register', async (req, res) => {
 // Login user
 router.post('/login', async (req, res) => {
   try {
-    console.log('Login request body:', req.body);
-
     const { email, password } = req.body;
 
     // Validate required fields
@@ -65,16 +63,11 @@ router.post('/login', async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-      console.log('User not found for email:', email);
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    console.log('User found:', user.email);
-    console.log('Password to check:', password);
-
     // Check password
     const isMatch = await user.comparePassword(password);
-    console.log('Password match:', isMatch);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
