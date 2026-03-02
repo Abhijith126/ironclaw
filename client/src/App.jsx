@@ -179,11 +179,28 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
           normalized[day] = exercises
             .filter(ex => ex && ex.id && ex.sets)
             .map(ex => {
-              const normalizedEx = { ...ex };
-              if (exerciseMap[ex.id.toLowerCase()]) {
-                normalizedEx.id = exerciseMap[ex.id.toLowerCase()].id;
+              // Try to find exercise by name (case insensitive) from seeded data
+              const exerciseKey = ex.id.toLowerCase();
+              let matchedId = null;
+              
+              // Check if it's already a valid MongoDB ObjectId
+              if (exerciseKey.match(/^[0-9a-f]{24}$/)) {
+                matchedId = exerciseKey;
+              } else {
+                // Try to find by name
+                for (const [name, info] of Object.entries(exerciseMap)) {
+                  if (name === exerciseKey || name.includes(exerciseKey) || exerciseKey.includes(name)) {
+                    matchedId = info.id;
+                    break;
+                  }
+                }
               }
-              return normalizedEx;
+              
+              return {
+                id: matchedId || ex.id,
+                sets: ex.sets,
+                reps: ex.reps,
+              };
             });
         } else {
           normalized[day] = [];
