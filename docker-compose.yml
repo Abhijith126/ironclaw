@@ -1,21 +1,37 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:7
+    container_name: workout-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - workout-app-network
+
   server:
     build: ./server
     container_name: workout-server
     restart: unless-stopped
-    env_file:
-      - ./server/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - mongodb
     networks:
       - workout-app-network
 
   client:
-    build: ./client
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api
     container_name: workout-client
     restart: unless-stopped
-    env_file:
-      - ./server/.env
     ports:
       - "3002:80"
     depends_on:
@@ -26,3 +42,6 @@ services:
 networks:
   workout-app-network:
     driver: bridge
+
+volumes:
+  mongodb_data:
