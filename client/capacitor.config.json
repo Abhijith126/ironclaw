@@ -1,0 +1,19 @@
+{
+  "appId": "com.ironlog.app",
+  "appName": "Iron Log",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "hostname": "localhost"
+  },
+  "android": {
+    "allowMixedContent": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#080808"
+    }
+  }
+}

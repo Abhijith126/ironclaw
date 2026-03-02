@@ -22,3 +22,23 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files
+.env
+.env.local
+.env.production
+!.env.example
+
+# Android
+client/android/.gradle
+client/android/build
+client/android/app/build
+client/android/app/src/main/assets
+client/android/app/src/main/res/raw
+client/android/local.properties
+
+# Docker
+docker-compose.override.yml
+
+# OS
+Thumbs.db

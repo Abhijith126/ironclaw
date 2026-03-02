@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    container_name: workout-server
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    networks:
+      - workout-app-network
+
+  client:
+    build: ./client
+    container_name: workout-client
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    ports:
+      - "3002:80"
+    depends_on:
+      - server
+    networks:
+      - workout-app-network
+
+networks:
+  workout-app-network:
+    driver: bridge
