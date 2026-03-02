@@ -177,6 +177,18 @@ const AuthForm = ({ onAuthSuccess }) => {
           </button>
         </form>
 
+        {!window.matchMedia('(display-mode: standalone)').matches && (
+          <div className="text-center pb-4">
+            <button
+              type="button"
+              onClick={() => navigate('/install')}
+              className="text-sm text-lime bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              Get the Android App
+            </button>
+          </div>
+        )}
+
         <div className="flex items-center justify-center gap-2">
           <span className="text-sm text-silver">
             {isLogin ? "Don't have an account?" : 'Already have an account?'}

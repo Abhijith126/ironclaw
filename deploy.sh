@@ -1,27 +1,25 @@
 #!/bin/bash
 
-echo "🧹 Cleaning up old containers and images..."
+echo "🧹 Cleaning up old containers..."
 
-# Stop and remove containers
 docker-compose down 2>/dev/null
-
-# Remove specific containers if any running
 docker rm -f workout-server workout-client 2>/dev/null
 
-# Remove images
-docker rmi workout-tracker-server workout-tracker-client 2>/dev/null
-docker rmi $(docker images -q workout-tracker) 2>/dev/null
-
-# Clean up unused volumes
-docker volume prune -f 2>/dev/null
-
-echo "✅ Cleanup complete!"
+echo "✅ Cleanup done!"
 echo ""
 echo "🔨 Building and starting containers..."
 
-# Build and start
 docker-compose up -d --build
+
+# Copy APK to dist if it exists
+if [ -f "client/android/app/build/outputs/apk/debug/app-release.apk" ]; then
+    cp client/android/app/build/outputs/apk/debug/app-release.apk client/dist/
+    echo "📱 APK copied to dist/"
+fi
 
 echo ""
 echo "📋 Container status:"
 docker-compose ps
+
+echo ""
+echo "✅ Deploy complete!"

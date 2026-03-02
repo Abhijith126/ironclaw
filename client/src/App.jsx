@@ -14,10 +14,15 @@ import WorkoutChecklist from './components/WorkoutChecklist';
 import EquipmentTracker from './components/EquipmentTracker';
 import WeightTracker from './components/WeightTracker';
 import Settings from './components/Settings';
+import InstallApp from './components/InstallApp';
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import { userAPI, getExerciseNameMap } from './services/api';
 import { ConfirmModal, AlertModal } from './components/Modal';
+
+// Detect if running as native app
+const isNativeApp = window.matchMedia('(display-mode: standalone)').matches || 
+                    window.navigator.userAgent.includes('wv');
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -68,6 +73,10 @@ function App() {
                 <AuthForm onAuthSuccess={handleAuthSuccess} />
               )
             }
+          />
+          <Route
+            path="/install"
+            element={<InstallApp />}
           />
           <Route
             path="/*"
@@ -349,6 +358,15 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
                 {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
                 <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
               </button>
+              {!isNativeApp && (
+                <button
+                  onClick={() => navigate('/install')}
+                  className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
+                >
+                  <Download size={18} />
+                  <span>Get App</span>
+                </button>
+              )}
               <button
                 onClick={handleExport}
                 className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
