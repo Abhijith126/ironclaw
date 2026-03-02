@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const path = require('path');
-const dotenv = require('dotenv');
 
-dotenv.config({ path: path.join(__dirname, '.env') });
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://mongodb:27017/workout-tracker';
 
 const equipmentSchema = new mongoose.Schema({
   machineName: { type: String, required: true, unique: true },
@@ -63,7 +61,7 @@ const equipmentList = [
 
 async function seed() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB');
     
     await Equipment.deleteMany({});

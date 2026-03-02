@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const path = require('path');
-const dotenv = require('dotenv');
 
-dotenv.config({ path: path.join(__dirname, '.env') });
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://mongodb:27017/workout-tracker';
 
 const exerciseSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true, unique: true },
