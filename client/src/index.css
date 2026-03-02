@@ -5,7 +5,7 @@
   --font-display: 'Syne', system-ui, sans-serif;
   --font-body: 'DM Sans', system-ui, sans-serif;
 
-  /* Core palette - Industrial Athletic */
+  /* Core palette - Industrial Athletic (Dark) */
   --color-obsidian: #080808;
   --color-carbon: #111111;
   --color-graphite: #1a1a1a;
@@ -39,6 +39,7 @@
     -moz-osx-font-smoothing: grayscale;
     min-height: 100dvh;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   * {
@@ -60,6 +61,62 @@
     border-radius: 3px;
   }
 }
+
+/* Light theme - Warm, refined, easy on eyes */
+html.light {
+  --color-obsidian: #faf9f7;
+  --color-carbon: #ffffff;
+  --color-graphite: #f5f4f1;
+  --color-steel: #e8e6e1;
+  --color-iron: #d4d2cc;
+  --color-silver: #7a7873;
+  --color-chalk: #2d2c2a;
+  --color-white: #1a1918;
+  --color-muted: #efede9;
+  --color-lime: #7abf1a;
+  --color-lime-dim: #5fa615;
+}
+
+html.light body {
+  background-color: var(--color-obsidian);
+  color: var(--color-chalk);
+}
+
+html.light *::-webkit-scrollbar-track {
+  background: var(--color-graphite);
+}
+
+html.light *::-webkit-scrollbar-thumb {
+  background: var(--color-steel);
+}
+
+html.light ::selection {
+  background: var(--color-lime);
+  color: var(--color-obsidian);
+}
+
+html.light :focus-visible {
+  outline: 2px solid var(--color-lime);
+  outline-offset: 2px;
+}
+
+html.light input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(0.3);
+}
+
+html.light .bg-obsidian { background-color: var(--color-obsidian); }
+html.light .bg-carbon { background-color: var(--color-carbon); }
+html.light .bg-graphite { background-color: var(--color-graphite); }
+html.light .bg-steel { background-color: var(--color-steel); }
+
+html.light .text-chalk { color: var(--color-chalk); }
+html.light .text-silver { color: var(--color-silver); }
+html.light .text-white { color: var(--color-white); }
+
+html.light .border-steel { border-color: var(--color-steel); }
+
+html.light .from-obsidian { --tw-gradient-from: var(--color-obsidian); }
+html.light .via-carbon { --tw-gradient-to: var(--color-carbon); }
 
 /* Selection */
 ::selection {

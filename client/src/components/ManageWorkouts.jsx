@@ -96,11 +96,6 @@ export default function ManageWorkouts({ onSave }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <h2 className="font-display text-2xl font-bold text-white">Edit Schedule</h2>
-        <p className="text-sm text-silver mt-1">Customize your weekly workout plan</p>
-      </div>
-
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
         {DAYS.map((d) => (
           <button

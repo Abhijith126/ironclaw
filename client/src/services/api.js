@@ -36,6 +36,7 @@ export const authAPI = {
 export const userAPI = {
   getProfile: () => api.get('/users/profile'),
   updateProfile: (userData) => api.put('/users/profile', userData),
+  changePassword: (currentPassword, newPassword) => api.put('/users/password', { currentPassword, newPassword }),
   deleteAccount: () => api.delete('/users/profile'),
   getWeeklySchedule: () => api.get('/users/weekly-schedule'),
   updateWeeklySchedule: (scheduleData) => api.put('/users/weekly-schedule', scheduleData),

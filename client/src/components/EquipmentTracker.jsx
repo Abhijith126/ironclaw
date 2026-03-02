@@ -70,8 +70,10 @@ export default function EquipmentTracker() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <h2 className="font-display text-2xl font-bold text-white">Equipment</h2>
+      <div className="mb-2">
+        <h1 className="font-display text-2xl font-extrabold tracking-tight text-chalk">
+          Equipment
+        </h1>
         <p className="text-sm text-silver mt-1">Learn how to use gym equipment</p>
       </div>
 

@@ -68,6 +68,45 @@ router.put('/profile', auth, async (req, res) => {
   }
 });
 
+// Change password
+router.put('/password', auth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'Current password and new password are required' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if user has a password (Google OAuth users might not)
+    if (!user.password || user.password === 'google_oauth_placeholder') {
+      return res.status(400).json({ message: 'Password cannot be changed for OAuth accounts' });
+    }
+
+    // Verify current password
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.json({ message: 'Password changed successfully' });
+  } catch (error) {
+    console.error('Password change error:', error);
+    res.status(500).json({ message: 'Server error while changing password' });
+  }
+});
+
 // Get user's weekly schedule
 router.get('/weekly-schedule', auth, async (req, res) => {
   try {

@@ -157,6 +157,12 @@ function WorkoutChecklist() {
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="mb-2">
+        <h1 className="font-display text-2xl font-extrabold tracking-tight text-chalk">
+          Workout
+        </h1>
+        <p className="text-sm text-silver mt-1">Track and complete your daily exercises</p>
+      </div>
       {editing ? (
         <ManageWorkouts onSave={saveCallback} />
       ) : (
@@ -244,7 +250,7 @@ function WorkoutChecklist() {
             )}
           </div>
 
-          {tomorrowsWorkout.exercises.length > 0 && (
+          {tomorrowsWorkout.exercises.length > 0 ? (
             <div className="bg-graphite border border-steel rounded-xl p-4">
               <div className="flex items-center gap-3 mb-3">
                 <span className="px-2 py-1 bg-steel text-[10px] font-bold uppercase tracking-wider text-silver rounded">
@@ -266,6 +272,20 @@ function WorkoutChecklist() {
                   </span>
                 )}
               </div>
+            </div>
+          ) : (
+            <div className="bg-graphite border border-steel rounded-xl p-4">
+              <div className="flex items-center gap-3">
+                <span className="px-2 py-1 bg-lime/15 text-[10px] font-bold uppercase tracking-wider text-lime rounded">
+                  Tomorrow
+                </span>
+                <span className="font-display font-bold text-white text-sm">
+                  Rest Day
+                </span>
+              </div>
+              <p className="text-xs text-silver mt-2">
+                Time to recover! Catch up on sleep and stay active with light movement.
+              </p>
             </div>
           )}
 

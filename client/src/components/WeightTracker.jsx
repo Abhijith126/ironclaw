@@ -73,6 +73,12 @@ function WeightTracker({ user, onWeightUpdate }) {
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="mb-2">
+        <h1 className="font-display text-2xl font-extrabold tracking-tight text-chalk">
+          Progress
+        </h1>
+        <p className="text-sm text-silver mt-1">Track your weight and see your gains over time</p>
+      </div>
       <div className="bg-graphite border border-steel rounded-2xl p-5">
         <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
           Log Weight

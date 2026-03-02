@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,12 +7,13 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { LayoutDashboard, Dumbbell, Scale, Menu, X, LogOut, Download, Upload, Cpu } from 'lucide-react';
+import { LayoutDashboard, Dumbbell, Scale, Menu, X, LogOut, Download, Upload, Cpu, Sun, Moon, Settings as SettingsIcon } from 'lucide-react';
 import './App.css';
 import Dashboard from './components/Dashboard';
 import WorkoutChecklist from './components/WorkoutChecklist';
 import EquipmentTracker from './components/EquipmentTracker';
 import WeightTracker from './components/WeightTracker';
+import Settings from './components/Settings';
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import { userAPI, getExerciseNameMap } from './services/api';
@@ -24,6 +25,22 @@ function App() {
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
   const handleAuthSuccess = (userData) => {
     setUser(userData);
   };
@@ -32,6 +49,10 @@ function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+  };
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
   return (
@@ -52,7 +73,7 @@ function App() {
             path="/*"
             element={
               <ProtectedRoute>
-                <AppContent user={user} onLogout={handleLogout} />
+                <AppContent user={user} onLogout={handleLogout} theme={theme} toggleTheme={toggleTheme} setUser={setUser} />
               </ProtectedRoute>
             }
           />
@@ -62,7 +83,7 @@ function App() {
   );
 }
 
-function AppContent({ user, onLogout }) {
+function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -75,6 +96,7 @@ function AppContent({ user, onLogout }) {
     if (path.includes('/checklist') || path.includes('/workout')) return 'workout';
     if (path.includes('/equipment')) return 'equipment';
     if (path.includes('/weight')) return 'weight';
+    if (path.includes('/settings')) return 'settings';
     return 'dashboard';
   };
 
@@ -86,6 +108,7 @@ function AppContent({ user, onLogout }) {
       workout: '/checklist',
       equipment: '/equipment',
       weight: '/weight',
+      settings: '/settings',
     };
     navigate(routes[tab]);
     setIsMenuOpen(false);
@@ -197,6 +220,7 @@ function AppContent({ user, onLogout }) {
     { id: 'workout', label: 'Workout', icon: Dumbbell, path: '/checklist' },
     { id: 'equipment', label: 'Equipment', icon: Cpu, path: '/equipment' },
     { id: 'weight', label: 'Progress', icon: Scale, path: '/weight' },
+    { id: 'settings', label: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
 
   const today = new Date().toLocaleDateString('en-US', {
@@ -281,13 +305,22 @@ function AppContent({ user, onLogout }) {
                         ? 'Workout'
                         : tab.id === 'equipment'
                           ? 'Equipment'
-                          : 'Progress'}
+                          : tab.id === 'weight'
+                            ? 'Progress'
+                            : 'Settings'}
                   </span>
                 </button>
               ))}
             </nav>
 
             <div className="p-3 border-t border-steel flex flex-col gap-2">
+              <button
+                onClick={toggleTheme}
+                className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
+              >
+                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+              </button>
               <button
                 onClick={handleExport}
                 className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
@@ -327,6 +360,7 @@ function AppContent({ user, onLogout }) {
           {activeTab === 'workout' && <WorkoutChecklist />}
           {activeTab === 'equipment' && <EquipmentTracker />}
           {activeTab === 'weight' && <WeightTracker user={user} />}
+          {activeTab === 'settings' && <Settings user={user} setUser={setUser} />}
         </div>
       </main>
 
