@@ -10,44 +10,41 @@ const exerciseSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Exercise category is required'],
-    enum: ['chest', 'back', 'shoulders', 'legs', 'arms', 'core', 'cardio']
+    enum: ['upper body', 'lower body', 'core', 'cardio', 'full body', 'flexibility']
+  },
+  muscleGroup: {
+    type: String,
+    required: [true, 'Muscle group is required'],
+    enum: ['chest', 'back', 'shoulders', 'arms', 'legs', 'core', 'cardiovascular', 'full body']
   },
   equipment: {
     type: String,
     required: [true, 'Equipment is required'],
     enum: [
       'barbell',
-      'dumbbell',
+      'dumbbells',
       'cable',
       'machine',
       'bodyweight',
-      'cardio',
+      'kettlebell',
+      'none',
       'other'
     ]
   },
-  imageUrl: {
+  difficulty: {
+    type: String,
+    enum: ['beginner', 'intermediate', 'advanced'],
+    default: 'beginner'
+  },
+  description: {
     type: String,
     maxlength: [500, 'Description cannot exceed 500 characters']
   },
   imageUrl: {
-    type: String,
-    validate: {
-      validator: function (v) {
-        return !v || /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i.test(v);
-      },
-      message: 'Please provide a valid image URL'
-    }
+    type: String
   },
   videoUrl: {
-    type: String,
-    validate: {
-      validator: function (v) {
-        return (
-          !v || /^https?:\/\/(www\.)?(youtube\.com|vimeo\.com|\.mp4|youtu\.be)(\/|\?)/i.test(v)
-        );
-      },
-      message: 'Please provide a valid video URL'
-    }
+    type: String
   },
   createdAt: {
     type: Date,

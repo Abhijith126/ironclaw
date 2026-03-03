@@ -32,6 +32,13 @@
     font-family: var(--font-body);
   }
 
+  :root {
+    --sat: env(safe-area-inset-top);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+    --sar: env(safe-area-inset-right);
+  }
+
   body {
     background-color: var(--color-obsidian);
     color: var(--color-chalk);

@@ -2,27 +2,36 @@ const mongoose = require('mongoose');
 const Exercise = require('../models/Exercise');
 
 const exercises = [
-  // Upper Body
+  // Chest
   {
-    name: 'Push-ups',
+    name: 'Chest Press Machine',
     category: 'upper body',
     muscleGroup: 'chest',
-    equipment: 'bodyweight',
+    equipment: 'machine',
     difficulty: 'beginner',
-    description: 'A classic bodyweight exercise that targets the chest, shoulders, and triceps.',
-    imageUrl: 'https://example.com/pushups.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=IODxDxX7oi4'
+    description: 'A machine exercise that targets the chest muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
-    name: 'Pull-ups',
+    name: 'Incline Bench Press',
     category: 'upper body',
-    muscleGroup: 'back',
-    equipment: 'bodyweight',
+    muscleGroup: 'chest',
+    equipment: 'barbell',
     difficulty: 'intermediate',
-    description:
-      'A compound exercise that primarily targets the latissimus dorsi and other back muscles.',
-    imageUrl: 'https://example.com/pullups.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=eGo4IYlbE5s'
+    description: 'A barbell exercise that targets the upper chest.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Pec Deck',
+    category: 'upper body',
+    muscleGroup: 'chest',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A machine exercise that targets the chest muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Bench Press',
@@ -30,10 +39,103 @@ const exercises = [
     muscleGroup: 'chest',
     equipment: 'barbell',
     difficulty: 'intermediate',
-    description:
-      'A compound exercise that targets the chest, shoulders, and triceps using a barbell.',
-    imageUrl: 'https://example.com/benchpress.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=rT7DgCr-3pg'
+    description: 'A compound exercise that targets the chest, shoulders, and triceps using a barbell.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Push-ups',
+    category: 'upper body',
+    muscleGroup: 'chest',
+    equipment: 'bodyweight',
+    difficulty: 'beginner',
+    description: 'A classic bodyweight exercise that targets the chest, shoulders, and triceps.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+
+  // Back
+  {
+    name: 'Lat Pulldown',
+    category: 'upper body',
+    muscleGroup: 'back',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A machine exercise that targets the latissimus dorsi muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Seated Cable Row',
+    category: 'upper body',
+    muscleGroup: 'back',
+    equipment: 'cable',
+    difficulty: 'beginner',
+    description: 'A cable exercise that targets the middle back muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Pull-ups',
+    category: 'upper body',
+    muscleGroup: 'back',
+    equipment: 'bodyweight',
+    difficulty: 'intermediate',
+    description: 'A compound exercise that primarily targets the latissimus dorsi and other back muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'T-Bar Row',
+    category: 'upper body',
+    muscleGroup: 'back',
+    equipment: 'barbell',
+    difficulty: 'intermediate',
+    description: 'A barbell exercise that targets the back muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Face Pull',
+    category: 'upper body',
+    muscleGroup: 'back',
+    equipment: 'cable',
+    difficulty: 'beginner',
+    description: 'A cable exercise that targets the rear deltoids and upper back.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+
+  // Shoulders
+  {
+    name: 'Shoulder Press Machine',
+    category: 'upper body',
+    muscleGroup: 'shoulders',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A machine exercise that targets the shoulder muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Lateral Raise',
+    category: 'upper body',
+    muscleGroup: 'shoulders',
+    equipment: 'dumbbells',
+    difficulty: 'beginner',
+    description: 'An isolation exercise that targets the lateral deltoid muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Rear Delt Fly',
+    category: 'upper body',
+    muscleGroup: 'shoulders',
+    equipment: 'dumbbells',
+    difficulty: 'beginner',
+    description: 'An isolation exercise that targets the rear deltoid muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Dumbbell Shoulder Press',
@@ -42,8 +144,50 @@ const exercises = [
     equipment: 'dumbbells',
     difficulty: 'beginner',
     description: 'An isolation exercise that targets the deltoid muscles of the shoulders.',
-    imageUrl: 'https://example.com/shoulderpress.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=qEwKCR--bMc'
+    imageUrl: '',
+    videoUrl: ''
+  },
+
+  // Arms
+  {
+    name: 'Tricep Pushdown',
+    category: 'upper body',
+    muscleGroup: 'arms',
+    equipment: 'cable',
+    difficulty: 'beginner',
+    description: 'A cable exercise that targets the triceps muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Cable Curl',
+    category: 'upper body',
+    muscleGroup: 'arms',
+    equipment: 'cable',
+    difficulty: 'beginner',
+    description: 'A cable exercise that targets the biceps muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Hammer Curl',
+    category: 'upper body',
+    muscleGroup: 'arms',
+    equipment: 'dumbbells',
+    difficulty: 'beginner',
+    description: 'A dumbbell exercise that targets the biceps and forearms.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Overhead Tricep Extension',
+    category: 'upper body',
+    muscleGroup: 'arms',
+    equipment: 'dumbbells',
+    difficulty: 'beginner',
+    description: 'A dumbbell exercise that targets the triceps muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Bicep Curls',
@@ -52,8 +196,8 @@ const exercises = [
     equipment: 'dumbbells',
     difficulty: 'beginner',
     description: 'An isolation exercise that targets the biceps brachii muscles.',
-    imageUrl: 'https://example.com/bicepcurls.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=kwG2ipFRgfo'
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Tricep Dips',
@@ -61,22 +205,91 @@ const exercises = [
     muscleGroup: 'arms',
     equipment: 'bodyweight',
     difficulty: 'beginner',
-    description:
-      'An isolation exercise that targets the triceps muscles using parallel bars or a bench.',
-    imageUrl: 'https://example.com/tricepdips.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=0326dy_-CzM'
+    description: 'An isolation exercise that targets the triceps muscles using parallel bars or a bench.',
+    imageUrl: '',
+    videoUrl: ''
   },
 
-  // Lower Body
+  // Legs
   {
-    name: 'Squats',
+    name: 'Squat',
     category: 'lower body',
     muscleGroup: 'legs',
-    equipment: 'bodyweight',
-    difficulty: 'beginner',
+    equipment: 'barbell',
+    difficulty: 'intermediate',
     description: 'A compound exercise that targets the quadriceps, hamstrings, and glutes.',
-    imageUrl: 'https://example.com/squats.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=aclHkVaku9U'
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Leg Press',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A compound exercise that targets the quadriceps, hamstrings, and glutes using a leg press machine.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Leg Curl',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A machine exercise that targets the hamstring muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Leg Extension',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A machine exercise that targets the quadriceps muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Hip Thrust',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'barbell',
+    difficulty: 'intermediate',
+    description: 'A barbell exercise that targets the glute muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Calf Raise',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'An isolation exercise that targets the calf muscles.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Romanian Deadlift',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'barbell',
+    difficulty: 'intermediate',
+    description: 'A barbell exercise that targets the hamstrings and glutes.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Abductor Machine',
+    category: 'lower body',
+    muscleGroup: 'legs',
+    equipment: 'machine',
+    difficulty: 'beginner',
+    description: 'A machine exercise that targets the outer thigh muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Lunges',
@@ -84,10 +297,9 @@ const exercises = [
     muscleGroup: 'legs',
     equipment: 'bodyweight',
     difficulty: 'beginner',
-    description:
-      'A compound exercise that targets the quadriceps, hamstrings, and glutes unilaterally.',
-    imageUrl: 'https://example.com/lunges.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=QOVaHwm-Q6U'
+    description: 'A compound exercise that targets the quadriceps, hamstrings, and glutes unilaterally.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Deadlifts',
@@ -96,29 +308,8 @@ const exercises = [
     equipment: 'barbell',
     difficulty: 'advanced',
     description: 'A compound exercise that targets the hamstrings, glutes, and lower back.',
-    imageUrl: 'https://example.com/deadlifts.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=op9kVnSso6Q'
-  },
-  {
-    name: 'Leg Press',
-    category: 'lower body',
-    muscleGroup: 'legs',
-    equipment: 'machine',
-    difficulty: 'beginner',
-    description:
-      'A compound exercise that targets the quadriceps, hamstrings, and glutes using a leg press machine.',
-    imageUrl: 'https://example.com/legpress.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=2UpsGdJrL4E'
-  },
-  {
-    name: 'Calf Raises',
-    category: 'lower body',
-    muscleGroup: 'legs',
-    equipment: 'bodyweight',
-    difficulty: 'beginner',
-    description: 'An isolation exercise that targets the calf muscles.',
-    imageUrl: 'https://example.com/calfraises.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=-M4-G8p8fmc'
+    imageUrl: '',
+    videoUrl: ''
   },
 
   // Core
@@ -128,10 +319,19 @@ const exercises = [
     muscleGroup: 'core',
     equipment: 'bodyweight',
     difficulty: 'beginner',
-    description:
-      'An isometric exercise that targets the core muscles, including the abdominals and lower back.',
-    imageUrl: 'https://example.com/plank.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=pSHjTRCQxIw'
+    description: 'An isometric exercise that targets the core muscles, including the abdominals and lower back.',
+    imageUrl: '',
+    videoUrl: ''
+  },
+  {
+    name: 'Cable Crunch',
+    category: 'core',
+    muscleGroup: 'core',
+    equipment: 'cable',
+    difficulty: 'beginner',
+    description: 'A cable exercise that targets the abdominal muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Russian Twists',
@@ -140,8 +340,8 @@ const exercises = [
     equipment: 'bodyweight',
     difficulty: 'beginner',
     description: 'An isolation exercise that targets the obliques and other core muscles.',
-    imageUrl: 'https://example.com/russiantwists.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=wkD8rjkodUI'
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Leg Raises',
@@ -150,8 +350,8 @@ const exercises = [
     equipment: 'bodyweight',
     difficulty: 'intermediate',
     description: 'An isolation exercise that targets the lower abdominal muscles.',
-    imageUrl: 'https://example.com/legraises.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=JyI0Ui3om24'
+    imageUrl: '',
+    videoUrl: ''
   },
 
   // Cardio
@@ -162,8 +362,8 @@ const exercises = [
     equipment: 'none',
     difficulty: 'beginner',
     description: 'A cardiovascular exercise that improves heart health and burns calories.',
-    imageUrl: 'https://example.com/running.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=OQ5jsbhAv_M'
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Cycling',
@@ -171,10 +371,9 @@ const exercises = [
     muscleGroup: 'cardiovascular',
     equipment: 'none',
     difficulty: 'beginner',
-    description:
-      'A cardiovascular exercise that improves heart health and works the lower body muscles.',
-    imageUrl: 'https://example.com/cycling.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=OQ5jsbhAv_M'
+    description: 'A cardiovascular exercise that improves heart health and works the lower body muscles.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Jumping Jacks',
@@ -182,10 +381,9 @@ const exercises = [
     muscleGroup: 'cardiovascular',
     equipment: 'none',
     difficulty: 'beginner',
-    description:
-      'A full-body cardiovascular exercise that increases heart rate and burns calories.',
-    imageUrl: 'https://example.com/jumpingjacks.jpg',
-    videoUrl: 'https://youtube.com/watch?v=OQ5jsbhAv_M'
+    description: 'A full-body cardiovascular exercise that increases heart rate and burns calories.',
+    imageUrl: '',
+    videoUrl: ''
   },
 
   // Full Body
@@ -195,10 +393,9 @@ const exercises = [
     muscleGroup: 'full body',
     equipment: 'bodyweight',
     difficulty: 'advanced',
-    description:
-      'A full-body exercise that combines a squat, push-up, and jump to improve strength and cardiovascular fitness.',
-    imageUrl: 'https://example.com/burpees.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=auBLPXO8Fww'
+    description: 'A full-body exercise that combines a squat, push-up, and jump to improve strength and cardiovascular fitness.',
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Kettlebell Swings',
@@ -206,10 +403,9 @@ const exercises = [
     muscleGroup: 'full body',
     equipment: 'kettlebell',
     difficulty: 'intermediate',
-    description:
-      'A full-body exercise that targets the posterior chain and improves cardiovascular fitness.',
-    imageUrl: 'https://example.com/kettlebellswings.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=YSxHifyI6s8'
+    description: 'A full-body exercise that targets the posterior chain and improves cardiovascular fitness.',
+    imageUrl: '',
+    videoUrl: ''
   },
 
   // Flexibility
@@ -220,8 +416,8 @@ const exercises = [
     equipment: 'none',
     difficulty: 'beginner',
     description: 'A flexibility exercise that stretches the hamstrings, lower back, and calves.',
-    imageUrl: 'https://example.com/forwardfold.jpg',
-    videoUrl: 'https://www.youtube.com/watch?v=OQ5jsbhAv_M'
+    imageUrl: '',
+    videoUrl: ''
   },
   {
     name: 'Cat-Cow Stretch',
@@ -229,10 +425,9 @@ const exercises = [
     muscleGroup: 'core',
     equipment: 'none',
     difficulty: 'beginner',
-    description:
-      'A flexibility exercise that improves spinal mobility and stretches the back muscles.',
-    imageUrl: 'https://example.com/catcow.jpg',
-    videoUrl: 'https://youtube.com/watch?v=OQ5jsbhAv_M'
+    description: 'A flexibility exercise that improves spinal mobility and stretches the back muscles.',
+    imageUrl: '',
+    videoUrl: ''
   }
 ];
 

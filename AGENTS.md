@@ -267,11 +267,48 @@ All charts follow the same dark theme:
 
 ---
 
-## 10. Dark Theme Rules
+## 10. Theme Support
 
-This app is **dark-mode only**. There is no light mode.
+The app supports both dark and light themes with a toggle in the settings.
 
-1. **Never use pure white backgrounds.** The lightest background is `muted` (`#1f1f1f`).
+### 10.1 Dark Theme (Default)
+
+This is the primary theme with the industrial athletic palette described above.
+
+### 10.2 Light Theme
+
+When light mode is enabled, the CSS variables are inverted:
+
+```css
+html.light {
+  --color-obsidian: #faf9f7;
+  --color-carbon: #ffffff;
+  --color-graphite: #f5f4f1;
+  --color-steel: #e8e6e1;
+  --color-iron: #d4d2cc;
+  --color-silver: #7a7873;
+  --color-chalk: #2d2c2a;
+  --color-white: #1a1918;
+  --color-muted: #efede9;
+  --color-lime: #7abf1a;
+  --color-lime-dim: #5fa615;
+}
+```
+
+To toggle theme programmatically:
+```jsx
+const toggleTheme = () => {
+  setTheme(prev => prev === 'light' ? 'dark' : 'light');
+};
+```
+
+---
+
+## 11. Dark Theme Rules
+
+The app has light mode support, but dark theme is the default and primary experience.
+
+1. **Never use pure white backgrounds.** The lightest background is `muted` (`#1f1f1f`) in dark mode.
 2. **Text hierarchy:** `white` → `chalk` → `silver` (primary → secondary → muted).
 3. **Borders are always subtle:** `steel` (`#2a2a2a`) — barely visible separation.
 4. **Accent is electric lime** (`#c6f135`) for all primary interactive elements.
@@ -284,10 +321,11 @@ This app is **dark-mode only**. There is no light mode.
 
 | File | Theme Elements |
 |---|---|
-| `index.html` | Google Fonts (Syne, DM Sans), theme-color meta `#080808` |
-| `src/index.css` | `@theme` color tokens, font imports, base styles |
+| `index.html` | Google Fonts (Syne, DM Sans), theme-color meta `#080808`, viewport-fit=cover |
+| `src/index.css` | `@theme` color tokens, font imports, base styles, safe area CSS vars |
 | `src/App.css` | Minimal utilities, Recharts overrides, scrollbar styles |
-| `src/App.jsx` | Shell layout, bottom nav (4 tabs), slide menu, import/export |
+| `src/App.jsx` | Shell layout, bottom nav (5 tabs), slide menu, import/export, safe area handling |
+| `src/hooks/useDeviceInsets.js` | Hook for detecting notch and software navigation insets |
 | `src/components/AuthForm.jsx` | Login/register form with lime accent |
 | `src/components/Dashboard.jsx` | Stat cards, area/bar charts |
 | `src/components/WeightTracker.jsx` | Form inputs, line chart, trend badges |
@@ -296,6 +334,7 @@ This app is **dark-mode only**. There is no light mode.
 | `src/components/ExercisePicker.jsx` | Searchable dropdown for exercise selection |
 | `src/components/EquipmentTracker.jsx` | Equipment list with categories, search, video modal |
 | `src/components/Modal.jsx` | Reusable Modal, ConfirmModal, AlertModal |
+| `src/components/InstallApp.jsx` | Download APK page, points to /app-release.apk |
 | `src/services/api.js` | Axios client, auth interceptors, exercise/equipment caches |
 
 ---
@@ -361,6 +400,91 @@ Exercises are cached in memory after first fetch to prevent duplicate API calls:
 - **Import**: Validates JSON, maps names back to local exercise IDs using name lookup
 
 ### Navigation
-4 tabs in order: Home → Workout → Equipment → Progress
-- Routes: `/dashboard`, `/checklist`, `/equipment`, `/weight`
+5 tabs in order: Home → Workout → Equipment → Progress → Settings
+- Routes: `/dashboard`, `/checklist`, `/equipment`, `/weight`, `/settings`
 - Bottom nav with active indicator glow
+
+---
+
+## 15. Android PWA & Build
+
+### 15.1 Build Scripts
+
+```bash
+# Build release APK (web assets + Android)
+./scripts/build-release.sh
+
+# Or manually:
+cd client && npm run build
+cd client/android && ./gradlew assembleRelease
+```
+
+### 15.2 APK Locations
+
+- `client/public/app-release.apk` - served on website
+- `client/dist/app-release.apk` - bundled with build
+
+### 15.3 Safe Area Insets (Notch/Navigation)
+
+The app handles device cutouts and software navigation:
+
+- **Hook**: `src/hooks/useDeviceInsets.js`
+- **Detection**: Uses CSS `env(safe-area-inset-*)` + fallback calculation
+- **State**: `hasNotch`, `hasBottomInset`, `top`, `bottom`
+
+**Usage in components:**
+```jsx
+const { top: safeAreaTop, bottom: safeAreaBottom, hasNotch, hasBottomInset } = useDeviceInsets();
+
+// Apply to header
+style={{ paddingTop: hasNotch ? `${safeAreaTop + 14}px` : undefined }}
+
+// Apply to bottom nav
+style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 8}px` : undefined }}
+```
+
+### 15.4 CSS Variables for Safe Areas
+
+In `index.css`:
+```css
+:root {
+  --sat: env(safe-area-inset-top);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+  --sar: env(safe-area-inset-right);
+}
+```
+
+### 15.5 Native App Detection
+
+```js
+const isNativeApp = window.matchMedia('(display-mode: standalone)').matches || 
+                    window.navigator.userAgent.includes('wv');
+```
+
+---
+
+## 16. Project Structure
+
+```
+workout-tracker/
+├── client/                    # React frontend
+│   ├── src/
+│   │   ├── components components
+│   │   ├── hooks/        # React/             # Custom hooks
+│   │   ├── services/          # API services
+│   │   ├── App.jsx            # Main app with routing
+│   │   ├── index.css          # Tailwind theme & base styles
+│   │   └── main.jsx           # Entry point
+│   ├── android/                # Android native project
+│   ├── public/                 # Static assets + APK
+│   ├── capacitor.config.json  # Capacitor config
+│   └── package.json
+├── server/                     # Node.js backend
+│   ├── routes/                 # API routes
+│   ├── models/                 # Mongoose models
+│   └── index.js               # Express server
+├── scripts/                    # Build scripts
+│   └── build-release.sh       # Build release APK
+└── AGENTS.md                   # This file
+```

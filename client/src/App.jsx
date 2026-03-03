@@ -19,6 +19,7 @@ import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import { userAPI, getExerciseNameMap } from './services/api';
 import { ConfirmModal, AlertModal } from './components/Modal';
+import { useDeviceInsets } from './hooks/useDeviceInsets';
 
 // Detect if running as native app
 const isNativeApp = window.matchMedia('(display-mode: standalone)').matches || 
@@ -99,6 +100,7 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
   const [importData, setImportData] = useState(null);
   const [alert, setAlert] = useState({ isOpen: false, type: 'success', title: '', message: '' });
   const fileInputRef = useRef(null);
+  const { top: safeAreaTop, bottom: safeAreaBottom, hasNotch, hasBottomInset } = useDeviceInsets();
 
   const getActiveTab = () => {
     const path = location.pathname;
@@ -275,7 +277,10 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-obsidian">
-      <header className="sticky top-0 z-40 flex justify-between items-center px-5 py-3.5 bg-gradient-to-b from-carbon to-carbon/95 backdrop-blur-xl border-b border-steel">
+      <header 
+        className="sticky top-0 z-40 flex justify-between items-center px-5 py-3.5 bg-gradient-to-b from-carbon to-carbon/95 backdrop-blur-xl border-b border-steel"
+        style={{ paddingTop: hasNotch ? `${safeAreaTop + 14}px` : undefined }}
+      >
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsMenuOpen(true)}
@@ -410,7 +415,10 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
         </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 flex justify-around py-2 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] bg-gradient-to-t from-obsidian via-carbon to-transparent border-t border-steel">
+      <nav 
+        className="fixed bottom-0 left-0 right-0 z-50 flex justify-around py-2 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] bg-gradient-to-t from-obsidian via-carbon to-transparent border-t border-steel"
+        style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 8}px` : undefined }}
+      >
         {tabs.map((tab) => (
           <button
             key={tab.id}
