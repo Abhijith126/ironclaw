@@ -87,7 +87,7 @@ const InstallApp = () => {
             Help us keep Iron Log free and continuously improving. Your support makes a difference!
           </p>
           <a
-            href="https://buymeacoffee.com/yourlink"
+            href="https://buymeacoffee.com/abhijith126"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 py-3 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors"
