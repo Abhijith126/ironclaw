@@ -1,33 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Download, Heart, Shield, Zap, Smartphone, ExternalLink } from 'lucide-react';
-import { userAPI } from '../services/api';
 
 const InstallApp = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
-
   const handleDownload = () => {
     window.open('/app-release.apk', '_blank');
   };
 
   return (
-    <div className="min-h-screen pb-24">
-      <div className="max-w-xl mx-auto">
+    <div>
+      <div className="max-w-xl mx-auto px-5">
         <div className="mb-6">
-          <button
-            onClick={() => navigate(user ? '/dashboard' : '/')}
-            className="text-silver hover:text-chalk transition-colors text-sm mb-4 flex items-center gap-1"
-          >
-            ← Back
-          </button>
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-chalk">
             Get Iron Log
           </h1>

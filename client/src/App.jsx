@@ -76,10 +76,6 @@ function App() {
             }
           />
           <Route
-            path="/install"
-            element={<InstallApp />}
-          />
-          <Route
             path="/*"
             element={
               <ProtectedRoute>
@@ -262,6 +258,8 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
     { id: 'settings', label: 'Settings', icon: SettingsIcon, path: '/settings' },
   ];
 
+  const bottomNavTabs = tabs.slice(0, 4);
+
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'short',
     month: 'short',
@@ -279,7 +277,10 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
     <div className="flex flex-col min-h-screen bg-obsidian">
       <header 
         className="sticky top-0 z-40 flex justify-between items-center px-5 py-3.5 bg-gradient-to-b from-carbon to-carbon/95 backdrop-blur-xl border-b border-steel"
-        style={{ paddingTop: hasNotch ? `${safeAreaTop + 14}px` : undefined }}
+        style={{ 
+          paddingTop: hasNotch ? `${safeAreaTop + 14}px` : undefined,
+          backgroundColor: '#111111'
+        }}
       >
         <div className="flex items-center gap-3">
           <button
@@ -305,8 +306,8 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
       {isMenuOpen && (
         <div className="fixed inset-0 z-60">
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closeMenu} />
-          <div className="absolute top-0 left-0 w-[280px] h-full bg-carbon border-r border-steel flex flex-col">
-            <div className="flex justify-between items-center p-5 border-b border-steel">
+          <div className="absolute top-0 left-0 w-[280px] h-full bg-carbon border-r border-steel flex flex-col" style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 60}px` : '60px' }}>
+            <div className="flex justify-between items-center p-5 pt-16 border-b border-steel">
               <span className="font-display text-lg font-extrabold tracking-[0.15em] text-lime">
                 IRON LOG
               </span>
@@ -365,7 +366,7 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
               </button>
               {!isNativeApp && (
                 <button
-                  onClick={() => navigate('/install')}
+                  onClick={() => { navigate('/install'); closeMenu(); }}
                   className="flex items-center gap-3 w-full p-3 bg-transparent border-none rounded-xl text-silver text-sm hover:bg-steel hover:text-chalk transition-colors"
                 >
                   <Download size={18} />
@@ -405,9 +406,14 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
         </div>
       )}
 
-      <main className="flex-1 px-5 py-5 pb-24">
+      <main className="flex-1 px-5 py-5" style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 96}px` : '144px' }}>
         <div className="max-w-[600px] mx-auto">
-          {activeTab === 'dashboard' && <Dashboard />}
+          {location.pathname === '/install' && (
+            <div className="pt-12">
+              <InstallApp />
+            </div>
+          )}
+          {activeTab === 'dashboard' && location.pathname !== '/install' && <Dashboard />}
           {activeTab === 'workout' && <WorkoutChecklist />}
           {activeTab === 'equipment' && <EquipmentTracker />}
           {activeTab === 'weight' && <WeightTracker />}
@@ -416,10 +422,10 @@ function AppContent({ user, onLogout, theme, toggleTheme, setUser }) {
       </main>
 
       <nav 
-        className="fixed bottom-0 left-0 right-0 z-50 flex justify-around py-2 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0.75rem))] bg-gradient-to-t from-obsidian via-carbon to-transparent border-t border-steel"
+        className="fixed bottom-0 left-0 right-0 z-50 flex justify-around py-2 px-3 pb-[max(0.80rem,env(safe-area-inset-bottom,0.80rem))] bg-gradient-to-t from-obsidian via-carbon to-transparent border-t border-steel"
         style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 8}px` : undefined }}
       >
-        {tabs.map((tab) => (
+        {bottomNavTabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => navigateTo(tab.id)}

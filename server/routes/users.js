@@ -20,6 +20,7 @@ router.get('/profile', auth, async (req, res) => {
         age: user.age,
         height: user.height,
         weight: user.weight,
+        weightUnit: user.weightUnit,
         profilePicture: user.profilePicture,
         createdAt: user.createdAt,
         lastLogin: user.lastLogin
@@ -34,7 +35,7 @@ router.get('/profile', auth, async (req, res) => {
 // Update user profile
 router.put('/profile', auth, async (req, res) => {
   try {
-    const { name, age, height, weight, profilePicture } = req.body;
+    const { name, age, height, weight, weightUnit, profilePicture } = req.body;
 
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -46,6 +47,7 @@ router.put('/profile', auth, async (req, res) => {
     if (age !== undefined) user.age = age;
     if (height !== undefined) user.height = height;
     if (weight !== undefined) user.weight = weight;
+    if (weightUnit !== undefined) user.weightUnit = weightUnit;
     if (profilePicture !== undefined) user.profilePicture = profilePicture;
 
     await user.save();
@@ -59,6 +61,7 @@ router.put('/profile', auth, async (req, res) => {
         age: user.age,
         height: user.height,
         weight: user.weight,
+        weightUnit: user.weightUnit,
         profilePicture: user.profilePicture
       }
     });

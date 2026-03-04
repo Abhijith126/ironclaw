@@ -35,6 +35,11 @@ const userSchema = new mongoose.Schema({
     min: [20, 'Please enter a valid weight in kg'],
     max: [500, 'Please enter a valid weight in kg']
   },
+  weightUnit: {
+    type: String,
+    enum: ['kg', 'lbs'],
+    default: 'kg'
+  },
   profilePicture: {
     type: String,
     default: null
@@ -58,7 +63,11 @@ const userSchema = new mongoose.Schema({
       {
         id: String,
         sets: Number,
-        reps: String
+        reps: String,
+        pr: {
+          weight: Number,
+          reps: Number
+        }
       }
     ],
     default: new Map()

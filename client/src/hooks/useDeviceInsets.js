@@ -10,18 +10,22 @@ export function useDeviceInsets() {
 
   useEffect(() => {
     const updateInsets = () => {
-      const top = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat') || '0', 10) || 
-                  (window.innerHeight > window.screen.height ? window.innerHeight - window.screen.height : 0);
+      const isAndroid = /android/i.test(navigator.userAgent);
       
-      const bottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sab') || '0', 10) || 
-                     (window.innerHeight < window.screen.height ? window.screen.height - window.innerHeight : 0);
-
-      const computedStyle = getComputedStyle(document.documentElement);
-      const cssTop = computedStyle.getPropertyValue('env(safe-area-inset-top, 0px)');
-      const cssBottom = computedStyle.getPropertyValue('env(safe-area-inset-bottom, 0px)');
-
-      const topInset = cssTop !== '0px' ? parseInt(cssTop, 10) : top;
-      const bottomInset = cssBottom !== '0px' ? parseInt(cssBottom, 10) : bottom;
+      // For Android, calculate insets based on window vs screen dimensions
+      let topInset = 0;
+      let bottomInset = 0;
+      
+      if (isAndroid) {
+        // Status bar height (approximate for most Android devices)
+        topInset = window.innerHeight < window.screen.height ? window.screen.height - window.innerHeight - 48 : 24;
+        // Navigation bar height
+        bottomInset = window.innerWidth < window.screen.width ? 48 : 0;
+      } else {
+        // iOS uses safe-area-inset
+        topInset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat') || '0', 10);
+        bottomInset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sab') || '0', 10);
+      }
 
       setInsets({
         top: topInset,

@@ -38,9 +38,10 @@ export default function EquipmentTracker() {
       if (selectedCategory) params.category = selectedCategory;
       
       const res = await equipmentAPI.getAll(params);
-      setEquipment(res.data.equipment);
+      setEquipment(res.data?.equipment || []);
     } catch (err) {
       console.error('Failed to fetch equipment:', err);
+      setEquipment([]);
     } finally {
       setLoading(false);
     }
@@ -49,12 +50,13 @@ export default function EquipmentTracker() {
   const fetchCategories = async () => {
     try {
       const res = await equipmentAPI.getCategories();
-      const sorted = (res.data.categories || []).sort((a, b) => {
+      const sorted = (res.data?.categories || []).sort((a, b) => {
         return CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b);
       });
       setCategories(sorted);
     } catch (err) {
       console.error('Failed to fetch categories:', err);
+      setCategories([]);
     }
   };
 

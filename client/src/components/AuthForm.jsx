@@ -177,7 +177,7 @@ const AuthForm = ({ onAuthSuccess }) => {
           </button>
         </form>
 
-        {!window.matchMedia('(display-mode: standalone)').matches && (
+        {(!window.matchMedia('(display-mode: standalone)').matches && !/android/i.test(navigator.userAgent)) && (
           <div className="text-center pb-4">
             <button
               type="button"

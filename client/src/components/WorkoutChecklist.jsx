@@ -9,6 +9,8 @@ function WorkoutChecklist() {
   const [completedMap, setCompletedMap] = useState({});
   const [animatingId, setAnimatingId] = useState(null);
   const [exerciseMap, setExerciseMap] = useState({});
+  const [editingPR, setEditingPR] = useState(null);
+  const [prValues, setPrValues] = useState({ weight: '', reps: '' });
 
   const todayName = useMemo(() => new Date().toLocaleDateString('en-US', { weekday: 'long' }), []);
   const tomorrowName = useMemo(
@@ -93,6 +95,7 @@ function WorkoutChecklist() {
           name: exercise?.name || e.id,
           sets: e.sets,
           reps: e.reps,
+          pr: e.pr || null,
         };
       });
       return { name: dayName, day: dayName, exercises: exList };
@@ -155,6 +158,35 @@ function WorkoutChecklist() {
     }
   }
 
+  function openEditPR(exercise) {
+    setEditingPR(exercise.id);
+    setPrValues({
+      weight: exercise.pr?.weight || '',
+      reps: exercise.pr?.reps || '',
+    });
+  }
+
+  async function savePR(exerciseId) {
+    const next = { ...userWeekly };
+    const dayExercises = next[todayName] || [];
+    const idx = dayExercises.findIndex(e => e.id === exerciseId);
+    if (idx !== -1) {
+      dayExercises[idx] = {
+        ...dayExercises[idx],
+        pr: { weight: Number(prValues.weight) || null, reps: Number(prValues.reps) || null }
+      };
+      next[todayName] = dayExercises;
+      setUserWeekly(next);
+      
+      try {
+        await userAPI.updateWeeklySchedule({ weeklySchedule: next });
+      } catch (err) {
+        console.error('Failed to save PR:', err);
+      }
+    }
+    setEditingPR(null);
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-2">
@@ -196,44 +228,125 @@ function WorkoutChecklist() {
             {totalCount === 0 ? (
               <p className="text-center text-silver py-6">Rest day! Take it easy and recover.</p>
             ) : (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 {todaysWorkout.exercises.map((exercise) => {
                   const isDone = completedToday.includes(exercise.id);
+                  const showPR = exercise.pr?.weight || editingPR === exercise.id;
+                  
                   return (
-                    <button
+                    <div
                       key={exercise.id}
-                      onClick={() => toggleExerciseDone(exercise.id)}
-                      className={`flex items-center gap-3 p-4 rounded-xl border transition-all duration-200 text-left w-full ${
+                      className={`relative overflow-hidden rounded-2xl border transition-all duration-300 ${
                         isDone
-                          ? 'bg-success/10 border-success/20'
-                          : 'bg-muted border-steel active:scale-[0.99]'
+                          ? 'bg-gradient-to-br from-success/15 to-success/5 border-success/30'
+                          : 'bg-muted border-steel hover:border-iron'
                       }`}
                     >
-                      <span className={isDone ? 'text-success' : 'text-iron'}>
-                        {isDone ? (
-                          <CheckCircle size={22} strokeWidth={2.5} />
-                        ) : (
-                          <Circle size={22} strokeWidth={1.5} />
-                        )}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <p
-                          className={`font-medium ${
+                      <button
+                        onClick={() => toggleExerciseDone(exercise.id)}
+                        className="w-full flex items-center gap-4 p-4 text-left"
+                      >
+                        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                          isDone 
+                            ? 'bg-success text-white' 
+                            : 'bg-steel/50 text-iron'
+                        }`}>
+                          {isDone ? (
+                            <CheckCircle size={24} strokeWidth={2.5} />
+                          ) : (
+                            <Circle size={24} strokeWidth={1.5} />
+                          )}
+                        </div>
+                        
+                        <div className="flex-1 min-w-0">
+                          <p className={`font-display font-bold text-lg ${
                             isDone ? 'text-white/60 line-through' : 'text-white'
-                          }`}
+                          }`}>
+                            {exercise.name}
+                          </p>
+                          <p className={`text-sm ${isDone ? 'text-white/40' : 'text-silver'}`}>
+                            {exercise.sets} sets × {exercise.reps}
+                          </p>
+                        </div>
+
+                        {isDone && (
+                          <span className="flex-shrink-0 px-3 py-1.5 bg-success rounded-full text-[10px] font-bold uppercase tracking-wider text-white">
+                            Done
+                          </span>
+                        )}
+                      </button>
+
+                      {showPR && (
+                        <div 
+                          className="px-4 pb-4 pt-0"
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          {exercise.name}
-                        </p>
-                        <p className="text-xs text-silver">
-                          {exercise.sets} sets × {exercise.reps}
-                        </p>
-                      </div>
-                      {isDone && (
-                        <span className="px-2 py-1 bg-success rounded text-[10px] font-bold uppercase tracking-wider text-white">
-                          Done
-                        </span>
+                          {editingPR === exercise.id ? (
+                            <div className="mt-3 p-4 bg-carbon/80 rounded-xl border border-lime/30">
+                              <p className="text-[10px] font-bold uppercase tracking-wider text-lime mb-3">
+                                Update Your PR
+                              </p>
+                              <div className="flex items-center gap-3">
+                                <div className="flex-1 relative">
+                                  <input
+                                    type="number"
+                                    value={prValues.weight}
+                                    onChange={(e) => setPrValues(p => ({ ...p, weight: e.target.value }))}
+                                    className="w-full px-4 py-3 bg-graphite border border-lime/50 rounded-xl text-white text-center font-display font-bold text-lg focus:border-lime outline-none"
+                                    placeholder="0"
+                                    autoFocus
+                                  />
+                                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-silver">kg</span>
+                                </div>
+                                <span className="text-lime text-xl font-bold">×</span>
+                                <div className="flex-1 relative">
+                                  <input
+                                    type="number"
+                                    value={prValues.reps}
+                                    onChange={(e) => setPrValues(p => ({ ...p, reps: e.target.value }))}
+                                    className="w-full px-4 py-3 bg-graphite border border-lime/50 rounded-xl text-white text-center font-display font-bold text-lg focus:border-lime outline-none"
+                                    placeholder="0"
+                                  />
+                                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-silver">reps</span>
+                                </div>
+                                <button
+                                  onClick={() => savePR(exercise.id)}
+                                  className="px-4 py-3 bg-lime text-obsidian rounded-xl font-display font-bold hover:bg-lime-dim transition-colors"
+                                >
+                                  ✓
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="mt-3 flex items-center justify-between p-3 bg-carbon/60 rounded-xl">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-lime">PR</span>
+                                <span className="text-white font-display font-bold">
+                                  {exercise.pr.weight} kg <span className="text-silver">×</span> {exercise.pr.reps} reps
+                                </span>
+                              </div>
+                              <button
+                                onClick={(e) => { e.stopPropagation(); openEditPR(exercise); }}
+                                className="p-2 text-lime/60 hover:text-lime transition-colors"
+                              >
+                                <Edit size={16} />
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       )}
-                    </button>
+
+                      {!showPR && !isDone && (
+                        <div className="px-4 pb-4 pt-0">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); openEditPR(exercise); }}
+                            className="mt-3 w-full py-2.5 border border-dashed border-lime/30 rounded-xl text-lime text-xs font-semibold hover:bg-lime/5 transition-colors"
+                          >
+                            + Set Your PR
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>

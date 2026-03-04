@@ -68,7 +68,7 @@ export default function ManageWorkouts({ onSave }) {
     const next = { ...userWeekly };
     next[selectedDay] = [
       ...(next[selectedDay] || []),
-      { id: 'bench-press', sets: 3, reps: '8-12' },
+      { id: 'bench-press', sets: 3, reps: '8-12', pr: { weight: null, reps: null } },
     ];
     setUserWeekly(next);
     scrollToNewExercise();
@@ -177,6 +177,37 @@ export default function ManageWorkouts({ onSave }) {
                     placeholder="8-12"
                   />
                 </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-lime">
+                  Personal Record (PR)
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={row.pr?.weight || ''}
+                      onChange={(e) => updateRow(idx, 'pr', { ...row.pr, weight: Number(e.target.value) || null })}
+                      className="w-full px-3 py-3 bg-graphite border border-lime/30 rounded-lg text-white text-center font-medium focus:border-lime outline-none transition-colors"
+                      placeholder="0"
+                      min="0"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-silver">kg</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={row.pr?.reps || ''}
+                      onChange={(e) => updateRow(idx, 'pr', { ...row.pr, reps: Number(e.target.value) || null })}
+                      className="w-full px-3 py-3 bg-graphite border border-lime/30 rounded-lg text-white text-center font-medium focus:border-lime outline-none transition-colors"
+                      placeholder="0"
+                      min="0"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-silver">reps</span>
+                  </div>
+                </div>
+                <p className="text-[10px] text-silver/60 mt-1">Set your personal record to track progress</p>
               </div>
 
               <button

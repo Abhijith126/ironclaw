@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   AreaChart,
   Area,
@@ -7,12 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  BarChart,
-  Bar,
-  Cell,
 } from 'recharts';
-import { TrendingUp, Calendar, Flame, Target } from 'lucide-react';
-import { userAPI } from '../services/api';
+import { TrendingUp, Flame, Target } from 'lucide-react';
+import { userAPI, getExerciseMap } from '../services/api';
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -31,6 +28,10 @@ function Dashboard() {
   const [workoutLog, setWorkoutLog] = useState([]);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [weeklySchedule, setWeeklySchedule] = useState({});
+  const [exerciseMap, setExerciseMap] = useState({});
+
+  const todayName = useMemo(() => new Date().toLocaleDateString('en-US', { weekday: 'long' }), []);
 
   useEffect(() => {
     fetchData();
@@ -38,20 +39,42 @@ function Dashboard() {
 
   const fetchData = async () => {
     try {
-      const [weightRes, workoutRes] = await Promise.all([
+      const [weightRes, workoutRes, scheduleRes, exerciseMapData] = await Promise.all([
         userAPI.getWeightLog(),
         userAPI.getWorkoutLog(),
+        userAPI.getWeeklySchedule(),
+        getExerciseMap(),
       ]);
 
       setWeightLog(weightRes.data.weightLog || []);
       setWorkoutLog(workoutRes.data.workoutLog || []);
       setCurrentStreak(workoutRes.data.currentStreak || 0);
+      setWeeklySchedule(scheduleRes.data.weeklySchedule || {});
+      setExerciseMap(exerciseMapData);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  const todaysPRs = useMemo(() => {
+    const todayExercises = weeklySchedule[todayName] || [];
+    return todayExercises
+      .filter(e => e.pr?.weight)
+      .map(e => ({
+        name: exerciseMap[e.id]?.name || e.id,
+        pr: e.pr,
+      }))
+      .slice(0, 5);
+  }, [weeklySchedule, todayName, exerciseMap]);
+
+  const todaysPRsComplete = useMemo(() => {
+    const todayExercises = weeklySchedule[todayName] || [];
+    const totalExercises = todayExercises.length;
+    const prCount = todayExercises.filter(e => e.pr?.weight).length;
+    return totalExercises > 0 && prCount >= totalExercises;
+  }, [weeklySchedule, todayName]);
 
   const totalLogs = weightLog.length;
   const weightData = [...weightLog]
@@ -64,40 +87,13 @@ function Dashboard() {
       weight: parseFloat(entry.weight),
     }));
 
-  // Calculate weekly stats from real workout data
-  const getWeeklyStats = () => {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const today = new Date();
-    const stats = [];
-
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      const dateStr = date.toDateString();
-
-      const hasWorkout = workoutLog.some(
-        (w) => new Date(w.date).toDateString() === dateStr && w.completed
-      );
-
-      stats.push({
-        week: days[date.getDay()],
-        completed: hasWorkout ? 1 : 0,
-        date: dateStr,
-      });
-    }
-
-    return stats;
-  };
-
-  const weeklyStats = getWeeklyStats();
-  const weekProgress = weeklyStats.filter((d) => d.completed > 0).length;
   const latestWeight = weightData.length > 0 ? weightData[weightData.length - 1].weight : null;
   const startWeight = weightData.length > 0 ? weightData[0].weight : null;
   const weightChange = latestWeight && startWeight ? (latestWeight - startWeight).toFixed(1) : null;
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <div className="bg-graphite border border-steel rounded-xl p-4 flex flex-col gap-2">
           <div className="w-9 h-9 rounded-lg bg-lime/15 flex items-center justify-center text-lime">
             <Flame size={18} />
@@ -121,20 +117,28 @@ function Dashboard() {
           </span>
           <span className="text-[10px] text-silver">entries</span>
         </div>
-
-        <div className="bg-graphite border border-steel rounded-xl p-4 flex flex-col gap-2">
-          <div className="w-9 h-9 rounded-lg bg-warning/15 flex items-center justify-center text-warning">
-            <Calendar size={18} />
-          </div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-silver">
-            This Week
-          </span>
-          <span className="font-display text-2xl font-bold text-white leading-none">
-            {weekProgress}
-          </span>
-          <span className="text-[10px] text-silver">/7 days</span>
-        </div>
       </div>
+
+      {todaysPRs.length > 0 && (
+        <div className="bg-gradient-to-br from-lime/10 via-carbon to-carbon border border-lime/20 rounded-2xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Target size={16} className="text-lime" />
+            <h3 className="font-display text-xs font-bold uppercase tracking-wider text-lime">
+              {todaysPRsComplete ? "Today's PRs" : 'Target PRs'}
+            </h3>
+          </div>
+          <div className="flex flex-col gap-2">
+            {todaysPRs.map((pr, idx) => (
+              <div key={idx} className="flex justify-between items-center py-2 border-b border-steel/30 last:border-0">
+                <span className="text-chalk font-medium">{pr.name}</span>
+                <span className="text-lime font-display font-bold">
+                  {pr.pr.weight} kg × {pr.pr.reps} reps
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {weightData.length > 0 && (
         <div className="bg-graphite border border-steel rounded-2xl p-5">
@@ -192,29 +196,6 @@ function Dashboard() {
           </ResponsiveContainer>
         </div>
       )}
-
-      <div className="bg-graphite border border-steel rounded-2xl p-5">
-        <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
-          Weekly Activity
-        </h3>
-        <ResponsiveContainer width="100%" height={140}>
-          <BarChart data={weeklyStats} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" vertical={false} />
-            <XAxis
-              dataKey="week"
-              tick={{ fontSize: 10, fill: '#888888' }}
-              axisLine={{ stroke: '#2a2a2a' }}
-              tickLine={false}
-            />
-            <YAxis hide />
-            <Bar dataKey="completed" radius={[4, 4, 0, 0]}>
-              {weeklyStats.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.completed > 0 ? '#c6f135' : '#2a2a2a'} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
 
       {weightData.length === 0 && !loading && (
         <div className="bg-graphite border border-steel rounded-2xl p-8 text-center">

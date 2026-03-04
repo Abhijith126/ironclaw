@@ -12,6 +12,7 @@ const Settings = ({ user, setUser }) => {
     age: '',
     height: '',
     weight: '',
+    weightUnit: 'kg',
   });
 
   const [passwords, setPasswords] = useState({
@@ -35,6 +36,7 @@ const Settings = ({ user, setUser }) => {
           age: userData.age || '',
           height: userData.height || '',
           weight: userData.weight || '',
+          weightUnit: userData.weightUnit || 'kg',
         });
         if (setUser) {
           setUser(userData);
@@ -71,6 +73,7 @@ const Settings = ({ user, setUser }) => {
         age: profile.age ? parseInt(profile.age) : null,
         height: profile.height ? parseInt(profile.height) : null,
         weight: profile.weight ? parseFloat(profile.weight) : null,
+        weightUnit: profile.weightUnit,
       });
 
       setMessage({ type: 'success', text: 'Profile updated successfully!' });
@@ -197,7 +200,7 @@ const Settings = ({ user, setUser }) => {
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-silver mb-2">
-                    Weight (kg)
+                    Weight ({profile.weightUnit})
                   </label>
                   <input
                     type="number"
@@ -210,6 +213,36 @@ const Settings = ({ user, setUser }) => {
                     className="w-full px-3 py-3 bg-graphite border border-steel rounded-xl text-chalk text-center placeholder-silver/50 focus:border-lime focus:ring-2 focus:ring-lime/20 outline-none transition-all"
                     placeholder="70"
                   />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-silver mb-2">
+                  Weight Unit
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setProfile(prev => ({ ...prev, weightUnit: 'kg' }))}
+                    className={`flex-1 py-3 rounded-xl font-semibold text-sm transition-all ${
+                      profile.weightUnit === 'kg'
+                        ? 'bg-lime text-obsidian'
+                        : 'bg-graphite border border-steel text-silver hover:text-chalk'
+                    }`}
+                  >
+                    kg
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setProfile(prev => ({ ...prev, weightUnit: 'lbs' }))}
+                    className={`flex-1 py-3 rounded-xl font-semibold text-sm transition-all ${
+                      profile.weightUnit === 'lbs'
+                        ? 'bg-lime text-obsidian'
+                        : 'bg-graphite border border-steel text-silver hover:text-chalk'
+                    }`}
+                  >
+                    lbs
+                  </button>
                 </div>
               </div>
 
