@@ -16,10 +16,12 @@
 | PWA | vite-plugin-pwa | 1.x |
 | Date utils | date-fns | 4.x |
 | HTTP client | axios | 1.x |
+| i18n | i18next + react-i18next | Latest |
 
 - Tailwind v4 uses the new `@theme` directive in `src/index.css` (no `tailwind.config.js`).
 - All styles use Tailwind utility classes. Minimal custom CSS in `App.css`.
 - There is **no** component library. All UI is hand-built with Tailwind.
+- **i18n is required** - all user-facing text must use translation keys from `src/i18n/locales/`
 
 ---
 
@@ -326,15 +328,17 @@ The app has light mode support, but dark theme is the default and primary experi
 | `src/App.css` | Minimal utilities, Recharts overrides, scrollbar styles |
 | `src/App.jsx` | Shell layout, bottom nav (5 tabs), slide menu, import/export, safe area handling |
 | `src/hooks/useDeviceInsets.js` | Hook for detecting notch and software navigation insets |
-| `src/components/AuthForm.jsx` | Login/register form with lime accent |
-| `src/components/Dashboard.jsx` | Stat cards, area/bar charts |
-| `src/components/WeightTracker.jsx` | Form inputs, line chart, trend badges |
-| `src/components/WorkoutChecklist.jsx` | Exercise list, check states |
-| `src/components/ManageWorkouts.jsx` | Day pills, exercise editor with ExercisePicker |
-| `src/components/ExercisePicker.jsx` | Searchable dropdown for exercise selection |
-| `src/components/EquipmentTracker.jsx` | Equipment list with categories, search, video modal |
-| `src/components/Modal.jsx` | Reusable Modal, ConfirmModal, AlertModal |
-| `src/components/InstallApp.jsx` | Download APK page, points to /app-release.apk |
+| `src/hooks/useTheme.js` | Theme state management (dark/light toggle) |
+| `src/i18n/index.js` | i18n configuration with react-i18next |
+| `src/components/ui/` | Global reusable UI components (Button, Input, Card, Modal, etc.) |
+| `src/features/dashboard/Dashboard.jsx` | Stat cards, area/bar charts |
+| `src/features/weight/WeightTracker.jsx` | Form inputs, line chart, trend badges |
+| `src/features/workout/WorkoutChecklist.jsx` | Exercise list, check states |
+| `src/features/workout/ManageWorkouts.jsx` | Day pills, exercise editor with ExercisePicker |
+| `src/features/workout/ExercisePicker.jsx` | Searchable dropdown for exercise selection |
+| `src/features/equipment/EquipmentTracker.jsx` | Equipment list with categories, search, video modal |
+| `src/features/settings/Settings.jsx` | Profile and password management |
+| `src/features/auth/AuthForm.jsx` | Login/register form |
 | `src/services/api.js` | Axios client, auth interceptors, exercise/equipment caches |
 
 ---
@@ -353,6 +357,10 @@ The app has light mode support, but dark theme is the default and primary experi
 10. **New CSS variables** should be added to `@theme` in `index.css`.
 11. **Avoid inline `<style>` tags** — use Tailwind classes instead.
 12. **Update this file** when adding new colors, fonts, or design patterns.
+13. **i18n required** - All user-facing text must use `useTranslation` hook with keys from `src/i18n/locales/`. Never hardcode display text.
+14. **DRY Principle** - Follow the project structure in Section 17. Reuse global components from `src/components/ui/`.
+15. **Feature organization** - Each feature should be in `src/features/<feature-name>/` with its own components, hooks (if specific), and utilities if needed.
+16. **Barrel exports** - Each directory must have an `index.js` file exporting its contents for clean imports.
 
 ---
 
@@ -470,21 +478,221 @@ const isNativeApp = window.matchMedia('(display-mode: standalone)').matches ||
 workout-tracker/
 ├── client/                    # React frontend
 │   ├── src/
-│   │   ├── components components
-│   │   ├── hooks/        # React/             # Custom hooks
+│   │   ├── components/ui/   # Global reusable UI components
+│   │   │   ├── index.jsx     # Barrel exports
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── Card.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── StatCard.jsx
+│   │   │   ├── Badge.jsx
+│   │   │   ├── SearchInput.jsx
+│   │   │   ├── Loader.jsx
+│   │   │   ├── PageHeader.jsx
+│   │   │   ├── ExerciseItem.jsx
+│   │   │   ├── TipBox.jsx
+│   │   │   ├── EmptyState.jsx
+│   │   │   ├── ChartTooltip.jsx
+│   │   │   └── LanguageSwitcher.jsx
+│   │   │
+│   │   ├── features/         # Feature-based modules
+│   │   │   ├── dashboard/    # Dashboard feature
+│   │   │   │   ├── Dashboard.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── workout/       # Workout feature
+│   │   │   │   ├── WorkoutChecklist.jsx
+│   │   │   │   ├── ManageWorkouts.jsx
+│   │   │   │   ├── ExercisePicker.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── weight/        # Weight tracking feature
+│   │   │   │   ├── WeightTracker.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── equipment/     # Equipment feature
+│   │   │   │   ├── EquipmentTracker.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── exercises/     # Exercises feature
+│   │   │   │   ├── ExercisesTracker.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── settings/      # Settings feature
+│   │   │   │   ├── Settings.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── auth/          # Auth feature
+│   │   │   │   ├── AuthForm.jsx
+│   │   │   │   └── index.js
+│   │   │   ├── about/         # About feature
+│   │   │   │   ├── AboutPage.jsx
+│   │   │   │   └── index.js
+│   │   │   └── index.js       # Feature barrel exports
+│   │   │
+│   │   ├── hooks/            # Global hooks
+│   │   │   ├── useDeviceInsets.js
+│   │   │   ├── useTheme.js
+│   │   │   └── index.js
+│   │   │
+│   │   ├── utils/             # Utility functions
+│   │   │   └── index.js
+│   │   │
+│   │   ├── constants/         # App constants
+│   │   │   └── index.js
+│   │   │
+│   │   ├── types/             # Type definitions
+│   │   │   └── index.js
+│   │   │
+│   │   ├── i18n/              # Internationalization
+│   │   │   ├── index.js        # i18n config
+│   │   │   └── locales/
+│   │   │       ├── en.json     # English
+│   │   │       ├── es.json     # Spanish
+│   │   │       └── nl.json     # Dutch
+│   │   │
 │   │   ├── services/          # API services
-│   │   ├── App.jsx            # Main app with routing
-│   │   ├── index.css          # Tailwind theme & base styles
+│   │   │   └── api.js
+│   │   │
+│   │   ├── App.jsx           # Main app with routing
+│   │   ├── index.css         # Tailwind theme & base styles
 │   │   └── main.jsx           # Entry point
-│   ├── android/                # Android native project
-│   ├── public/                 # Static assets + APK
+│   ├── android/               # Android native project
+│   ├── public/                # Static assets + APK
 │   ├── capacitor.config.json  # Capacitor config
 │   └── package.json
-├── server/                     # Node.js backend
-│   ├── routes/                 # API routes
-│   ├── models/                 # Mongoose models
-│   └── index.js               # Express server
-├── scripts/                    # Build scripts
-│   └── build-release.sh       # Build release APK
-└── AGENTS.md                   # This file
+├── server/                    # Node.js backend
+│   ├── routes/                # API routes
+│   ├── models/               # Mongoose models
+│   └── index.js              # Express server
+├── scripts/                   # Build scripts
+│   └── build-release.sh      # Build release APK
+└── AGENTS.md                  # This file
+```
+
+---
+
+## 17. DRY Principle & Global Architecture
+
+### 17.1 Global UI Components (`src/components/ui/`)
+
+All reusable UI primitives are centralized here. Each component must be imported from the barrel export:
+
+```jsx
+import { Button, Input, Card, Modal, StatCard, Badge, SearchInput, PageHeader, ExerciseItem, TipBox, EmptyState, ChartTooltip, LanguageSwitcher } from '@/components/ui';
+```
+
+| Component | Purpose |
+|---|---|
+| `Button` | Primary, secondary, danger, ghost variants with loading state |
+| `Input` | Text, password, number inputs with label and error support |
+| `Card` | Default, secondary, elevated, gradient variants |
+| `Modal` | Base modal with ConfirmModal, AlertModal, VideoModal |
+| `StatCard` | Dashboard statistics with icon, label, value, trend |
+| `Badge` | Status badges with color variants |
+| `SearchInput` | Search input with clear button |
+| `PageHeader` | Page title and subtitle with action slot |
+| `ExerciseItem` | Workout exercise item with completion toggle and PR editing |
+| `TipBox` | Tip/pro tip boxes with variants |
+| `EmptyState` | Empty state with icon, title, message |
+| `ChartTooltip` | Consistent chart tooltips |
+| `LanguageSwitcher` | Dropdown language selector |
+
+### 17.2 Global Hooks (`src/hooks/`)
+
+```jsx
+import { useDeviceInsets, useTheme } from '@/hooks';
+```
+
+- **useDeviceInsets**: Returns `{ top, bottom, hasNotch, hasBottomInset }` for safe area handling
+- **useTheme**: Returns `{ theme, setTheme, toggleTheme, isDark, isLight }` for theme management
+
+### 17.3 Global Utils (`src/utils/`)
+
+Centralized utility functions for reuse across features:
+- Date formatting: `formatDate`, `formatDateShort`, `getTodayName`, `getTomorrowName`, `getDateKey`
+- Weight utilities: `formatWeight`, `getWeightTrend`, `calculateWeightChange`
+- Common: `getInitials`, `debounce`, `groupBy`, `sortByDate`, `downloadJSON`, `readJSONFile`
+
+### 17.4 Global Constants (`src/constants/`)
+
+Centralized app constants:
+- `DAYS_OF_WEEK`, `WEIGHT_UNITS`, `DIFFICULTY_LEVELS`, `EQUIPMENT_CATEGORIES`
+- `ROUTES`, `STORAGE_KEYS`, `CHART_CONFIG`, `APP_NAME`
+
+### 17.5 Feature Structure
+
+Each feature lives in `src/features/<feature-name>/` with:
+- Main component (`Dashboard.jsx`, `WeightTracker.jsx`, etc.)
+- Sub-components specific to the feature
+- `index.js` barrel export
+
+```jsx
+// Importing features
+import { Dashboard } from '@/features/dashboard';
+import { WorkoutChecklist, ManageWorkouts } from '@/features/workout';
+```
+
+### 17.6 Using Global Components
+
+When building new features, always use global components first:
+
+```jsx
+import { PageHeader, Card, Button, Input, Badge, TipBox } from '@/components/ui';
+import { useTranslation } from 'react-i18next';
+
+function MyFeature() {
+  const { t } = useTranslation();
+  
+  return (
+    <div>
+      <PageHeader title={t('myFeature.title')} subtitle={t('myFeature.subtitle')} />
+      <Card>
+        <Button>{t('common.save')}</Button>
+      </Card>
+    </div>
+  );
+}
+```
+
+---
+
+## 18. Internationalization (i18n)
+
+### 18.1 Supported Languages
+- English (en) - Default
+- Spanish (es)
+- Dutch (nl)
+
+### 18.2 Adding New Translations
+
+1. Add translation keys to `src/i18n/locales/en.json`
+2. Add same keys to other locale files (`es.json`, `nl.json`)
+3. Use in components:
+
+```jsx
+import { useTranslation } from 'react-i18next';
+
+function MyComponent() {
+  const { t } = useTranslation();
+  
+  return <h1>{t('myComponent.title')}</h1>;
+}
+```
+
+### 18.3 Language Switcher
+
+The `LanguageSwitcher` component is available in the side menu. It:
+- Shows current language with flag
+- Dropdown to select between EN/ES/NL
+- Persists selection to localStorage
+
+### 18.4 Translation Key Structure
+
+```json
+{
+  "app": { "name": "...", "tagline": "..." },
+  "nav": { "home": "...", "workout": "...", ... },
+  "auth": { "signIn": "...", "signUp": "...", ... },
+  "dashboard": { "streak": "...", ... },
+  "workout": { "title": "...", ... },
+  "settings": { "title": "...", ... },
+  "common": { "save": "...", "cancel": "...", ... },
+  "importExport": { ... }
+}
+```
 ```

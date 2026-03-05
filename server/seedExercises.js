@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://mongodb:27017/workout-tracker';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/workout-tracker';
 
 const exerciseSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true, unique: true },
