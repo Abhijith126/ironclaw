@@ -94,7 +94,7 @@ export const getExerciseMap = async () => {
   const exercises = await getExercises();
   const map = {};
   exercises.forEach((ex) => {
-    map[ex._id] = { name: ex.name, equipment: ex.equipment };
+    map[ex._id] = { name: ex.name, equipment: ex.equipment, imageUrl: ex.imageUrl };
   });
   exerciseMapCache = map;
   return map;
