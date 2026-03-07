@@ -1,174 +1,300 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Play, ExternalLink, Dumbbell } from 'lucide-react';
-import { PageHeader, SearchInput, Card, Badge, EmptyState } from '../../components/ui';
+import { Dumbbell, ArrowLeft, ChevronRight } from 'lucide-react';
+import { PageHeader, SearchInput, Badge, EmptyState } from '../../components/ui';
+import { getExercises } from '../../services/api';
+
+interface APIExercise {
+  _id: string;
+  name: string;
+  category: string;
+  muscleGroup: string;
+  equipment: string;
+  difficulty: string;
+  imageUrl?: string;
+  description?: string;
+}
 
 const MUSCLE_GROUPS = [
-  { id: 'chest', name: 'Chest' },
-  { id: 'back', name: 'Back' },
-  { id: 'shoulders', name: 'Shoulders' },
-  { id: 'biceps', name: 'Biceps' },
-  { id: 'triceps', name: 'Triceps' },
-  { id: 'abs', name: 'Abs' },
-  { id: 'quads', name: 'Quads' },
-  { id: 'hamstrings', name: 'Hamstrings' },
-  { id: 'glutes', name: 'Glutes' },
-  { id: 'calves', name: 'Calves' },
+  'all', 'chest', 'back', 'shoulders', 'arms', 'legs', 'core', 'cardiovascular', 'full body',
 ];
 
 const EQUIPMENT_FILTERS = [
-  { id: '', name: 'All' },
-  { id: 'dumbbell', name: 'Dumbbell' },
-  { id: 'barbell', name: 'Barbell' },
-  { id: 'bodyweight', name: 'Bodyweight' },
-  { id: 'cable', name: 'Cable' },
-  { id: 'machine', name: 'Machine' },
-  { id: 'kettlebell', name: 'Kettlebell' },
+  '', 'barbell', 'dumbbells', 'cable', 'machine', 'bodyweight', 'kettlebell',
 ];
 
-const EXERCISES = {
-  chest: [
-    { name: 'Dumbbell Bench Press', equipment: 'dumbbell', difficulty: 'Beginner', views: '7.2M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-bench-press.html' },
-    { name: 'Incline Dumbbell Press', equipment: 'dumbbell', difficulty: 'Beginner', views: '6.1M', url: 'https://www.muscleandstrength.com/exercises/incline-dumbbell-bench-press.html' },
-    { name: 'Dumbbell Fly', equipment: 'dumbbell', difficulty: 'Beginner', views: '5.4M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-flys.html' },
-    { name: 'Barbell Bench Press', equipment: 'barbell', difficulty: 'Intermediate', views: '5.2M', url: 'https://www.muscleandstrength.com/exercises/barbell-bench-press.html' },
-    { name: 'Incline Barbell Press', equipment: 'barbell', difficulty: 'Beginner', views: '3.9M', url: 'https://www.muscleandstrength.com/exercises/incline-bench-press.html' },
-    { name: 'Decline Bench Press', equipment: 'barbell', difficulty: 'Beginner', views: '828K', url: 'https://www.muscleandstrength.com/exercises/decline-bench-press.html' },
-    { name: 'Pec Deck', equipment: 'machine', difficulty: 'Beginner', views: '3.2M', url: 'https://www.muscleandstrength.com/exercises/pec-dec.html' },
-    { name: 'Cable Crossover', equipment: 'cable', difficulty: 'Beginner', views: '1.9M', url: 'https://www.muscleandstrength.com/exercises/cable-crossovers-%28mid-chest%29.html' },
-    { name: 'Chest Dip', equipment: 'bodyweight', difficulty: 'Intermediate', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/chest-dip.html' },
-    { name: 'Push Up', equipment: 'bodyweight', difficulty: 'Beginner', views: '1M', url: 'https://www.muscleandstrength.com/exercises/push-up.html' },
-    { name: 'Dumbbell Pullover', equipment: 'dumbbell', difficulty: 'Intermediate', views: '6.2M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-pullover.html' },
-    { name: 'Hammer Strength Press', equipment: 'machine', difficulty: 'Beginner', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/hammer-strength-bench-press.html' },
-  ],
-  back: [
-    { name: 'Lat Pulldown', equipment: 'cable', difficulty: 'Beginner', views: '5M', url: 'https://www.muscleandstrength.com/exercises/lat-pull-down.html' },
-    { name: 'Pull Up', equipment: 'bodyweight', difficulty: 'Intermediate', views: '514K', url: 'https://www.muscleandstrength.com/exercises/pull-up' },
-    { name: 'Chin Up', equipment: 'bodyweight', difficulty: 'Beginner', views: '1.9M', url: 'https://www.muscleandstrength.com/exercises/chin-up.html' },
-    { name: 'Wide Grip Pull Up', equipment: 'bodyweight', difficulty: 'Beginner', views: '3.5M', url: 'https://www.muscleandstrength.com/exercises/wide-grip-pull-up.html' },
-    { name: 'Seated Cable Row', equipment: 'cable', difficulty: 'Beginner', views: '2.2M', url: 'https://www.muscleandstrength.com/exercises/seated-cable-row.html' },
-    { name: 'Bent Over Barbell Row', equipment: 'barbell', difficulty: 'Intermediate', views: '8.6M', url: 'https://www.muscleandstrength.com/exercises/bent-over-barbell-row.html' },
-    { name: 'One Arm Dumbbell Row', equipment: 'dumbbell', difficulty: 'Beginner', views: '9.2M', url: 'https://www.muscleandstrength.com/exercises/one-arm-dumbbell-row.html' },
-    { name: 'T-Bar Row', equipment: 'barbell', difficulty: 'Intermediate', views: '3.1M', url: 'https://www.muscleandstrength.com/exercises/t-bar-row-with-handle.html' },
-    { name: 'Straight Arm Pulldown', equipment: 'cable', difficulty: 'Beginner', views: '1.3M', url: 'https://www.muscleandstrength.com/exercises/straight-arm-lat-pull-down.html' },
-    { name: 'Face Pull', equipment: 'cable', difficulty: 'Beginner', views: '2.8M', url: 'https://www.muscleandstrength.com/exercises/face-pull.html' },
-    { name: 'Deadlift', equipment: 'barbell', difficulty: 'Advanced', views: '4.5M', url: 'https://www.muscleandstrength.com/exercises/deadlift.html' },
-  ],
-  shoulders: [
-    { name: 'Dumbbell Lateral Raise', equipment: 'dumbbell', difficulty: 'Beginner', views: '10.8M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-lateral-raise.html' },
-    { name: 'Military Press', equipment: 'barbell', difficulty: 'Intermediate', views: '6.5M', url: 'https://www.muscleandstrength.com/exercises/military-press.html' },
-    { name: 'Arnold Press', equipment: 'dumbbell', difficulty: 'Intermediate', views: '4.2M', url: 'https://www.muscleandstrength.com/exercises/seated-arnold-press.html' },
-    { name: 'Dumbbell Shoulder Press', equipment: 'dumbbell', difficulty: 'Beginner', views: '3.8M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-shoulder-press.html' },
-    { name: 'Front Raise', equipment: 'dumbbell', difficulty: 'Beginner', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/front-dumbbell-raise.html' },
-    { name: 'Rear Delt Fly', equipment: 'dumbbell', difficulty: 'Beginner', views: '1.9M', url: 'https://www.muscleandstrength.com/exercises/reverse-dumbbell-fly.html' },
-    { name: 'Upright Row', equipment: 'barbell', difficulty: 'Intermediate', views: '2.5M', url: 'https://www.muscleandstrength.com/exercises/upright-barbell-row.html' },
-    { name: 'Shrug', equipment: 'dumbbell', difficulty: 'Beginner', views: '3.4M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-shrug.html' },
-    { name: 'Machine Shoulder Press', equipment: 'machine', difficulty: 'Beginner', views: '1.2M', url: 'https://www.muscleandstrength.com/exercises/machine-shoulder-press.html' },
-  ],
-  biceps: [
-    { name: 'Dumbbell Curl', equipment: 'dumbbell', difficulty: 'Beginner', views: '8.2M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-curl.html' },
-    { name: 'Hammer Curl', equipment: 'dumbbell', difficulty: 'Beginner', views: '5.6M', url: 'https://www.muscleandstrength.com/exercises/hammer-curl.html' },
-    { name: 'Preacher Curl', equipment: 'barbell', difficulty: 'Intermediate', views: '3.2M', url: 'https://www.muscleandstrength.com/exercises/barbell-preacher-curl.html' },
-    { name: 'Incline Dumbbell Curl', equipment: 'dumbbell', difficulty: 'Beginner', views: '2.8M', url: 'https://www.muscleandstrength.com/exercises/incline-dumbbell-curl.html' },
-    { name: 'Cable Curl', equipment: 'cable', difficulty: 'Beginner', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/cable-curl.html' },
-    { name: 'Concentration Curl', equipment: 'dumbbell', difficulty: 'Beginner', views: '1.5M', url: 'https://www.muscleandstrength.com/exercises/concentration-curl.html' },
-    { name: 'EZ Bar Curl', equipment: 'barbell', difficulty: 'Beginner', views: '1.8M', url: 'https://www.muscleandstrength.com/exercises/ez-bar-curl.html' },
-    { name: 'Cross Body Curl', equipment: 'dumbbell', difficulty: 'Beginner', views: '1.2M', url: 'https://www.muscleandstrength.com/exercises/cross-body-hammer-curl.html' },
-  ],
-  triceps: [
-    { name: 'Tricep Pushdown', equipment: 'cable', difficulty: 'Beginner', views: '4.5M', url: 'https://www.muscleandstrength.com/exercises/tricep-pushdown.html' },
-    { name: 'Overhead Tricep Extension', equipment: 'dumbbell', difficulty: 'Beginner', views: '3.2M', url: 'https://www.muscleandstrength.com/exercises/overhead-tricep-extension.html' },
-    { name: 'Skull Crusher', equipment: 'barbell', difficulty: 'Intermediate', views: '2.8M', url: 'https://www.muscleandstrength.com/exercises/skull-crusher.html' },
-    { name: 'Tricep Dip', equipment: 'bodyweight', difficulty: 'Intermediate', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/tricep-dip.html' },
-    { name: 'Close Grip Bench Press', equipment: 'barbell', difficulty: 'Intermediate', views: '1.9M', url: 'https://www.muscleandstrength.com/exercises/close-grip-bench-press.html' },
-    { name: 'Tricep Kickback', equipment: 'dumbbell', difficulty: 'Beginner', views: '1.5M', url: 'https://www.muscleandstrength.com/exercises/tricep-kickback.html' },
-    { name: 'Rope Pushdown', equipment: 'cable', difficulty: 'Beginner', views: '2.3M', url: 'https://www.muscleandstrength.com/exercises/rope-pushdown.html' },
-  ],
-  abs: [
-    { name: 'Crunch', equipment: 'bodyweight', difficulty: 'Beginner', views: '3.2M', url: 'https://www.muscleandstrength.com/exercises/crunch.html' },
-    { name: 'Plank', equipment: 'bodyweight', difficulty: 'Beginner', views: '4.1M', url: 'https://www.muscleandstrength.com/exercises/plank.html' },
-    { name: 'Leg Raise', equipment: 'bodyweight', difficulty: 'Intermediate', views: '2.5M', url: 'https://www.muscleandstrength.com/exercises/leg-raise.html' },
-    { name: 'Russian Twist', equipment: 'bodyweight', difficulty: 'Beginner', views: '1.8M', url: 'https://www.muscleandstrength.com/exercises/russian-twist.html' },
-    { name: 'Cable Crunch', equipment: 'cable', difficulty: 'Beginner', views: '1.2M', url: 'https://www.muscleandstrength.com/exercises/cable-crunch.html' },
-    { name: 'Ab Wheel Rollout', equipment: 'other', difficulty: 'Advanced', views: '890K', url: 'https://www.muscleandstrength.com/exercises/ab-wheel-rollout.html' },
-    { name: 'Hanging Leg Raise', equipment: 'bodyweight', difficulty: 'Advanced', views: '1.1M', url: 'https://www.muscleandstrength.com/exercises/hanging-leg-raise.html' },
-    { name: 'Dead Bug', equipment: 'bodyweight', difficulty: 'Beginner', views: '780K', url: 'https://www.muscleandstrength.com/exercises/dead-bug.html' },
-  ],
-  quads: [
-    { name: 'Squat', equipment: 'barbell', difficulty: 'Intermediate', views: '12M', url: 'https://www.muscleandstrength.com/exercises/barbell-squat.html' },
-    { name: 'Leg Press', equipment: 'machine', difficulty: 'Beginner', views: '5.2M', url: 'https://www.muscleandstrength.com/exercises/leg-press.html' },
-    { name: 'Front Squat', equipment: 'barbell', difficulty: 'Intermediate', views: '3.8M', url: 'https://www.muscleandstrength.com/exercises/front-squat.html' },
-    { name: 'Leg Extension', equipment: 'machine', difficulty: 'Beginner', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/leg-extension.html' },
-    { name: 'Lunge', equipment: 'dumbbells', difficulty: 'Beginner', views: '4.5M', url: 'https://www.muscleandstrength.com/exercises/lunge.html' },
-    { name: 'Goblet Squat', equipment: 'dumbbell', difficulty: 'Beginner', views: '2.8M', url: 'https://www.muscleandstrength.com/exercises/goblet-squat.html' },
-    { name: 'Bulgarian Split Squat', equipment: 'dumbbells', difficulty: 'Intermediate', views: '2.2M', url: 'https://www.muscleandstrength.com/exercises/bulgarian-split-squat.html' },
-    { name: 'Hack Squat', equipment: 'machine', difficulty: 'Intermediate', views: '1.9M', url: 'https://www.muscleandstrength.com/exercises/hack-squat.html' },
-    { name: 'Step Up', equipment: 'dumbbells', difficulty: 'Beginner', views: '1.5M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-step-up.html' },
-  ],
-  hamstrings: [
-    { name: 'Romanian Deadlift', equipment: 'barbell', difficulty: 'Intermediate', views: '5.7M', url: 'https://www.muscleandstrength.com/exercises/stiff-leg-deadlift-aka-romanian-deadlift.html' },
-    { name: 'Leg Curl', equipment: 'machine', difficulty: 'Beginner', views: '2.3M', url: 'https://www.muscleandstrength.com/exercises/leg-curl.html' },
-    { name: 'Stiff Leg Deadlift', equipment: 'barbell', difficulty: 'Intermediate', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/stiff-leg-deadlift.html' },
-    { name: 'Dumbbell Deadlift', equipment: 'dumbbell', difficulty: 'Beginner', views: '6.4M', url: 'https://www.muscleandstrength.com/exercises/dumbbell-deadlift.html' },
-    { name: 'Glute Ham Raise', equipment: 'machine', difficulty: 'Intermediate', views: '890K', url: 'https://www.muscleandstrength.com/exercises/glute-ham-raise.html' },
-  ],
-  glutes: [
-    { name: 'Hip Thrust', equipment: 'barbell', difficulty: 'Intermediate', views: '4.2M', url: 'https://www.muscleandstrength.com/exercises/barbell-hip-thrust.html' },
-    { name: 'Glute Bridge', equipment: 'bodyweight', difficulty: 'Beginner', views: '2.1M', url: 'https://www.muscleandstrength.com/exercises/glute-bridge.html' },
-    { name: 'Cable Pull Through', equipment: 'cable', difficulty: 'Beginner', views: '780K', url: 'https://www.muscleandstrength.com/exercises/cable-pull-through.html' },
-    { name: 'Sumo Deadlift', equipment: 'barbell', difficulty: 'Intermediate', views: '3.5M', url: 'https://www.muscleandstrength.com/exercises/sumo-deadlift.html' },
-    { name: 'Bulgarian Split Squat', equipment: 'dumbbells', difficulty: 'Intermediate', views: '2.2M', url: 'https://www.muscleandstrength.com/exercises/bulgarian-split-squat.html' },
-  ],
-  calves: [
-    { name: 'Standing Calf Raise', equipment: 'machine', difficulty: 'Beginner', views: '1.8M', url: 'https://www.muscleandstrength.com/exercises/standing-calf-raise.html' },
-    { name: 'Seated Calf Raise', equipment: 'machine', difficulty: 'Beginner', views: '1.2M', url: 'https://www.muscleandstrength.com/exercises/seated-calf-raise.html' },
-    { name: 'Donkey Calf Raise', equipment: 'machine', difficulty: 'Beginner', views: '650K', url: 'https://www.muscleandstrength.com/exercises/donkey-calf-raise.html' },
-  ],
+const HOW_TO: Record<string, { steps: string[]; tips: string[] }> = {
+  'chest': {
+    steps: [
+      'Set up the bench or position yourself correctly',
+      'Grip the weight with proper hand placement',
+      'Lower the weight with control to chest level',
+      'Press upward, extending your arms fully',
+      'Repeat for the desired number of reps',
+    ],
+    tips: [
+      'Keep your shoulder blades retracted',
+      'Maintain a slight arch in your lower back',
+      'Control the eccentric (lowering) phase',
+    ],
+  },
+  'back': {
+    steps: [
+      'Set up with proper grip width and stance',
+      'Initiate the pull by engaging your lats',
+      'Pull the weight toward your torso',
+      'Squeeze your shoulder blades at peak contraction',
+      'Lower with control back to start',
+    ],
+    tips: [
+      'Focus on pulling with your elbows, not your hands',
+      'Keep your core engaged throughout',
+      'Avoid using momentum',
+    ],
+  },
+  'shoulders': {
+    steps: [
+      'Start with the weight at shoulder height',
+      'Engage your core and set your stance',
+      'Press or raise the weight in a controlled motion',
+      'Hold briefly at the top of the movement',
+      'Lower slowly back to the starting position',
+    ],
+    tips: [
+      'Avoid shrugging your shoulders up',
+      'Keep a slight bend in your elbows for raises',
+      'Use lighter weight with strict form',
+    ],
+  },
+  'arms': {
+    steps: [
+      'Position your arms and grip the weight',
+      'Keep your elbows fixed in position',
+      'Curl or extend through the full range of motion',
+      'Squeeze the muscle at peak contraction',
+      'Lower with control, resisting gravity',
+    ],
+    tips: [
+      'Avoid swinging or using body momentum',
+      'Focus on the mind-muscle connection',
+      'Full range of motion beats heavy weight',
+    ],
+  },
+  'legs': {
+    steps: [
+      'Set up with proper foot placement and stance',
+      'Brace your core before initiating the movement',
+      'Lower yourself with control through the full range',
+      'Drive through your feet to return to start',
+      'Keep your knees tracking over your toes',
+    ],
+    tips: [
+      'Warm up thoroughly before heavy leg work',
+      'Focus on depth over weight',
+      'Keep your core tight throughout',
+    ],
+  },
+  'core': {
+    steps: [
+      'Position yourself on the floor or apparatus',
+      'Engage your core by bracing your abdominals',
+      'Perform the movement with control',
+      'Hold the contraction briefly',
+      'Return to start position slowly',
+    ],
+    tips: [
+      'Breathe out during the contraction',
+      'Avoid pulling on your neck',
+      'Quality reps beat quantity',
+    ],
+  },
+  'cardiovascular': {
+    steps: [
+      'Set your pace and intensity level',
+      'Maintain proper form and posture',
+      'Keep a steady breathing rhythm',
+      'Monitor your heart rate',
+      'Cool down gradually',
+    ],
+    tips: [
+      'Start with a warm-up period',
+      'Stay hydrated throughout',
+      'Gradually increase intensity over time',
+    ],
+  },
+  'full body': {
+    steps: [
+      'Set up with proper form and stance',
+      'Engage multiple muscle groups simultaneously',
+      'Move through the full range of motion',
+      'Maintain coordination throughout',
+      'Reset between reps if needed',
+    ],
+    tips: [
+      'Master the movement pattern before adding weight',
+      'Focus on form over speed',
+      'These exercises burn more calories due to multi-joint engagement',
+    ],
+  },
 };
 
-export default function ExercisesTracker() {
+function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: () => void }) {
   const { t } = useTranslation();
-  const [selectedMuscle, setSelectedMuscle] = useState('chest');
-  const [selectedEquipment, setSelectedEquipment] = useState('');
-  const [search, setSearch] = useState('');
-
-  const filteredExercises = EXERCISES[selectedMuscle]?.filter(ex => {
-    const matchesSearch = ex.name.toLowerCase().includes(search.toLowerCase());
-    const matchesEquipment = !selectedEquipment || ex.equipment.toLowerCase().includes(selectedEquipment.toLowerCase());
-    return matchesSearch && matchesEquipment;
-  }) || [];
-
-  const currentMuscleGroup = MUSCLE_GROUPS.find(m => m.id === selectedMuscle);
-
-  const openExerciseUrl = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
-  const getDifficultyVariant = (difficulty) => {
-    if (difficulty === 'Beginner') return 'success';
-    if (difficulty === 'Intermediate') return 'primary';
-    return 'danger';
-  };
+  const [activeTab, setActiveTab] = useState<'howto' | 'history'>('howto');
+  const howTo = HOW_TO[exercise.muscleGroup] || HOW_TO['chest'];
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader 
-        title={t('exercises.title')} 
-        subtitle={t('exercises.areaWorkouts')} 
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 text-silver hover:text-lime transition-colors self-start"
+      >
+        <ArrowLeft size={18} />
+        <span className="text-sm font-medium">{t('exercises.backToList')}</span>
+      </button>
+
+      <div className="relative rounded-2xl overflow-hidden border border-steel bg-muted">
+        <div className="flex items-center gap-4 p-5">
+          <div className="w-20 h-20 rounded-2xl overflow-hidden bg-steel/50 shrink-0 flex items-center justify-center">
+            {exercise.imageUrl ? (
+              <img src={exercise.imageUrl} alt={exercise.name} className="w-full h-full object-cover" />
+            ) : (
+              <Dumbbell size={32} className="text-silver" />
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="font-display text-xl font-bold text-white">{exercise.name}</h2>
+            <div className="flex flex-wrap gap-2 mt-2">
+              <Badge variant={getDifficultyVariant(exercise.difficulty)} size="sm">
+                {exercise.difficulty}
+              </Badge>
+              <Badge variant="default" size="sm">{exercise.equipment}</Badge>
+              <Badge variant="default" size="sm">{exercise.muscleGroup}</Badge>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-1 p-1 bg-graphite rounded-xl border border-steel">
+        <button
+          onClick={() => setActiveTab('howto')}
+          className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${
+            activeTab === 'howto'
+              ? 'bg-lime text-obsidian'
+              : 'text-silver hover:text-white'
+          }`}
+        >
+          {t('exercises.howTo')}
+        </button>
+        <button
+          onClick={() => setActiveTab('history')}
+          className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${
+            activeTab === 'history'
+              ? 'bg-lime text-obsidian'
+              : 'text-silver hover:text-white'
+          }`}
+        >
+          {t('exercises.history')}
+        </button>
+      </div>
+
+      {activeTab === 'howto' ? (
+        <div className="flex flex-col gap-4">
+          <div className="p-4 bg-muted rounded-2xl border border-steel">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-lime mb-3">{t('exercises.steps')}</h3>
+            <div className="flex flex-col gap-3">
+              {howTo.steps.map((step, i) => (
+                <div key={i} className="flex gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-lime/15 text-lime text-xs font-bold flex items-center justify-center">
+                    {i + 1}
+                  </span>
+                  <p className="text-chalk text-sm leading-relaxed pt-0.5">{step}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-4 bg-muted rounded-2xl border border-steel">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-lime mb-3">{t('exercises.tips')}</h3>
+            <div className="flex flex-col gap-2">
+              {howTo.tips.map((tip, i) => (
+                <div key={i} className="flex gap-2 items-start">
+                  <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-lime mt-1.5" />
+                  <p className="text-silver text-sm">{tip}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="p-6 bg-muted rounded-2xl border border-steel">
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <Dumbbell size={40} className="text-steel mb-3" />
+            <p className="text-silver text-sm">{t('exercises.noHistory')}</p>
+            <p className="text-steel text-xs mt-1">{t('exercises.noHistoryHint')}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function getDifficultyVariant(difficulty: string) {
+  if (difficulty === 'beginner') return 'success' as const;
+  if (difficulty === 'intermediate') return 'primary' as const;
+  return 'danger' as const;
+}
+
+export default function ExercisesTracker() {
+  const { t } = useTranslation();
+  const [exercises, setExercises] = useState<APIExercise[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedMuscle, setSelectedMuscle] = useState('all');
+  const [selectedEquipment, setSelectedEquipment] = useState('');
+  const [search, setSearch] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState<APIExercise | null>(null);
+
+  useEffect(() => {
+    getExercises()
+      .then((data) => setExercises(data as APIExercise[]))
+      .catch((err) => console.error('Failed to load exercises:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filteredExercises = useMemo(() => {
+    return exercises.filter((ex) => {
+      const matchesMuscle = selectedMuscle === 'all' || ex.muscleGroup === selectedMuscle;
+      const matchesEquipment = !selectedEquipment || ex.equipment === selectedEquipment;
+      const matchesSearch = !search || ex.name.toLowerCase().includes(search.toLowerCase());
+      return matchesMuscle && matchesEquipment && matchesSearch;
+    });
+  }, [exercises, selectedMuscle, selectedEquipment, search]);
+
+  if (selectedExercise) {
+    return (
+      <ExerciseDetail
+        exercise={selectedExercise}
+        onBack={() => setSelectedExercise(null)}
       />
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <PageHeader title={t('exercises.title')} subtitle={t('exercises.browseLibrary')} />
 
       <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
         {MUSCLE_GROUPS.map((muscle) => (
           <button
-            key={muscle.id}
-            onClick={() => setSelectedMuscle(muscle.id)}
-            className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
-              selectedMuscle === muscle.id
+            key={muscle}
+            onClick={() => setSelectedMuscle(muscle)}
+            className={`shrink-0 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
+              selectedMuscle === muscle
                 ? 'bg-lime text-obsidian shadow-lg shadow-lime/20'
                 : 'bg-steel/60 text-silver hover:text-white hover:bg-iron'
             }`}
           >
-            {muscle.name}
+            {t(`exercises.muscles.${muscle}`)}
           </button>
         ))}
       </div>
@@ -183,71 +309,68 @@ export default function ExercisesTracker() {
         <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
           {EQUIPMENT_FILTERS.map((equip) => (
             <button
-              key={equip.id}
-              onClick={() => setSelectedEquipment(equip.id)}
-              className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
-                selectedEquipment === equip.id
+              key={equip || 'all'}
+              onClick={() => setSelectedEquipment(equip)}
+              className={`shrink-0 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                selectedEquipment === equip
                   ? 'bg-lime text-obsidian'
                   : 'bg-steel text-silver hover:text-white'
               }`}
             >
-              {equip.name}
+              {t(`exercises.equipmentFilter.${equip || 'all'}`)}
             </button>
           ))}
         </div>
       </div>
 
       <div className="flex items-center justify-between py-2">
-        <span className="text-sm font-medium text-white">{currentMuscleGroup?.name}</span>
-        <span className="text-xs text-silver">{filteredExercises.length} exercises</span>
+        <span className="text-sm font-medium text-white">
+          {selectedMuscle === 'all' ? t('exercises.allExercises') : t(`exercises.muscles.${selectedMuscle}`)}
+        </span>
+        <span className="text-xs text-silver">{t('exercises.exerciseCount', { count: filteredExercises.length })}</span>
       </div>
 
-      <div className="flex flex-col gap-3">
-        {filteredExercises.map((exercise, index) => (
-          <Card key={exercise.name} variant="secondary" className="overflow-hidden">
-            <div className="flex items-center justify-between">
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="w-8 h-8 border-2 border-lime/30 border-t-lime rounded-full animate-spin" />
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {filteredExercises.map((exercise) => (
+            <button
+              key={exercise._id}
+              onClick={() => setSelectedExercise(exercise)}
+              className="flex items-center gap-3 p-3 bg-muted rounded-xl border border-steel hover:border-iron transition-all text-left group"
+            >
+              <div className="w-12 h-12 rounded-xl overflow-hidden bg-steel/50 shrink-0 flex items-center justify-center">
+                {exercise.imageUrl ? (
+                  <img src={exercise.imageUrl} alt={exercise.name} className="w-full h-full object-cover" />
+                ) : (
+                  <Dumbbell size={20} className="text-silver" />
+                )}
+              </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-white truncate pr-2">{exercise.name}</h3>
-                <div className="flex items-center gap-2 mt-1.5">
+                <p className="text-chalk text-sm font-semibold truncate">{exercise.name}</p>
+                <div className="flex items-center gap-2 mt-1">
                   <Badge variant={getDifficultyVariant(exercise.difficulty)} size="sm">
                     {exercise.difficulty}
                   </Badge>
-                  <Badge variant="default" size="sm">
-                    {exercise.equipment}
-                  </Badge>
+                  <span className="text-[10px] text-silver">{exercise.equipment}</span>
                 </div>
               </div>
-              
-              <button
-                onClick={() => openExerciseUrl(exercise.url)}
-                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-lime/10 text-lime rounded-lg text-xs font-semibold hover:bg-lime hover:text-obsidian transition-all duration-200"
-              >
-                <Play size={12} className="fill-current" />
-                {t('exercises.watch')}
-              </button>
-            </div>
+              <ChevronRight size={16} className="text-steel group-hover:text-lime transition-colors shrink-0" />
+            </button>
+          ))}
 
-            <div className="mt-3 flex items-center justify-between">
-              <span className="text-[10px] text-silver">{exercise.views} {t('exercises.views')}</span>
-              <button
-                onClick={() => openExerciseUrl(exercise.url)}
-                className="flex items-center gap-1 text-[10px] text-silver hover:text-lime transition-colors"
-              >
-                <ExternalLink size={10} />
-                {t('exercises.viewOnMS')}
-              </button>
-            </div>
-          </Card>
-        ))}
-
-        {filteredExercises.length === 0 && (
-          <EmptyState
-            icon={Dumbbell}
-            title={t('exercises.noExercises')}
-            message={t('exercises.noExercisesMessage')}
-          />
-        )}
-      </div>
+          {filteredExercises.length === 0 && !loading && (
+            <EmptyState
+              icon={Dumbbell}
+              title={t('exercises.noExercises')}
+              message={t('exercises.noExercisesMessage')}
+            />
+          )}
+        </div>
+      )}
 
       <div className="h-4" />
     </div>

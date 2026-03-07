@@ -1,7 +1,15 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 const Exercise = require('../models/Exercise');
 const router = express.Router();
+
+const requireAdmin = (req, res, next) => {
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ message: 'Admin access required' });
+  }
+  next();
+};
 
 // Get all exercises
 router.get('/', async (req, res) => {
@@ -56,6 +64,9 @@ router.get('/equipment/:equipment', async (req, res) => {
 // Get a specific exercise by ID
 router.get('/:id', async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const exercise = await Exercise.findById(req.params.id);
 
     if (!exercise) {
@@ -70,7 +81,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a new exercise (admin only)
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, requireAdmin, async (req, res) => {
   try {
     const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
       req.body;
@@ -105,8 +116,11 @@ router.post('/', auth, async (req, res) => {
 });
 
 // Update an exercise (admin only)
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', auth, requireAdmin, async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
       req.body;
 
@@ -138,8 +152,11 @@ router.put('/:id', auth, async (req, res) => {
 });
 
 // Delete an exercise (admin only)
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, requireAdmin, async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const exercise = await Exercise.findByIdAndDelete(req.params.id);
 
     if (!exercise) {

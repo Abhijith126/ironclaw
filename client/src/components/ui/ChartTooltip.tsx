@@ -6,7 +6,13 @@ interface ChartTooltipProps {
   formatter?: (value: number) => string;
 }
 
-const ChartTooltip: React.FC<ChartTooltipProps> = ({ active, payload, label, valueLabel = 'kg', formatter }) => {
+const ChartTooltip: React.FC<ChartTooltipProps> = ({
+  active,
+  payload,
+  label,
+  valueLabel = 'kg',
+  formatter,
+}) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-carbon border border-steel rounded-lg px-3 py-2">

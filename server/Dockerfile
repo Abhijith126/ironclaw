@@ -12,5 +12,5 @@ EXPOSE 3001
 ENV NODE_ENV=production
 ENV PORT=3001
 
-# Run seed script first, then start server
-CMD ["sh", "-c", "node seedExercises.js && node seedEquipment.js && node index.js"]
+# Server auto-seeds on startup if database is empty
+CMD ["node", "index.js"]

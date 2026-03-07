@@ -13,7 +13,8 @@ const Card: React.FC<CardProps> = ({ children, className = '', variant = 'defaul
     default: 'bg-graphite border border-steel rounded-2xl p-5',
     secondary: 'bg-muted border border-steel rounded-xl p-4',
     elevated: 'bg-carbon border border-steel rounded-2xl p-5',
-    gradient: 'bg-gradient-to-br from-lime/10 via-carbon to-carbon border border-lime/20 rounded-2xl p-5',
+    gradient:
+      'bg-gradient-to-br from-lime/10 via-carbon to-carbon border border-lime/20 rounded-2xl p-5',
     ghost: 'bg-transparent border-none rounded-xl p-0',
   };
 

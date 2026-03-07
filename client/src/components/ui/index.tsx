@@ -12,29 +12,34 @@ export { default as TipBox } from './TipBox';
 export { default as EmptyState } from './EmptyState';
 export { default as ChartTooltip } from './ChartTooltip';
 export { default as LanguageSwitcher } from './LanguageSwitcher';
+export { default as DayCarousel } from './DayCarousel';
+export { default as WeightChart } from './WeightChart';
+export { default as SettingsMenuItem } from './SettingsMenuItem';
 
-export const PageTitle = ({ title, subtitle }) => (
+import { ReactNode } from 'react';
+
+export const PageTitle = ({ title, subtitle }: { title: string; subtitle?: string }) => (
   <div className="mb-6">
-    <h1 className="font-display text-3xl font-extrabold tracking-tight text-chalk">
-      {title}
-    </h1>
+    <h1 className="font-display text-3xl font-extrabold tracking-tight text-chalk">{title}</h1>
     {subtitle && <p className="text-silver mt-2">{subtitle}</p>}
   </div>
 );
 
-export const SectionTitle = ({ children }) => (
+export const SectionTitle = ({ children }: { children: ReactNode }) => (
   <h3 className="font-display font-bold text-chalk mb-4">{children}</h3>
 );
 
-export const ListItem = ({ children, className = '' }) => (
+export const ListItem = ({ children, className = '' }: { children: ReactNode; className?: string }) => (
   <li className={`flex items-start gap-2 text-sm text-silver ${className}`}>
     <span className="text-lime">•</span>
     {children}
   </li>
 );
 
-export const Grid = ({ children, cols = 3, gap = 'gap-3' }) => (
-  <div className={`grid ${cols === 2 ? 'grid-cols-2' : cols === 3 ? 'grid-cols-3' : 'grid-cols-1'} ${gap}`}>
+export const Grid = ({ children, cols = 3, gap = 'gap-3' }: { children: ReactNode; cols?: number; gap?: string }) => (
+  <div
+    className={`grid ${cols === 2 ? 'grid-cols-2' : cols === 3 ? 'grid-cols-3' : 'grid-cols-1'} ${gap}`}
+  >
     {children}
   </div>
 );

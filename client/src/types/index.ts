@@ -15,7 +15,7 @@ export interface Exercise {
   id: string;
   name: string;
   sets: number;
-  reps: number;
+  reps: number | string;
   pr: { weight: number; reps: number } | null;
 }
 

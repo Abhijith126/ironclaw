@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
@@ -66,6 +67,11 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
+    // Reject email/password login for Google OAuth users
+    if (user.googleId) {
+      return res.status(400).json({ message: 'Please sign in with Google' });
+    }
+
     // Check password
     const isMatch = await user.comparePassword(password);
 
@@ -127,7 +133,7 @@ router.post('/google', async (req, res) => {
           googleId,
           email,
           name,
-          password: 'google_oauth_placeholder' // This won't be used for Google auth
+          password: crypto.randomBytes(32).toString('hex') // Random unguessable password for OAuth users
         });
       }
 

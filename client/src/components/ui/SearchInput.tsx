@@ -9,12 +9,12 @@ interface SearchInputProps {
   className?: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ 
-  value, 
-  onChange, 
+const SearchInput: React.FC<SearchInputProps> = ({
+  value,
+  onChange,
   placeholder = 'Search...',
   onClear,
-  className = ''
+  className = '',
 }) => {
   return (
     <div className={`relative ${className}`}>

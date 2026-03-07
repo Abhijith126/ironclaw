@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { Dumbbell, Target, TrendingUp, Calendar } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Dumbbell, Target, TrendingUp, Calendar, ArrowLeft } from 'lucide-react';
 import { PageHeader, Card, Badge, ListItem } from '../../components/ui';
 import { APP_NAME, APP_TAGLINE } from '../../constants';
 
 const AboutPage = () => {
   const { t } = useTranslation();
-  
+  const navigate = useNavigate();
+
   const features = [
     { icon: Dumbbell, title: t('about.workoutTracking'), desc: t('about.workoutTrackingDesc') },
     { icon: Target, title: t('about.prManagement'), desc: t('about.prManagementDesc') },
@@ -13,19 +15,19 @@ const AboutPage = () => {
     { icon: Calendar, title: t('about.weeklySchedule'), desc: t('about.weeklyScheduleDesc') },
   ];
 
-  const tips = [
-    t('about.tip1'),
-    t('about.tip2'),
-    t('about.tip3'),
-    t('about.tip4'),
-  ];
+  const tips = [t('about.tip1'), t('about.tip2'), t('about.tip3'), t('about.tip4')];
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader 
-        title={t('about.title')} 
-        subtitle={t('about.yourCompanion')} 
-      />
+      <button
+        onClick={() => navigate('/settings')}
+        className="flex items-center gap-2 text-silver hover:text-chalk transition-colors self-start py-1"
+      >
+        <ArrowLeft size={18} />
+        <span className="text-sm font-medium">{t('nav.settings')}</span>
+      </button>
+
+      <PageHeader title={t('about.title')} subtitle={t('about.yourCompanion')} />
 
       <Card className="text-center py-8">
         <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-lime flex items-center justify-center text-obsidian">

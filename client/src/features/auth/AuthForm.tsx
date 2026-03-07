@@ -29,6 +29,12 @@ const AuthForm = ({ onAuthSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (!isLogin && formData.password.length < 6) {
+      setError(t('auth.passwordTooShort'));
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -55,25 +61,25 @@ const AuthForm = ({ onAuthSuccess }) => {
         navigate('/dashboard');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Authentication failed. Please try again.');
+      setError(err.response?.data?.message || t('auth.authFailed'));
     } finally {
       setIsLoading(false);
     }
   };
 
-  const isStandalone = typeof window !== 'undefined' && 
-    window.matchMedia('(display-mode: standalone)').matches;
+  const isStandalone =
+    typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(198,241,53,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(198,241,53,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(198,241,53,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(198,241,53,0.03)_1px,transparent_1px)] bg-size-[40px_40px]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(198,241,53,0.08)_0%,transparent_60%)]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-[400px] flex flex-col gap-6">
+      <div className="relative z-10 w-full max-w-100 flex flex-col gap-6">
         <div className="text-center">
-          <div className="w-[72px] h-[72px] mx-auto mb-4 rounded-[20px] bg-lime flex items-center justify-center text-obsidian shadow-[0_8px_32px_rgba(198,241,53,0.3)]">
+          <div className="w-18 h-18 mx-auto mb-4 rounded-[20px] bg-lime flex items-center justify-center text-obsidian shadow-[0_8px_32px_rgba(198,241,53,0.3)]">
             <Dumbbell size={32} strokeWidth={2.5} />
           </div>
           <h1 className="font-display text-4xl font-extrabold tracking-[0.2em] text-lime">
@@ -101,7 +107,7 @@ const AuthForm = ({ onAuthSuccess }) => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Enter your name"
+                placeholder={t('auth.enterName')}
                 required={!isLogin}
                 disabled={isLoading}
               />
@@ -117,7 +123,7 @@ const AuthForm = ({ onAuthSuccess }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="you@example.com"
+              placeholder={t('auth.emailPlaceholder')}
               required
               disabled={isLoading}
             />
@@ -132,7 +138,7 @@ const AuthForm = ({ onAuthSuccess }) => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="••••••••"
+              placeholder={t('auth.passwordPlaceholder')}
               required
               minLength={6}
               disabled={isLoading}
@@ -198,9 +204,7 @@ const AuthForm = ({ onAuthSuccess }) => {
         </div>
 
         <div className="text-center pt-4 border-t border-steel">
-          <p className="text-[10px] text-silver/70">
-            {t('app.tagline')}
-          </p>
+          <p className="text-[10px] text-silver/70">{t('app.tagline')}</p>
         </div>
       </div>
     </div>

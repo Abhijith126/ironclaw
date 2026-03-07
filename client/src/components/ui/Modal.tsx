@@ -1,4 +1,5 @@
 import { useEffect, useRef, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertTriangle, CheckCircle } from 'lucide-react';
 
 interface ModalProps {
@@ -28,9 +29,11 @@ export function Modal({ isOpen, onClose, children, className = '' }: ModalProps)
   if (!isOpen) return null;
 
   return (
-    <div ref={overlayRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div ref={overlayRef} className="fixed inset-0 z-100 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className={`relative w-full max-w-sm bg-carbon border border-steel rounded-2xl shadow-2xl overflow-hidden ${className}`}>
+      <div
+        className={`relative w-full max-w-sm bg-carbon border border-steel rounded-2xl shadow-2xl overflow-hidden ${className}`}
+      >
         {children}
       </div>
     </div>
@@ -48,20 +51,24 @@ interface ConfirmModalProps {
   danger?: boolean;
 }
 
-export function ConfirmModal({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
-  title, 
-  message, 
-  confirmText = 'Confirm', 
-  cancelText = 'Cancel', 
-  danger = false 
+export function ConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText,
+  cancelText,
+  danger = false,
 }: ConfirmModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-6 flex flex-col items-center text-center">
-        <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${danger ? 'bg-danger/15' : 'bg-lime/15'}`}>
+        <div
+          className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${danger ? 'bg-danger/15' : 'bg-lime/15'}`}
+        >
           {danger ? (
             <AlertTriangle size={28} className="text-danger" />
           ) : (
@@ -75,7 +82,7 @@ export function ConfirmModal({
             onClick={onClose}
             className="flex-1 py-3 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors"
           >
-            {cancelText}
+            {cancelText ?? t('common.cancel')}
           </button>
           <button
             onClick={onConfirm}
@@ -85,7 +92,7 @@ export function ConfirmModal({
                 : 'bg-lime text-obsidian hover:bg-lime-dim'
             }`}
           >
-            {confirmText}
+            {confirmText ?? t('common.confirm')}
           </button>
         </div>
       </div>
@@ -102,10 +109,14 @@ interface AlertModalProps {
 }
 
 export function AlertModal({ isOpen, onClose, title, message, type = 'success' }: AlertModalProps) {
+  const { t } = useTranslation();
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-6 flex flex-col items-center text-center">
-        <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${type === 'success' ? 'bg-lime/15' : 'bg-danger/15'}`}>
+        <div
+          className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${type === 'success' ? 'bg-lime/15' : 'bg-danger/15'}`}
+        >
           {type === 'success' ? (
             <CheckCircle size={28} className="text-lime" />
           ) : (
@@ -118,7 +129,7 @@ export function AlertModal({ isOpen, onClose, title, message, type = 'success' }
           onClick={onClose}
           className="w-full py-3 bg-lime text-obsidian font-semibold rounded-xl hover:bg-lime-dim transition-colors"
         >
-          OK
+          {t('common.ok')}
         </button>
       </div>
     </Modal>
@@ -135,12 +146,20 @@ interface VideoModalProps {
   notes?: string;
 }
 
-export function VideoModal({ isOpen, onClose, title, subtitle, videoUrl, children, notes }: VideoModalProps) {
+export function VideoModal({
+  isOpen,
+  onClose,
+  title,
+  subtitle,
+  videoUrl,
+  children,
+  notes,
+}: VideoModalProps) {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
-  const videoId = videoUrl?.includes('youtube.com') 
-    ? videoUrl.split('v=')[1]?.split('&')[0]
-    : null;
+  const videoId = videoUrl?.includes('youtube.com') ? videoUrl.split('v=')[1]?.split('&')[0] : null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -149,7 +168,7 @@ export function VideoModal({ isOpen, onClose, title, subtitle, videoUrl, childre
           <h3 className="font-display text-lg font-bold text-white">{title}</h3>
           {subtitle && <p className="text-xs text-silver mt-1">{subtitle}</p>}
         </div>
-        
+
         <div className="aspect-video bg-obsidian">
           {videoId ? (
             <iframe
@@ -161,7 +180,7 @@ export function VideoModal({ isOpen, onClose, title, subtitle, videoUrl, childre
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-silver">
-              <p>Video not available</p>
+              <p>{t('equipment.videoNotAvailable')}</p>
             </div>
           )}
         </div>
@@ -178,7 +197,7 @@ export function VideoModal({ isOpen, onClose, title, subtitle, videoUrl, childre
             onClick={onClose}
             className="w-full py-3 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors"
           >
-            Close
+            {t('common.close')}
           </button>
         </div>
       </div>

@@ -1,20 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
-const equipmentSchema = new mongoose.Schema({
-  machineName: { type: String, required: true, unique: true },
-  category: { type: String, required: true },
-  zone: { type: String },
-  resistanceType: { type: String },
-  movementPattern: { type: String },
-  primaryMuscles: [{ type: String }],
-  secondaryMuscles: [{ type: String }],
-  difficultyLevel: { type: String },
-  notes: { type: String },
-  videoUrl: { type: String },
-}, { timestamps: true });
-
-const Equipment = mongoose.model('Equipment', equipmentSchema);
+const Equipment = require('../models/Equipment');
 
 const router = express.Router();
 
@@ -55,6 +41,9 @@ router.get('/categories', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const equipment = await Equipment.findById(req.params.id);
     if (!equipment) {
       return res.status(404).json({ message: 'Equipment not found' });

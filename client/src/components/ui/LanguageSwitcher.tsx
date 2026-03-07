@@ -16,7 +16,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) =
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+  const currentLang = languages.find((l) => l.code === i18n.language) || languages[0];
 
   const handleLanguageChange = (langCode: string) => {
     i18n.changeLanguage(langCode);
@@ -32,7 +32,9 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ className = '' }) =
       >
         <div className="flex items-center gap-2">
           <Globe size={16} />
-          <span>{currentLang.flag} {currentLang.name}</span>
+          <span>
+            {currentLang.flag} {currentLang.name}
+          </span>
         </div>
         <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>

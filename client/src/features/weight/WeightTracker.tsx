@@ -1,17 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, TrendingDown, TrendingUp, Scale as ScaleIcon } from 'lucide-react';
-import {
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-} from 'recharts';
 import { userAPI } from '../../services/api';
-import { PageHeader, Card, Button, Input, EmptyState, ChartTooltip } from '../../components/ui';
+import { PageHeader, Card, Button, Input, EmptyState, WeightChart } from '../../components/ui';
 import { sortByDate, formatDateShort, getWeightTrend } from '../../utils';
 
 function WeightTracker() {
@@ -49,31 +40,26 @@ function WeightTracker() {
     }
   };
 
-  const sortedLogs = useMemo(() => 
-    sortByDate(weightLog, 'date'), 
-    [weightLog]
-  );
+  const sortedLogs = useMemo(() => sortByDate(weightLog, 'date'), [weightLog]);
 
   const recentLogs = sortedLogs.slice(-10).reverse();
 
   const trend = useMemo(() => getWeightTrend(sortedLogs), [sortedLogs]);
   const currentWeight = sortedLogs.length > 0 ? sortedLogs[sortedLogs.length - 1].weight : null;
 
-  const weightData = useMemo(() => 
-    sortedLogs.map((w) => ({
-      date: formatDateShort(w.date),
-      weight: parseFloat(w.weight),
-    })),
+  const weightData = useMemo(
+    () =>
+      sortedLogs.map((w) => ({
+        date: formatDateShort(w.date),
+        weight: parseFloat(w.weight),
+      })),
     [sortedLogs]
   );
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader 
-        title={t('weight.title')} 
-        subtitle={t('weight.trackWeight')} 
-      />
-      
+      <PageHeader title={t('weight.title')} subtitle={t('weight.trackWeight')} />
+
       <Card>
         <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
           {t('weight.logWeight')}
@@ -133,53 +119,7 @@ function WeightTracker() {
           <h3 className="font-display text-xs font-bold uppercase tracking-wider text-silver mb-4">
             {t('weight.title')}
           </h3>
-          <ResponsiveContainer width="100%" height={180}>
-            <AreaChart
-              data={weightData}
-              margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="weightGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#c6f135" stopOpacity={0.25} />
-                  <stop offset="95%" stopColor="#c6f135" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" vertical={false} />
-              <XAxis
-                dataKey="date"
-                tick={{ fontSize: 10, fill: '#888888' }}
-                axisLine={{ stroke: '#2a2a2a' }}
-                tickLine={false}
-              />
-              <YAxis
-                tick={{ fontSize: 10, fill: '#888888' }}
-                axisLine={false}
-                tickLine={false}
-                domain={['dataMin - 0.5', 'dataMax + 0.5']}
-              />
-              <Tooltip content={<ChartTooltip valueLabel="kg" />} />
-              <Area
-                type="monotone"
-                dataKey="weight"
-                stroke="#c6f135"
-                strokeWidth={2}
-                fillOpacity={1}
-                fill="url(#weightGrad)"
-                dot={{
-                  r: 3,
-                  fill: '#c6f135',
-                  stroke: '#080808',
-                  strokeWidth: 1.5,
-                }}
-                activeDot={{
-                  r: 5,
-                  fill: '#c6f135',
-                  stroke: '#080808',
-                  strokeWidth: 2,
-                }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          <WeightChart data={weightData} gradientId="weightTrackerGrad" showDots />
         </Card>
       )}
 
@@ -195,9 +135,7 @@ function WeightTracker() {
                   <span className="font-display font-bold text-white">
                     {parseFloat(entry.weight).toFixed(1)} kg
                   </span>
-                  <span className="text-[10px] text-silver">
-                    {formatDateShort(entry.date)}
-                  </span>
+                  <span className="text-[10px] text-silver">{formatDateShort(entry.date)}</span>
                 </div>
                 {idx === 0 && trend !== null && (
                   <span

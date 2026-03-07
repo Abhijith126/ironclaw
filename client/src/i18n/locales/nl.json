@@ -10,7 +10,8 @@
     "progress": "Voortgang",
     "settings": "Instellingen",
     "about": "Over",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "profile": "Profiel"
   },
   "auth": {
     "welcomeBack": "Welkom terug, atleet",
@@ -26,7 +27,12 @@
     "password": "Wachtwoord",
     "confirmPassword": "Bevestig Nieuw Wachtwoord",
     "currentPassword": "Huidig Wachtwoord",
-    "newPassword": "Nieuw Wachtwoord"
+    "newPassword": "Nieuw Wachtwoord",
+    "enterName": "Voer je naam in",
+    "emailPlaceholder": "je@voorbeeld.nl",
+    "passwordPlaceholder": "••••••••",
+    "authFailed": "Authenticatie mislukt. Probeer het opnieuw.",
+    "passwordTooShort": "Wachtwoord moet minstens 6 tekens lang zijn"
   },
   "dashboard": {
     "streak": "Streak",
@@ -47,6 +53,7 @@
     "today": "Vandaag",
     "restDay": "Rustdag",
     "restDayMessage": "Rustdag! Neem het rustig en herstel.",
+    "restDayAddHint": "Rustdag - tik hieronder om oefeningen toe te voegen",
     "nextUp": "Volgende",
     "tomorrow": "Morgen",
     "editSchedule": "Schema Bewerken",
@@ -58,27 +65,54 @@
     "done": "Gedaan",
     "sets": "sets",
     "reps": "reps",
-    "kg": "kg"
+    "kg": "kg",
+    "remove": "Verwijderen",
+    "exerciseCount": "{{count}} oefeningen",
+    "addExercise": "+ Oefening Toevoegen",
+    "proTip": "Pro Tip"
   },
   "manageWorkout": {
     "editSchedule": "Schema Bewerken",
     "save": "Opslaan",
     "addExercise": "Oefening Toevoegen",
-    "selectExercise": "Selecteer Oefening"
+    "selectExercise": "Selecteer Oefening",
+    "searchExercises": "Zoek oefeningen..."
   },
   "exercises": {
     "title": "Oefeningen",
-    "areaWorkouts": "Gebiedsgerichte workouts met videohandleidingen",
+    "browseLibrary": "Blader door de oefeningenbibliotheek",
     "searchExercises": "Zoek oefeningen...",
-    "all": "Alle",
-    "beginner": "Beginner",
-    "intermediate": "Gevorderd",
-    "advanced": "Expert",
-    "watch": "Bekijk",
-    "views": "keer bekeken",
-    "viewOnMS": "Bekijk op M&S",
+    "allExercises": "Alle Oefeningen",
     "noExercises": "Geen Oefeningen Gevonden",
-    "noExercisesMessage": "Probeer je filters aan te passen"
+    "noExercisesMessage": "Probeer je filters aan te passen",
+    "exerciseCount": "{{count}} oefeningen",
+    "backToList": "Terug",
+    "howTo": "Uitleg",
+    "history": "Geschiedenis",
+    "steps": "Stappen",
+    "tips": "Tips",
+    "noHistory": "Nog geen trainingsgeschiedenis",
+    "noHistoryHint": "Voltooi deze oefening in je workout om hier geschiedenis te zien",
+    "muscles": {
+      "all": "Alle",
+      "chest": "Borst",
+      "back": "Rug",
+      "shoulders": "Schouders",
+      "arms": "Armen",
+      "legs": "Benen",
+      "core": "Core",
+      "cardiovascular": "Cardio",
+      "full body": "Volledig Lichaam"
+    },
+    "equipmentFilter": {
+      "all": "Alle",
+      "dumbbells": "Dumbbells",
+      "barbell": "Halter",
+      "bodyweight": "Lichaamsgewicht",
+      "cable": "Kabel",
+      "machine": "Machine",
+      "kettlebell": "Kettlebell"
+    }
   },
   "weight": {
     "title": "Voortgang",
@@ -102,7 +136,9 @@
     "movement": "Beweging",
     "noEquipment": "Geen Apparatuur Gevonden",
     "noEquipmentMessage": "Probeer je zoekopdracht aan te passen",
-    "close": "Sluiten"
+    "close": "Sluiten",
+    "videoNotAvailable": "Video niet beschikbaar",
+    "itemCount": "{{count}} items"
   },
   "settings": {
     "title": "Instellingen",
@@ -123,7 +159,17 @@
     "passwordsNotMatch": "Nieuwe wachtwoorden komen niet overeen",
     "passwordTooShort": "Nieuw wachtwoord moet minstens 6 tekens lang zijn",
     "language": "Taal",
-    "selectLanguage": "Selecteer Taal"
+    "selectLanguage": "Selecteer Taal",
+    "preferences": "Voorkeuren",
+    "data": "Gegevens",
+    "signOut": "Uitloggen",
+    "enterName": "Voer je naam in",
+    "enterCurrentPassword": "Voer huidig wachtwoord in",
+    "enterNewPassword": "Voer nieuw wachtwoord in",
+    "confirmNewPassword": "Bevestig nieuw wachtwoord",
+    "defaultName": "Atleet",
+    "updateFailed": "Profiel bijwerken mislukt",
+    "passwordFailed": "Wachtwoord wijzigen mislukt"
   },
   "about": {
     "title": "Over",
@@ -159,7 +205,8 @@
     "import": "Importeren",
     "export": "Exporteren",
     "darkMode": "Donkere Modus",
-    "lightMode": "Lichte Modus"
+    "lightMode": "Lichte Modus",
+    "ok": "OK"
   },
   "importExport": {
     "importSchedule": "Schema Importeren",
@@ -170,5 +217,13 @@
     "importFailed": "Opslaan van schema mislukt.",
     "invalidFormat": "Ongeldig Formaat",
     "invalidFormatMessage": "Verwacht een trainingsschema JSON bestand."
+  },
+  "install": {
+    "installApp": "Installeer de app voor de beste ervaring",
+    "nativeExperience": "Native Ervaring",
+    "nativeExperienceDesc": "Installeer als zelfstandige app voor volledig scherm",
+    "downloadAPK": "Download APK",
+    "downloadAPKDesc": "Download de nieuwste Android-versie direct",
+    "backToApp": "Terug naar app"
   }
 }

@@ -7,21 +7,12 @@ interface PageHeaderProps {
   className?: string;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ 
-  title, 
-  subtitle, 
-  action,
-  className = '' 
-}) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, action, className = '' }) => {
   return (
     <div className={`mb-2 ${action ? 'flex justify-between items-start' : ''} ${className}`}>
       <div>
-        <h1 className="font-display text-2xl font-extrabold tracking-tight text-chalk">
-          {title}
-        </h1>
-        {subtitle && (
-          <p className="text-sm text-silver mt-1">{subtitle}</p>
-        )}
+        <h1 className="font-display text-2xl font-extrabold tracking-tight text-chalk">{title}</h1>
+        {subtitle && <p className="text-sm text-silver mt-1">{subtitle}</p>}
       </div>
       {action && <div>{action}</div>}
     </div>
@@ -34,10 +25,10 @@ interface SectionHeadingProps {
   className?: string;
 }
 
-export const SectionHeading: React.FC<SectionHeadingProps> = ({ 
-  children, 
+export const SectionHeading: React.FC<SectionHeadingProps> = ({
+  children,
   action,
-  className = '' 
+  className = '',
 }) => {
   return (
     <div className={`flex justify-between items-center mb-4 ${className}`}>

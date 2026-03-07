@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('../middleware/auth');
 const User = require('../models/User');
+const Workout = require('../models/Workout');
 const router = express.Router();
 
 // Get current user profile
@@ -89,8 +90,8 @@ router.put('/password', auth, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Check if user has a password (Google OAuth users might not)
-    if (!user.password || user.password === 'google_oauth_placeholder') {
+    // Check if user is a Google OAuth user
+    if (!user.password || user.googleId) {
       return res.status(400).json({ message: 'Password cannot be changed for OAuth accounts' });
     }
 
@@ -140,7 +141,16 @@ router.put('/weekly-schedule', auth, async (req, res) => {
 
     // Validate the schedule structure
     if (!weeklySchedule || typeof weeklySchedule !== 'object') {
-      return res.status(400).json({ message: 'Invalid schedule format' });
+      return res.status(400).json({ message: 'Weekly schedule is required' });
+    }
+    const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    for (const day of Object.keys(weeklySchedule)) {
+      if (!validDays.includes(day)) {
+        return res.status(400).json({ message: `Invalid day: ${day}` });
+      }
+      if (!Array.isArray(weeklySchedule[day])) {
+        return res.status(400).json({ message: `${day} must be an array` });
+      }
     }
 
     // Update the weekly schedule
@@ -165,8 +175,8 @@ router.delete('/profile', auth, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // TODO: Delete associated workouts and other data
-    await user.remove();
+    await Workout.deleteMany({ user: req.user._id });
+    await User.findByIdAndDelete(req.user._id);
 
     res.json({ message: 'Account deleted successfully' });
   } catch (error) {

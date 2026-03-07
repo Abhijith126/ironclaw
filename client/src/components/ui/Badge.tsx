@@ -10,11 +10,11 @@ interface BadgeProps {
   className?: string;
 }
 
-const Badge: React.FC<BadgeProps> = ({ 
-  children, 
-  variant = 'default', 
+const Badge: React.FC<BadgeProps> = ({
+  children,
+  variant = 'default',
   size = 'md',
-  className = '' 
+  className = '',
 }) => {
   const variantClasses: Record<BadgeVariant, string> = {
     default: 'bg-steel text-silver',
@@ -32,7 +32,7 @@ const Badge: React.FC<BadgeProps> = ({
   };
 
   return (
-    <span 
+    <span
       className={`inline-flex items-center font-semibold rounded-lg ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
     >
       {children}

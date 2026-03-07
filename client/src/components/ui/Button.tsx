@@ -23,7 +23,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   },
   ref
 ) {
-  const baseClasses = 'flex items-center justify-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-lime/20 disabled:opacity-70 disabled:cursor-not-allowed';
+  const baseClasses =
+    'flex items-center justify-center gap-2 font-semibold rounded-xl transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-lime/20 disabled:opacity-70 disabled:cursor-not-allowed';
 
   const variantClasses: Record<ButtonVariant, string> = {
     primary: 'bg-lime text-obsidian hover:bg-lime-dim',

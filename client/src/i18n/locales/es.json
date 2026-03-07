@@ -10,7 +10,8 @@
     "progress": "Progreso",
     "settings": "Ajustes",
     "about": "Acerca de",
-    "dashboard": "Panel"
+    "dashboard": "Panel",
+    "profile": "Perfil"
   },
   "auth": {
     "welcomeBack": "Bienvenido de nuevo, atleta",
@@ -26,7 +27,12 @@
     "password": "Contraseña",
     "confirmPassword": "Confirmar Nueva Contraseña",
     "currentPassword": "Contraseña Actual",
-    "newPassword": "Nueva Contraseña"
+    "newPassword": "Nueva Contraseña",
+    "enterName": "Ingresa tu nombre",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "passwordPlaceholder": "••••••••",
+    "authFailed": "Autenticación fallida. Inténtalo de nuevo.",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres"
   },
   "dashboard": {
     "streak": "Racha",
@@ -47,6 +53,7 @@
     "today": "Hoy",
     "restDay": "Día de Descanso",
     "restDayMessage": "¡Día de descanso! Tómalo con calma y recupérate.",
+    "restDayAddHint": "Día de descanso - toca abajo para agregar ejercicios",
     "nextUp": "Próximo",
     "tomorrow": "Mañana",
     "editSchedule": "Editar Horario",
@@ -58,27 +65,54 @@
     "done": "Hecho",
     "sets": "series",
     "reps": "reps",
-    "kg": "kg"
+    "kg": "kg",
+    "remove": "Eliminar",
+    "exerciseCount": "{{count}} ejercicios",
+    "addExercise": "+ Agregar Ejercicio",
+    "proTip": "Consejo Pro"
   },
   "manageWorkout": {
     "editSchedule": "Editar Horario",
     "save": "Guardar",
     "addExercise": "Agregar Ejercicio",
-    "selectExercise": "Seleccionar Ejercicio"
+    "selectExercise": "Seleccionar Ejercicio",
+    "searchExercises": "Buscar ejercicios..."
   },
   "exercises": {
     "title": "Ejercicios",
-    "areaWorkouts": "Entrenamientos enfocados por área con guías en video",
+    "browseLibrary": "Explora la biblioteca de ejercicios",
     "searchExercises": "Buscar ejercicios...",
-    "all": "Todos",
-    "beginner": "Principiante",
-    "intermediate": "Intermedio",
-    "advanced": "Avanzado",
-    "watch": "Ver",
-    "views": "vistas",
-    "viewOnMS": "Ver en M&S",
+    "allExercises": "Todos los Ejercicios",
     "noExercises": "No Se Encontraron Ejercicios",
-    "noExercisesMessage": "Intenta ajustar tus filtros"
+    "noExercisesMessage": "Intenta ajustar tus filtros",
+    "exerciseCount": "{{count}} ejercicios",
+    "backToList": "Volver",
+    "howTo": "Cómo Hacerlo",
+    "history": "Historial",
+    "steps": "Pasos",
+    "tips": "Consejos",
+    "noHistory": "Aún no hay historial de entrenamiento",
+    "noHistoryHint": "Completa este ejercicio en tu rutina para ver el historial aquí",
+    "muscles": {
+      "all": "Todos",
+      "chest": "Pecho",
+      "back": "Espalda",
+      "shoulders": "Hombros",
+      "arms": "Brazos",
+      "legs": "Piernas",
+      "core": "Core",
+      "cardiovascular": "Cardio",
+      "full body": "Cuerpo Completo"
+    },
+    "equipmentFilter": {
+      "all": "Todos",
+      "dumbbells": "Mancuernas",
+      "barbell": "Barra",
+      "bodyweight": "Peso Corporal",
+      "cable": "Cable",
+      "machine": "Máquina",
+      "kettlebell": "Kettlebell"
+    }
   },
   "weight": {
     "title": "Progreso",
@@ -102,7 +136,9 @@
     "movement": "Movimiento",
     "noEquipment": "No Se Encontró Equipamiento",
     "noEquipmentMessage": "Intenta ajustar tu búsqueda",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "videoNotAvailable": "Video no disponible",
+    "itemCount": "{{count}} elementos"
   },
   "settings": {
     "title": "Ajustes",
@@ -123,7 +159,17 @@
     "passwordsNotMatch": "Las nuevas contraseñas no coinciden",
     "passwordTooShort": "La nueva contraseña debe tener al menos 6 caracteres",
     "language": "Idioma",
-    "selectLanguage": "Seleccionar Idioma"
+    "selectLanguage": "Seleccionar Idioma",
+    "preferences": "Preferencias",
+    "data": "Datos",
+    "signOut": "Cerrar Sesión",
+    "enterName": "Ingresa tu nombre",
+    "enterCurrentPassword": "Ingresa la contraseña actual",
+    "enterNewPassword": "Ingresa la nueva contraseña",
+    "confirmNewPassword": "Confirma la nueva contraseña",
+    "defaultName": "Atleta",
+    "updateFailed": "Error al actualizar el perfil",
+    "passwordFailed": "Error al cambiar la contraseña"
   },
   "about": {
     "title": "Acerca de",
@@ -159,7 +205,8 @@
     "import": "Importar",
     "export": "Exportar",
     "darkMode": "Modo Oscuro",
-    "lightMode": "Modo Claro"
+    "lightMode": "Modo Claro",
+    "ok": "OK"
   },
   "importExport": {
     "importSchedule": "Importar Horario",
@@ -170,5 +217,13 @@
     "importFailed": "Error al guardar el horario.",
     "invalidFormat": "Formato Inválido",
     "invalidFormatMessage": "Se esperaba un archivo JSON de horario de entrenamiento."
+  },
+  "install": {
+    "installApp": "Instala la app para la mejor experiencia",
+    "nativeExperience": "Experiencia Nativa",
+    "nativeExperienceDesc": "Instala como app independiente para pantalla completa",
+    "downloadAPK": "Descargar APK",
+    "downloadAPKDesc": "Obtén la última versión de Android directamente",
+    "backToApp": "Volver a la app"
   }
 }

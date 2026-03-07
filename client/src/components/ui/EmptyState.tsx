@@ -10,12 +10,12 @@ interface EmptyStateProps {
   className?: string;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ 
+const EmptyState: React.FC<EmptyStateProps> = ({
   icon: Icon = Dumbbell,
-  title, 
+  title,
   message,
   action,
-  className = '' 
+  className = '',
 }) => {
   return (
     <div className={`bg-graphite border border-steel rounded-2xl p-8 text-center ${className}`}>
@@ -23,9 +23,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         <Icon size={28} />
       </div>
       <h3 className="font-display text-lg font-bold text-chalk mb-2">{title}</h3>
-      <p className="text-sm text-silver max-w-[240px] mx-auto">
-        {message}
-      </p>
+      <p className="text-sm text-silver max-w-60 mx-auto">{message}</p>
       {action && <div className="mt-4">{action}</div>}
     </div>
   );

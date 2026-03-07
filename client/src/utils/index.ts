@@ -1,14 +1,14 @@
-export const formatDate = (date: Date | string, options: Intl.DateTimeFormatOptions = {}) => {
+export const formatDate = (date: Date | string, options: Intl.DateTimeFormatOptions = {}, locale?: string) => {
   const defaultOptions: Intl.DateTimeFormatOptions = {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
   };
-  return new Date(date).toLocaleDateString('en-US', { ...defaultOptions, ...options });
+  return new Date(date).toLocaleDateString(locale, { ...defaultOptions, ...options });
 };
 
-export const formatDateShort = (date: Date | string) => {
-  return new Date(date).toLocaleDateString('en-US', {
+export const formatDateShort = (date: Date | string, locale?: string) => {
+  return new Date(date).toLocaleDateString(locale, {
     month: 'short',
     day: 'numeric',
   });

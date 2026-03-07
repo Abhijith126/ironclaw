@@ -8,14 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  {
-    label,
-    error,
-    type = 'text',
-    className = '',
-    containerClassName = '',
-    ...props
-  },
+  { label, error, type = 'text', className = '', containerClassName = '', ...props },
   ref
 ) {
   const [showPassword, setShowPassword] = useState(false);

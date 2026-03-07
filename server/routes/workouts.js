@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const auth = require('../middleware/auth');
 const Workout = require('../models/Workout');
 const router = express.Router();
@@ -20,6 +21,9 @@ router.get('/', auth, async (req, res) => {
 // Get a specific workout by ID
 router.get('/:id', auth, async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const workout = await Workout.findOne({
       _id: req.params.id,
       userId: req.user._id
@@ -40,6 +44,13 @@ router.get('/:id', auth, async (req, res) => {
 router.post('/', auth, async (req, res) => {
   try {
     const { name, type, exercises } = req.body;
+
+    if (!req.body.name || typeof req.body.name !== 'string') {
+      return res.status(400).json({ message: 'Name is required' });
+    }
+    if (req.body.type && !['strength', 'cardio', 'flexibility', 'hiit', 'other'].includes(req.body.type)) {
+      return res.status(400).json({ message: 'Invalid workout type' });
+    }
 
     const workout = new Workout({
       userId: req.user._id,
@@ -72,6 +83,9 @@ router.post('/', auth, async (req, res) => {
 // Update a workout
 router.put('/:id', auth, async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const { name, type, exercises } = req.body;
 
     const workout = await Workout.findOne({
@@ -114,6 +128,9 @@ router.put('/:id', auth, async (req, res) => {
 // Delete a workout
 router.delete('/:id', auth, async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const workout = await Workout.findOneAndDelete({
       _id: req.params.id,
       userId: req.user._id
@@ -133,6 +150,9 @@ router.delete('/:id', auth, async (req, res) => {
 // Mark a workout as completed
 router.patch('/:id/complete', auth, async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Not found' });
+    }
     const workout = await Workout.findOne({
       _id: req.params.id,
       userId: req.user._id
@@ -162,7 +182,12 @@ router.patch(
   auth,
   async (req, res) => {
     try {
-      const { workoutId, exerciseIndex, setIndex } = req.params;
+      const { workoutId } = req.params;
+      const exerciseIndex = parseInt(req.params.exerciseIndex);
+      const setIndex = parseInt(req.params.setIndex);
+      if (isNaN(exerciseIndex) || isNaN(setIndex) || exerciseIndex < 0 || setIndex < 0) {
+        return res.status(400).json({ message: 'Invalid index' });
+      }
 
       const workout = await Workout.findOne({
         _id: workoutId,
@@ -173,8 +198,11 @@ router.patch(
         return res.status(404).json({ message: 'Workout not found' });
       }
 
-      if (!workout.exercises[exerciseIndex] || !workout.exercises[exerciseIndex].sets[setIndex]) {
-        return res.status(404).json({ message: 'Exercise or set not found' });
+      if (exerciseIndex >= workout.exercises.length) {
+        return res.status(404).json({ message: 'Exercise not found' });
+      }
+      if (setIndex >= workout.exercises[exerciseIndex].sets.length) {
+        return res.status(404).json({ message: 'Set not found' });
       }
 
       workout.exercises[exerciseIndex].sets[setIndex].completed = true;

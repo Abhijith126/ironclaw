@@ -10,7 +10,8 @@
     "progress": "Progress",
     "settings": "Settings",
     "about": "About",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "profile": "Profile"
   },
   "auth": {
     "welcomeBack": "Welcome back, athlete",
@@ -26,7 +27,12 @@
     "password": "Password",
     "confirmPassword": "Confirm New Password",
     "currentPassword": "Current Password",
-    "newPassword": "New Password"
+    "newPassword": "New Password",
+    "enterName": "Enter your name",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "••••••••",
+    "authFailed": "Authentication failed. Please try again.",
+    "passwordTooShort": "Password must be at least 6 characters"
   },
   "dashboard": {
     "streak": "Streak",
@@ -47,6 +53,7 @@
     "today": "Today",
     "restDay": "Rest Day",
     "restDayMessage": "Rest day! Take it easy and recover.",
+    "restDayAddHint": "Rest day - tap below to add exercises",
     "nextUp": "Next Up",
     "tomorrow": "Tomorrow",
     "editSchedule": "Edit Schedule",
@@ -58,27 +65,54 @@
     "done": "Done",
     "sets": "sets",
     "reps": "reps",
-    "kg": "kg"
+    "kg": "kg",
+    "remove": "Remove",
+    "exerciseCount": "{{count}} exercises",
+    "addExercise": "+ Add Exercise",
+    "proTip": "Pro Tip"
   },
   "manageWorkout": {
     "editSchedule": "Edit Schedule",
     "save": "Save",
     "addExercise": "Add Exercise",
-    "selectExercise": "Select Exercise"
+    "selectExercise": "Select Exercise",
+    "searchExercises": "Search exercises..."
   },
   "exercises": {
     "title": "Exercises",
-    "areaWorkouts": "Area-focused workouts with video guides",
+    "browseLibrary": "Browse the exercise library",
     "searchExercises": "Search exercises...",
-    "all": "All",
-    "beginner": "Beginner",
-    "intermediate": "Intermediate",
-    "advanced": "Advanced",
-    "watch": "Watch",
-    "views": "views",
-    "viewOnMS": "View on M&S",
+    "allExercises": "All Exercises",
     "noExercises": "No Exercises Found",
-    "noExercisesMessage": "Try adjusting your filters"
+    "noExercisesMessage": "Try adjusting your filters",
+    "exerciseCount": "{{count}} exercises",
+    "backToList": "Back",
+    "howTo": "How To",
+    "history": "History",
+    "steps": "Steps",
+    "tips": "Tips",
+    "noHistory": "No workout history yet",
+    "noHistoryHint": "Complete this exercise in your workout to see history here",
+    "muscles": {
+      "all": "All",
+      "chest": "Chest",
+      "back": "Back",
+      "shoulders": "Shoulders",
+      "arms": "Arms",
+      "legs": "Legs",
+      "core": "Core",
+      "cardiovascular": "Cardio",
+      "full body": "Full Body"
+    },
+    "equipmentFilter": {
+      "all": "All",
+      "dumbbells": "Dumbbells",
+      "barbell": "Barbell",
+      "bodyweight": "Bodyweight",
+      "cable": "Cable",
+      "machine": "Machine",
+      "kettlebell": "Kettlebell"
+    }
   },
   "weight": {
     "title": "Progress",
@@ -102,7 +136,9 @@
     "movement": "Movement",
     "noEquipment": "No Equipment Found",
     "noEquipmentMessage": "Try adjusting your search",
-    "close": "Close"
+    "close": "Close",
+    "videoNotAvailable": "Video not available",
+    "itemCount": "{{count}} items"
   },
   "settings": {
     "title": "Settings",
@@ -123,7 +159,17 @@
     "passwordsNotMatch": "New passwords do not match",
     "passwordTooShort": "New password must be at least 6 characters",
     "language": "Language",
-    "selectLanguage": "Select Language"
+    "selectLanguage": "Select Language",
+    "preferences": "Preferences",
+    "data": "Data",
+    "signOut": "Sign Out",
+    "enterName": "Enter your name",
+    "enterCurrentPassword": "Enter current password",
+    "enterNewPassword": "Enter new password",
+    "confirmNewPassword": "Confirm new password",
+    "defaultName": "Athlete",
+    "updateFailed": "Failed to update profile",
+    "passwordFailed": "Failed to change password"
   },
   "about": {
     "title": "About",
@@ -159,7 +205,8 @@
     "import": "Import",
     "export": "Export",
     "darkMode": "Dark Mode",
-    "lightMode": "Light Mode"
+    "lightMode": "Light Mode",
+    "ok": "OK"
   },
   "importExport": {
     "importSchedule": "Import Schedule",
@@ -170,5 +217,13 @@
     "importFailed": "Failed to save schedule.",
     "invalidFormat": "Invalid Format",
     "invalidFormatMessage": "Expected a workout schedule JSON file."
+  },
+  "install": {
+    "installApp": "Install the app for the best experience",
+    "nativeExperience": "Native Experience",
+    "nativeExperienceDesc": "Install as a standalone app for full-screen experience",
+    "downloadAPK": "Download APK",
+    "downloadAPKDesc": "Get the latest Android version directly",
+    "backToApp": "Back to app"
   }
 }

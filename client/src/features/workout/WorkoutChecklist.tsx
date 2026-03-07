@@ -1,43 +1,43 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check, Edit } from 'lucide-react';
+import { Check, Edit, Dumbbell } from 'lucide-react';
 import ManageWorkouts from './ManageWorkouts';
-import { userAPI, getExerciseMap } from '../../services/api';
-import { PageHeader, ExerciseItem, Button, Card, Badge, TipBox } from '../../components/ui';
+import { userAPI } from '../../services/api';
+import {
+  PageHeader,
+  ExerciseItem,
+  Button,
+  Card,
+  Badge,
+  TipBox,
+  DayCarousel,
+} from '../../components/ui';
 import { getTodayName, getTomorrowName, getDateKey } from '../../utils';
+import { useExerciseMap, useDayCarousel } from '../../hooks';
 
 function WorkoutChecklist() {
   const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
-  const [userWeekly, setUserWeekly] = useState(null);
-  const [completedMap, setCompletedMap] = useState({});
-  const [animatingId, setAnimatingId] = useState(null);
-  const [exerciseMap, setExerciseMap] = useState({});
-  const [editingPR, setEditingPR] = useState(null);
+  const [userWeekly, setUserWeekly] = useState<Record<string, Array<{id: string; sets: number; reps: string; pr?: {weight: number; reps: number} | null}>> | null>(null);
+  const [completedMap, setCompletedMap] = useState<Record<string, string[]>>({});
+  const [editingPR, setEditingPR] = useState<string | null>(null);
   const [prValues, setPrValues] = useState({ weight: '', reps: '' });
 
+  const { exerciseMap } = useExerciseMap();
   const todayName = useMemo(() => getTodayName(), []);
   const tomorrowName = useMemo(() => getTomorrowName(), []);
+  const { selectedDay, carouselPos, animated, selectDay, handleTouchStart, handleTouchEnd } =
+    useDayCarousel(todayName);
+
+  const isToday = selectedDay === todayName;
 
   useEffect(() => {
     fetchSchedule();
     fetchWorkoutLog();
-    fetchExercises();
   }, []);
 
-  const fetchExercises = async () => {
-    try {
-      const map = await getExerciseMap();
-      setExerciseMap(map);
-    } catch (err) {
-      console.error('Failed to fetch exercises:', err);
-    }
-  };
-
   useEffect(() => {
-    if (!editing) {
-      fetchWorkoutLog();
-    }
+    if (!editing) fetchWorkoutLog();
   }, [editing]);
 
   const fetchSchedule = async () => {
@@ -66,7 +66,6 @@ function WorkoutChecklist() {
     try {
       const response = await userAPI.getWorkoutLog();
       const workoutLog = response.data.workoutLog || [];
-
       const map = {};
       workoutLog.forEach((w) => {
         const dateKey = new Date(w.date).toDateString();
@@ -102,7 +101,7 @@ function WorkoutChecklist() {
   };
 
   const todaysWorkout = getWorkoutByName(todayName);
-  const tomorrowsWorkout = getWorkoutByName(tomorrowName);
+  const selectedWorkout = getWorkoutByName(selectedDay);
 
   const todayKey = getDateKey();
   const completedToday = completedMap[todayKey] || [];
@@ -113,8 +112,6 @@ function WorkoutChecklist() {
   const isAllComplete = totalCount > 0 && completedCount === totalCount;
 
   const toggleExerciseDone = async (exId) => {
-    setAnimatingId(exId);
-
     const dayKey = getDateKey();
     const copy = { ...completedMap };
     const list = new Set(copy[dayKey] || []);
@@ -133,8 +130,6 @@ function WorkoutChecklist() {
     } catch (error) {
       console.error('Error logging workout:', error);
     }
-
-    setTimeout(() => setAnimatingId(null), 300);
   };
 
   const markAllDone = async () => {
@@ -163,22 +158,22 @@ function WorkoutChecklist() {
     });
   };
 
-  const handlePRChange = (id, field, value) => {
-    setPrValues(prev => ({ ...prev, [field]: value }));
+  const handlePRChange = (_id, field, value) => {
+    setPrValues((prev) => ({ ...prev, [field]: value }));
   };
 
   const savePR = async (exerciseId) => {
     const next = { ...userWeekly };
     const dayExercises = next[todayName] || [];
-    const idx = dayExercises.findIndex(e => e.id === exerciseId);
+    const idx = dayExercises.findIndex((e) => e.id === exerciseId);
     if (idx !== -1) {
       dayExercises[idx] = {
         ...dayExercises[idx],
-        pr: { weight: Number(prValues.weight) || null, reps: Number(prValues.reps) || null }
+        pr: { weight: Number(prValues.weight) || null, reps: Number(prValues.reps) || null },
       };
       next[todayName] = dayExercises;
       setUserWeekly(next);
-      
+
       try {
         await userAPI.updateWeeklySchedule({ weeklySchedule: next });
       } catch (err) {
@@ -190,45 +185,61 @@ function WorkoutChecklist() {
 
   return (
     <div className="flex flex-col gap-4">
-      <PageHeader 
-        title={t('workout.title')} 
-        subtitle={t('workout.trackAndComplete')} 
-      />
-      
+      <PageHeader title={t('workout.title')} subtitle={t('workout.trackAndComplete')} />
+
       {editing ? (
         <ManageWorkouts onSave={saveCallback} />
       ) : (
         <>
+          <DayCarousel
+            carouselPos={carouselPos}
+            animated={animated}
+            onSelectDay={selectDay}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          />
+
           <Card>
             <div className="flex justify-between items-start mb-4">
               <div>
-                <h2 className="font-display text-xl font-bold text-white">{t('workout.today')}</h2>
+                <h2 className="font-display text-xl font-bold text-white">{selectedDay}</h2>
                 <p className="text-xs text-silver uppercase tracking-wider mt-0.5">
-                  {todaysWorkout.name}
+                  {isToday
+                    ? t('workout.today')
+                    : selectedDay === tomorrowName
+                      ? t('workout.tomorrow')
+                      : ''}
                 </p>
               </div>
-              {totalCount > 0 && (
+              {isToday && totalCount > 0 && (
                 <Badge variant={isAllComplete ? 'success' : 'default'}>
-                  <span className={`font-display font-bold ${isAllComplete ? 'text-success' : 'text-lime'}`}>
+                  <span
+                    className={`font-display font-bold ${isAllComplete ? 'text-success' : 'text-lime'}`}
+                  >
                     {completedCount}
                   </span>
                   <span className="text-silver text-sm ml-1">/ {totalCount}</span>
                 </Badge>
               )}
+              {!isToday && selectedWorkout.exercises.length > 0 && (
+                <Badge variant="default">{t('workout.exerciseCount', { count: selectedWorkout.exercises.length })}</Badge>
+              )}
             </div>
 
-            {totalCount === 0 ? (
+            {selectedWorkout.exercises.length === 0 ? (
               <p className="text-center text-silver py-6">{t('workout.restDayMessage')}</p>
-            ) : (
+            ) : isToday ? (
               <div className="flex flex-col gap-3">
                 {todaysWorkout.exercises.map((exercise) => {
                   const isDone = completedToday.includes(exercise.id);
-                  const showPR = exercise.pr?.weight || editingPR === exercise.id;
-                  
+                  const showPR = !!exercise.pr?.weight || editingPR === exercise.id;
+                  const exData = exerciseMap[exercise.id];
+
                   return (
                     <ExerciseItem
                       key={exercise.id}
                       exercise={exercise}
+                      imageUrl={exData?.imageUrl}
                       isCompleted={isDone}
                       onToggle={toggleExerciseDone}
                       onEditPR={openEditPR}
@@ -244,9 +255,42 @@ function WorkoutChecklist() {
                   );
                 })}
               </div>
+            ) : (
+              <div className="flex flex-col gap-2">
+                {selectedWorkout.exercises.map((exercise) => {
+                  const exData = exerciseMap[exercise.id];
+                  const imageUrl = exData?.imageUrl;
+                  return (
+                    <div
+                      key={exercise.id}
+                      className="flex items-center gap-3 p-3 bg-graphite/50 rounded-xl border border-steel/30"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-steel/50 overflow-hidden shrink-0 flex items-center justify-center">
+                        {imageUrl ? (
+                          <img
+                            src={imageUrl}
+                            alt={exercise.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <Dumbbell size={18} className="text-silver" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-chalk text-sm font-medium truncate block">
+                          {exercise.name}
+                        </span>
+                      </div>
+                      <span className="text-silver text-xs font-medium shrink-0">
+                        {exercise.sets} &times; {exercise.reps}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             )}
 
-            {totalCount > 0 && !isAllComplete && (
+            {isToday && totalCount > 0 && !isAllComplete && (
               <Button onClick={markAllDone} className="w-full mt-4">
                 <Check size={18} />
                 <span>{t('workout.markAllComplete')}</span>
@@ -254,47 +298,12 @@ function WorkoutChecklist() {
             )}
           </Card>
 
-          {tomorrowsWorkout.exercises.length > 0 ? (
-            <Card variant="secondary">
-              <div className="flex items-center gap-3 mb-3">
-                <Badge variant="default">{t('workout.nextUp')}</Badge>
-                <span className="font-display font-bold text-white text-sm">
-                  {tomorrowsWorkout.name}
-                </span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {tomorrowsWorkout.exercises.slice(0, 3).map((ex) => (
-                  <span key={ex.id} className="px-3 py-1.5 bg-muted text-xs text-silver rounded-lg">
-                    {ex.name}
-                  </span>
-                ))}
-                {tomorrowsWorkout.exercises.length > 3 && (
-                  <span className="px-3 py-1.5 text-xs text-lime">
-                    +{tomorrowsWorkout.exercises.length - 3} more
-                  </span>
-                )}
-              </div>
-            </Card>
-          ) : (
-            <Card variant="secondary">
-              <div className="flex items-center gap-3">
-                <Badge variant="primary">{t('workout.tomorrow')}</Badge>
-                <span className="font-display font-bold text-white text-sm">{t('workout.restDay')}</span>
-              </div>
-              <p className="text-xs text-silver mt-2">
-                {t('workout.restDayMessage')}
-              </p>
-            </Card>
-          )}
-
           <Button variant="secondary" onClick={() => setEditing(true)}>
             <Edit size={16} />
             <span>{t('workout.editSchedule')}</span>
           </Button>
 
-          <TipBox>
-            {t('workout.dailyTipMessage')}
-          </TipBox>
+          <TipBox>{t('workout.dailyTipMessage')}</TipBox>
         </>
       )}
     </div>

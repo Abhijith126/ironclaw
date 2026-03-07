@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type TipBoxVariant = 'primary' | 'success' | 'warning' | 'danger';
 
@@ -8,11 +9,9 @@ interface TipBoxProps {
   className?: string;
 }
 
-const TipBox: React.FC<TipBoxProps> = ({ 
-  children, 
-  variant = 'primary',
-  className = '' 
-}) => {
+const TipBox: React.FC<TipBoxProps> = ({ children, variant = 'primary', className = '' }) => {
+  const { t } = useTranslation();
+
   const variantClasses: Record<TipBoxVariant, string> = {
     primary: 'bg-lime/10 border border-lime/20 text-lime',
     success: 'bg-success/10 border border-success/20 text-success',
@@ -22,7 +21,7 @@ const TipBox: React.FC<TipBoxProps> = ({
 
   return (
     <div className={`rounded-xl p-4 ${variantClasses[variant]} ${className}`}>
-      <p className="text-[10px] font-bold uppercase tracking-wider mb-1">Pro Tip</p>
+      <p className="text-[10px] font-bold uppercase tracking-wider mb-1">{t('workout.proTip')}</p>
       <p className="text-xs text-silver leading-relaxed">{children}</p>
     </div>
   );
