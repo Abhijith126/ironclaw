@@ -5,7 +5,7 @@ const RECENTER_THRESHOLD = 14;
 
 export function useDayCarousel(initialDay: string = DAYS_OF_WEEK[0]) {
   const [selectedDay, setSelectedDay] = useState(initialDay);
-  const [carouselPos, setCarouselPos] = useState(0);
+  const [carouselPos, setCarouselPos] = useState(() => DAYS_OF_WEEK.indexOf(initialDay));
   const [animated, setAnimated] = useState(true);
   const touchStartX = useRef(0);
 

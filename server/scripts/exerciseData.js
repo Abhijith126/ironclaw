@@ -1,9 +1,9 @@
 // Auto-generated exercise data with images from Hevy Exercise Library
 const exercises = [
   { name: 'Chest Press Machine', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05771201-Lever-Chest-Press_Chest_thumbnail@3x.jpg' },
-  { name: 'Incline Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00471201-Barbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg' },
+  { name: 'Barbell Incline Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00471201-Barbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Pec Deck', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/10301201-Lever-Pec-Deck-Fly_Chest_thumbnail@3x.jpg' },
-  { name: 'Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00251201-Barbell-Bench-Press_Chest_thumbnail@3x.jpg' },
+  { name: 'Barbell Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00251201-Barbell-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Push-up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06621201-Push-up-m_Chest_thumbnail@3x.jpg' },
   { name: 'Dumbbell Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02891201-Dumbbell-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Chest Fly', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03081201-Dumbbell-Fly_Chest_thumbnail@3x.jpg' },
@@ -12,8 +12,8 @@ const exercises = [
   { name: 'Seated Cable Row', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/26611201-Cable-Seated-Row-with-V-bar_Back_thumbnail_@3x.jpg' },
   { name: 'Pull-up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'intermediate', imageUrl: '/exercises/06521201-Pull-up_Back_thumbnail@3x.jpg' },
   { name: 'T-Bar Row', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/06061201-Lever-T-bar-Row-(plate-loaded)_Back_thumbnail@3x.jpg' },
-  { name: 'Face Pull', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/77441201-Cable-Standing-Supinated-Face-Pull-(with-rope)_Sho_thumbnail_@3x.jpg' },
-  { name: 'Barbell Row', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00271201-Barbell-Bent-Over-Row_Back_thumbnail@3x.jpg' },
+  { name: 'Cable Face Pull', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/77441201-Cable-Standing-Supinated-Face-Pull-(with-rope)_Sho_thumbnail_@3x.jpg' },
+  { name: 'Barbell Bent Over Row', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00271201-Barbell-Bent-Over-Row_Back_thumbnail@3x.jpg' },
   { name: 'Deadlift', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'advanced', imageUrl: '/exercises/00321201-Barbell-Deadlift_Hips-FIX_thumbnail@3x.jpg' },
   { name: 'Dumbbell Row', category: 'upper body', muscleGroup: 'back', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02921201-Dumbbell-Bent-over-Row_Back_thumbnail@3x.jpg' },
   { name: 'Chin-up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'intermediate', imageUrl: '/exercises/13261201-Chin-Up_Back_thumbnail@3x.jpg' },
@@ -21,7 +21,7 @@ const exercises = [
   { name: 'Lateral Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03341201-Dumbbell-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
   { name: 'Rear Delt Fly', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03831201-Dumbbell-Reverse-Fly_Shoulders_thumbnail@3x.jpg' },
   { name: 'Dumbbell Shoulder Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders_thumbnail@3x.jpg' },
-  { name: 'Overhead Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders_thumbnail@3x.jpg' },
+  { name: 'Barbell Overhead Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders_thumbnail@3x.jpg' },
   { name: 'Arnold Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'intermediate', imageUrl: '/exercises/02871201-Dumbbell-Arnold-Press-II_Shoulders_thumbnail@3x.jpg' },
   { name: 'Front Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03101201-Dumbbell-Front-Raise_Shoulders_thumbnail@3x.jpg' },
   { name: 'Upright Row', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/01211201-Barbell-Upright-Row_Shoulders_thumbnail@3x.jpg' },
@@ -29,11 +29,11 @@ const exercises = [
   { name: 'Tricep Pushdown', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02011201-Cable-Pushdown_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Cable Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01561201-Cable-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Hammer Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03121201-Dumbbell-Hammer-Curl-(version-2)_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Overhead Tricep Extension', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_thumbnail_@3x.jpg' },
+  { name: 'Dumbbell Overhead Tricep Extension', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Bicep Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02941201-Dumbbell-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Tricep Dip', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08141201-Triceps-Dip_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Preacher Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00701201-Barbell-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Skull Crusher', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms_thumbnail_@3x.jpg' },
+  { name: 'Barbell Skull Crusher', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Tricep Kickback', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03331201-Dumbbell-Kickback_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Incline Dumbbell Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03151201-Dumbbell-Incline-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Concentration Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02971201-Dumbbell-Concentration-Curl_Upper-Arms_thumbnail@3x.jpg' },
@@ -43,26 +43,26 @@ const exercises = [
   { name: 'Leg Press', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07391201-Sled-45-Leg-Press_Hips_thumbnail@3x.jpg' },
   { name: 'Leg Curl', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05861201-Lever-Lying-Leg-Curl_Thighs_thumbnail@3x.jpg' },
   { name: 'Leg Extension', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05851201-Lever-Leg-Extension_Thighs_thumbnail@3x.jpg' },
-  { name: 'Hip Thrust', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/80151201-Glute-Bridge-from-Bench-(male)_Hips_thumbnail_@3x.jpg' },
+  { name: 'Barbell Hip Thrust', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/80151201-Glute-Bridge-from-Bench-(male)_Hips_thumbnail_@3x.jpg' },
   { name: 'Calf Raise', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05941201-Lever-Seated-Calf-Raise-(plate-loaded)_thumbnail@3x.jpg' },
-  { name: 'Romanian Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00851201-Barbell-Romanian-Deadlift_Hips-FIX_thumbnail_@3x.jpg' },
+  { name: 'Barbell Romanian Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00851201-Barbell-Romanian-Deadlift_Hips-FIX_thumbnail_@3x.jpg' },
   { name: 'Abductor Machine', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05971201-Lever-Seated-Hip-Abduction_Hips_thumbnail@3x.jpg' },
   { name: 'Front Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00421201-Barbell-Front-Squat_Hips_thumbnail@3x.jpg' },
   { name: 'Hack Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'intermediate', imageUrl: '/exercises/00461201-Barbell-Hack-Squat_Hips_thumbnail@3x.jpg' },
   { name: 'Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/14601201-Walking-Lunge-Male_Hips_thumbnail@3x.jpg' },
   { name: 'Bulgarian Split Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'intermediate', imageUrl: '/exercises/22901101-Dumbbell-Bulgarian-Split-Squat-(female)_Thighs_small_thumbnail@3x.jpg' },
-  { name: 'Goblet Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/22811201-Dumbbell-Goblet-Squat-(female)_Thighs_thumbnail@3x.jpg' },
+  { name: 'Dumbbell Goblet Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/22811201-Dumbbell-Goblet-Squat-(female)_Thighs_thumbnail@3x.jpg' },
   { name: 'Seated Calf Raise', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05941201-Lever-Seated-Calf-Raise-(plate-loaded)_thumbnail@3x.jpg' },
   { name: 'Standing Calf Raise', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/13731101-Bodyweight-Standing-Calf-Raise_Calves_small_thumbnail@3x.jpg' },
   { name: 'Adductor Machine', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05981201-Lever-Seated-Hip-Adduction_Thighs_thumbnail@3x.jpg' },
   { name: 'Glute Ham Raise', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'intermediate', imageUrl: '/exercises/57771201-Glute-Ham-Raise-(VERSION-2)-(female)_Thighs_thumbnail_@3x.jpg' },
   { name: 'Plank', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/04631201-Front-Plank-m_waist_thumbnail@3x.jpg' },
-  { name: 'Cable Crunch', category: 'core', muscleGroup: 'core', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01751201-Cable-Kneeling-Crunch_Waist_thumbnail@3x.jpg' },
+  { name: 'Cable Kneeling Crunch', category: 'core', muscleGroup: 'core', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01751201-Cable-Kneeling-Crunch_Waist_thumbnail@3x.jpg' },
   { name: 'Russian Twist', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06871201-Russian-Twist_waist_thumbnail@3x.jpg' },
   { name: 'Leg Raise', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11631201-Lying-Leg-Raise_Waist_thumbnail@3x.jpg' },
   { name: 'Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02741201-Crunch-Floor-m_waist_thumbnail@3x.jpg' },
   { name: 'Cable Woodchop', category: 'core', muscleGroup: 'core', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/08621201-Cable-twist-(up-down)_Waist_thumbnail@3x.jpg' },
-  { name: 'Ab Wheel Rollout', category: 'core', muscleGroup: 'core', equipment: 'other', difficulty: 'advanced', imageUrl: '/exercises/08571201-Wheel-Rollout_Waist_thumbnail@3x.jpg' },
+  { name: 'Ab Wheel Kneeling Rollout', category: 'core', muscleGroup: 'core', equipment: 'other', difficulty: 'advanced', imageUrl: '/exercises/08571201-Wheel-Rollout_Waist_thumbnail@3x.jpg' },
   { name: 'Hanging Leg Raise', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/17641201-Hanging-Leg-Hip-Raise_Waist_thumbnail@3x.jpg' },
   { name: 'Dead Bug', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/78391201-Dead-Bug-(VERSION-3)-(female)_Waist_thumbnail_@3x.jpg' },
   { name: 'Ab Crunch Machine', category: 'core', muscleGroup: 'core', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05951201-Lever-Seated-Crunch-(chest-pad)_thumbnail@3x.jpg' },
@@ -77,33 +77,31 @@ const exercises = [
   { name: 'Mountain Climber', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'intermediate', imageUrl: '/exercises/75311201-Plank-Alternate-Knee-Tuck-(female)_Waist_thumbnail_@3x.jpg' },
   { name: 'Treadmill', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'none', difficulty: 'beginner', imageUrl: '/exercises/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg' },
   { name: 'Burpees', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/11601201-Burpee_Cardio_thumbnail@3x.jpg' },
-  { name: 'Kettlebell Swings', category: 'full body', muscleGroup: 'full body', equipment: 'kettlebell', difficulty: 'intermediate', imageUrl: '/exercises/05491201-Kettlebell-Swing_Hips-FIX_thumbnail_@3x.jpg' },
+  { name: 'Kettlebell Swing', category: 'full body', muscleGroup: 'full body', equipment: 'kettlebell', difficulty: 'intermediate', imageUrl: '/exercises/05491201-Kettlebell-Swing_Hips-FIX_thumbnail_@3x.jpg' },
   { name: 'Forward Fold', category: 'flexibility', muscleGroup: 'full body', equipment: 'none', difficulty: 'beginner', imageUrl: '/exercises/09491101-Downward-Facing-Dog-Adho-Mukha-Svanasana_small_thumbnail@3x.jpg' },
   { name: 'Cat-Cow Stretch', category: 'flexibility', muscleGroup: 'core', equipment: 'none', difficulty: 'beginner', imageUrl: '/exercises/09491101-Downward-Facing-Dog-Adho-Mukha-Svanasana_small_thumbnail@3x.jpg' },
-  { name: 'Bench Press (Barbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00251201-Barbell-Bench-Press_Chest_thumbnail@3x.jpg' },
-  { name: 'Bench Press (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02891201-Dumbbell-Bench-Press_Chest_thumbnail@3x.jpg' },
-  { name: 'Bent Over Row (Barbell)', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00271201-Barbell-Bent-Over-Row_Back_thumbnail@3x.jpg' },
-  { name: 'Bicep Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02941201-Dumbbell-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02891201-Dumbbell-Bench-Press_Chest_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Bicep Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02941201-Dumbbell-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Cable Fly Crossovers', category: 'upper body', muscleGroup: 'chest', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/12691201-Cable-Standing-Up-Straight-Crossovers_Chest_thumbnail@3x.jpg' },
-  { name: 'Deadlift (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00321201-Barbell-Deadlift_Hips-FIX_thumbnail@3x.jpg' },
-  { name: 'Hammer Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03121201-Dumbbell-Hammer-Curl-(version-2)_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Incline Bench Press (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03141201-Dumbbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg' },
+  { name: 'Barbell Conventional Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00321201-Barbell-Deadlift_Hips-FIX_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Hammer Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03121201-Dumbbell-Hammer-Curl-(version-2)_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Incline Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03141201-Dumbbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Lat Pulldown (Cable)', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01501201-Cable-Bar-Lateral-Pulldown_Back_thumbnail@3x.jpg' },
-  { name: 'Lateral Raise (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03341201-Dumbbell-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Lateral Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03341201-Dumbbell-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
   { name: 'Leg Extension (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05851201-Lever-Leg-Extension_Thighs_thumbnail@3x.jpg' },
   { name: 'Leg Press (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07391201-Sled-45-Leg-Press_Hips_thumbnail@3x.jpg' },
   { name: 'Lying Leg Curl (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05861201-Lever-Lying-Leg-Curl_Thighs_thumbnail@3x.jpg' },
   { name: 'Seated Cable Row - V Grip (Cable)', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/26611201-Cable-Seated-Row-with-V-bar_Back_thumbnail_@3x.jpg' },
   { name: 'Seated Leg Curl (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05991201-Lever-Seated-Leg-Curl_Thighs_thumbnail@3x.jpg' },
-  { name: 'Shoulder Press (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Overhead Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04051201-Dumbbell-Seated-Shoulder-Press_Shoulders_thumbnail@3x.jpg' },
   { name: 'Squat (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00431201-Barbell-Full-Squat_Thighs_thumbnail@3x.jpg' },
-  { name: 'Triceps Pushdown', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02011201-Cable-Pushdown_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Triceps Rope Pushdown', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/24381201-Cable-Pushdown-(with-rope-attachment)-(female)_Upper-Arms_thumbnail_@3x.jpg' },
+  { name: 'Cable Straight Bar Tricep Pushdown', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02011201-Cable-Pushdown_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Cable Rope Tricep Pushdown', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/24381201-Cable-Pushdown-(with-rope-attachment)-(female)_Upper-Arms_thumbnail_@3x.jpg' },
   { name: '21s Bicep Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00311201-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Ab Scissors', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/62141201-Lying-Scissors-Cross-(male)_Hips_thumbnail_@3x.jpg' },
   { name: 'Ab Wheel', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08571201-Wheel-Rollout_Waist_thumbnail@3x.jpg' },
   { name: 'Air Bike', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/38931101-Assault-Bike-Run_Cardio_small_thumbnail_@3x.jpg' },
-  { name: 'Arnold Press (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02871201-Dumbbell-Arnold-Press-II_Shoulders_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Arnold Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02871201-Dumbbell-Arnold-Press-II_Shoulders_thumbnail@3x.jpg' },
   { name: 'Around The World', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02881201-Dumbbell-Around-Pullover_Chest_thumbnail@3x.jpg' },
   { name: 'Assisted Pistol Squats', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/23751201-Single-Leg-Squat-with-Support-(female)_Thighs_thumbnail_@3x.jpg' },
   { name: 'Back Extension (Hyperextension)', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/18601201-Hyperextension-(VERSION-2)_Hips_thumbnail@3x.jpg' },
@@ -118,18 +116,18 @@ const exercises = [
   { name: 'Bench Dip', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/13991201-Bench-dip-on-floor_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Bench Press (Cable)', category: 'upper body', muscleGroup: 'chest', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01511201-Cable-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Bench Press (Smith Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07481201-Smith-Bench-Press_Chest_thumbnail@3x.jpg' },
-  { name: 'Bench Press - Close Grip (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00301201-Barbell-Close-Grip-Bench-Press_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Barbell Close Grip Bench Press', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00301201-Barbell-Close-Grip-Bench-Press_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Bench Press - Wide Grip (Barbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/01221201-Barbell-Wide-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Bent Over Row (Band)', category: 'upper body', muscleGroup: 'back', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/38991201-Band-bent-over-row-(male)_Back_thumbnail_@3x.jpg' },
-  { name: 'Bent Over Row (Dumbbell)', category: 'upper body', muscleGroup: 'back', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02931201-Dumbbell-Bent-Over-Row_Back_thumbnail@3x.jpg' },
-  { name: 'Bicep Curl (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00311201-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Single Arm Dumbbell Bent Over Row', category: 'upper body', muscleGroup: 'back', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02931201-Dumbbell-Bent-Over-Row_Back_thumbnail@3x.jpg' },
+  { name: 'Barbell Bicep Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00311201-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Bicep Curl (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01561201-Cable-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Bicep Curl (Machine)', category: 'upper body', muscleGroup: 'arms', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/10321101-Lever-Alternate-Biceps-Curl_Upper-Arms_small_thumbnail@3x.jpg' },
   { name: 'Bicep Curl (Suspension)', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/10701201-Suspender-Arm-Curl-(female)_Upper-Arms_thumbnail_@3x.jpg' },
-  { name: 'Bicycle Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00031201-air-bike-m_waist_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Bicycle Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00031201-air-bike-m_waist_thumbnail@3x.jpg' },
   { name: 'Bicycle Crunch Raised Legs', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/01471201-Bycicle-Twisting-Crunch_Waist_thumbnail@3x.jpg' },
-  { name: 'Bird Dog', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/51821201-Bird-Dog-(VERSION-2)-(female)_Back_thumbnail_@3x.jpg' },
-  { name: 'Box Jump', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/71591201-Jump-Box-(female)_Plyometrics_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Bird Dog', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/51821201-Bird-Dog-(VERSION-2)-(female)_Back_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Box Jump', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/71591201-Jump-Box-(female)_Plyometrics_thumbnail_@3x.jpg' },
   { name: 'Box Squat (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/49621201-Barbell-Box-Squat_Hips_thumbnail_@3x.jpg' },
   { name: 'Boxing', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/22731101-Boxing-Right-Cross_small_thumbnail@3x.jpg' },
   { name: 'Burpee Over the Bar', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/101811201-Burpee-Over-the-Bar-(male)_Plyometrics_thumbnail_@3x.jpg' },
@@ -141,27 +139,27 @@ const exercises = [
   { name: 'Calf Extension (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/23151201-Lever-Rotary-Calf_Calves_thumbnail@3x.jpg' },
   { name: 'Calf Press (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07381201-Sled-45-Calf-Press_Calves_thumbnail@3x.jpg' },
   { name: 'Chest Dip', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02511201-Chest-Dip_Chest_thumbnail@3x.jpg' },
-  { name: 'Chest Dip (Assisted)', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00091201-Assisted-Chest-Dip-(kneeling)_Chest_thumbnail@3x.jpg' },
+  { name: 'Superband Assisted Dips', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00091201-Assisted-Chest-Dip-(kneeling)_Chest_thumbnail@3x.jpg' },
   { name: 'Chest Dip (Weighted)', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/17551201-Weighted-Tricep-Dips_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Chest Fly (Band)', category: 'upper body', muscleGroup: 'chest', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/09131201-Band-Middle-Fly-(female)_Chest_thumbnail_@3x.jpg' },
-  { name: 'Chest Fly (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03081201-Dumbbell-Fly_Chest_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Chest Fly', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03081201-Dumbbell-Fly_Chest_thumbnail@3x.jpg' },
   { name: 'Chest Fly (Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05961201-Lever-Seated-Fly_Chest_thumbnail@3x.jpg' },
-  { name: 'Chest Fly (Suspension)', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/57371201-Suspension-Fly_Chest-FIX_thumbnail_@3x.jpg' },
+  { name: 'Suspension Chest Fly', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/57371201-Suspension-Fly_Chest-FIX_thumbnail_@3x.jpg' },
   { name: 'Chest Press (Band)', category: 'upper body', muscleGroup: 'chest', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/09201201-Band-Standing-Chest-Press-(female)_Chest_thumbnail_@3x.jpg' },
   { name: 'Chest Press (Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05771201-Lever-Chest-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Chest Supported Incline Row (Dumbbell)', category: 'upper body', muscleGroup: 'back', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03271201-Dumbbell-Incline-Row_Back_thumbnail@3x.jpg' },
   { name: 'Chest Supported Reverse Fly (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03831201-Dumbbell-Reverse-Fly_Shoulders_thumbnail@3x.jpg' },
   { name: 'Chest Supported Y Raise (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/35411201-Dumbbell-Incline-Y-Raise_Shoulders__thumbnail_@3x.jpg' },
-  { name: 'Chin Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/13261201-Chin-Up_Back_thumbnail@3x.jpg' },
-  { name: 'Chin Up (Assisted)', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05721301-assisted-chin-up_small_thumbnail@3x.jpg' },
+  { name: 'Bar Chin Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/13261201-Chin-Up_Back_thumbnail@3x.jpg' },
+  { name: 'Superband Assisted Bar Chin Up', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05721301-assisted-chin-up_small_thumbnail@3x.jpg' },
   { name: 'Chin Up (Weighted)', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/29871101-Weighted-Close-Grip-Chin-up-on-Dip-Cage_Back_small_thumbnail@3x.jpg' },
-  { name: 'Clamshell', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/98491201-Side-Plank-Clamshell-(male)_Hips_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Side Lying Clamshell', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/98491201-Side-Plank-Clamshell-(male)_Hips_thumbnail_@3x.jpg' },
   { name: 'Clap Push Ups', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/12731101-Clap-Push-Up_Plyometrics_Chest_small_thumbnail@3x.jpg' },
   { name: 'Clean', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15211101-Barbell-Hang-Clean-Below-the-Knees_Weightlifts_small_thumbnail@3x.jpg' },
   { name: 'Clean and Jerk', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00281201-Barbell-Clean-and-Press_Shoulders_thumbnail@3x.jpg' },
   { name: 'Clean and Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00281201-Barbell-Clean-and-Press_Shoulders_thumbnail@3x.jpg' },
   { name: 'Clean Pull', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15171101-Barbell-Clean-Pull_Weightlifts_small_thumbnail@3x.jpg' },
-  { name: 'Cross Body Hammer Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02981101-Dumbbell-Cross-Body-Hammer-Curl_Forearms_small_thumbnail@3x.jpg' },
+  { name: 'Single Arm Dumbbell Cross Body Hammer Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02981101-Dumbbell-Cross-Body-Hammer-Curl_Forearms_small_thumbnail@3x.jpg' },
   { name: 'Crunch (Machine)', category: 'full body', muscleGroup: 'full body', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05951201-Lever-Seated-Crunch-(chest-pad)_thumbnail@3x.jpg' },
   { name: 'Crunch (Weighted)', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/66031201-Weighted-Plate-Lying-Crunch-(male)_Waist_thumbnail_@3x.jpg' },
   { name: 'Curtsy Lunge (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/08811201-Dumbbell-Curtsey-lunge-(female)_Thighs_thumbnail_@3x.jpg' },
@@ -169,20 +167,20 @@ const exercises = [
   { name: 'Deadlift (Band)', category: 'lower body', muscleGroup: 'legs', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/08951201-Band-Deadlift-(female)_Hips_thumbnail_@3x.jpg' },
   { name: 'Deadlift (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03001201-Dumbbell-Deadlift_Hips_thumbnail_@3x.jpg' },
   { name: 'Deadlift (Smith Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07521201-Smith-Deadlift_Hips_thumbnail@3x.jpg' },
-  { name: 'Deadlift (Trap bar)', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08111201-Trap-Bar-Deadlift_Thighs_thumbnail@3x.jpg' },
+  { name: 'Trap Bar Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08111201-Trap-Bar-Deadlift_Thighs_thumbnail@3x.jpg' },
   { name: 'Deadlift High Pull', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11991201-Sumo-Deadlift-High-Pull_Thighs_Shoulders_thumbnail@3x.jpg' },
-  { name: 'Decline Bench Press (Barbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00331201-Barbell-Decline-Bench-Press_Chest_thumbnail@3x.jpg' },
-  { name: 'Decline Bench Press (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03011201-Dumbbell-Decline-Bench-Press_Chest_thumbnail@3x.jpg' },
+  { name: 'Barbell Decline Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00331201-Barbell-Decline-Bench-Press_Chest_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Decline Bench Press', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03011201-Dumbbell-Decline-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Decline Bench Press (Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/13001201-Lever-Decline-Chest-Press_Chest-FIX__thumbnail_@3x.jpg' },
   { name: 'Decline Bench Press (Smith Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07531201-Smith-Decline-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Decline Chest Fly (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03021201-Dumbbell-Decline-Fly_Chest_thumbnail@3x.jpg' },
   { name: 'Decline Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02771201-Decline-Crunch_Waist_thumbnail@3x.jpg' },
   { name: 'Decline Crunch (Weighted)', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/21301201-Weighted-decline-crunch_Waist_thumbnail@3x.jpg' },
   { name: 'Decline Push Up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02791201-Decline-Push-Up_Chest_thumbnail@3x.jpg' },
-  { name: 'Diamond Push Up', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02831101-Diamond-Push-up_Upper-Arms_small_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Diamond Push Up', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02831101-Diamond-Push-up_Upper-Arms_small_thumbnail@3x.jpg' },
   { name: 'Downward Dog', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/09491101-Downward-Facing-Dog-Adho-Mukha-Svanasana_small_thumbnail@3x.jpg' },
   { name: 'Drag Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00381201-Barbell-Drag-Curl_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Dragon Flag', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/40581201-Leg-Raise-Dragon-Flag_Waist_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Dragon Flag', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/40581201-Leg-Raise-Dragon-Flag_Waist_thumbnail_@3x.jpg' },
   { name: 'Dragonfly', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/40581201-Leg-Raise-Dragon-Flag_Waist_thumbnail_@3x.jpg' },
   { name: 'Dumbbell Snatch', category: 'full body', muscleGroup: 'full body', equipment: 'dumbbells', difficulty: 'intermediate', imageUrl: '/exercises/38881101-Dumbbell-One-Arm-Snatch_small_thumbnail@3x.jpg' },
   { name: 'Dumbbell Squeeze Press', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/36811201-Dumbbell-Squeeze-Bench-Press_Chest-FIX__thumbnail_@3x.jpg' },
@@ -192,50 +190,48 @@ const exercises = [
   { name: 'EZ Bar Biceps Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/04471201-EZ-Barbell-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Farmers Walk', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/21331201-Farmers-walk_Cardio_thumbnail@3x.jpg' },
   { name: 'Feet Up Bench Press (Barbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/62701201-Barbell-Larsen-Press-(male)_Chest_thumbnail_@3x.jpg' },
-  { name: 'Fire Hydrants', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14751201-Bent-Leg-Side-Kick-(kneeling)-(female)_Hips-FIX_thumbnail_@3x.jpg' },
-  { name: 'Floor Press (Barbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/37241201-Barbell-Floor-Chest-Press_Chest_thumbnail_@3x.jpg' },
-  { name: 'Floor Press (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/36681201-Dumbbell-Lying-on-Floor-Chest-Press_Chest_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Fire Hydrant', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14751201-Bent-Leg-Side-Kick-(kneeling)-(female)_Hips-FIX_thumbnail_@3x.jpg' },
+  { name: 'Barbell Floor Press', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/37241201-Barbell-Floor-Chest-Press_Chest_thumbnail_@3x.jpg' },
+  { name: 'Double Dumbbell Floor Press', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/36681201-Dumbbell-Lying-on-Floor-Chest-Press_Chest_thumbnail_@3x.jpg' },
   { name: 'Floor Triceps Dip', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08151201-Triceps-Dips-Floor_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Flutter Kicks', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/12441201-Flutter-Kicks-(version-3)_Hips_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Flutter Kicks', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/12441201-Flutter-Kicks-(version-3)_Hips_thumbnail_@3x.jpg' },
   { name: 'Frog Jumps', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/101651201-Frog-Jump_Plyometrics_thumbnail_@3x.jpg' },
   { name: 'Frog Pumps (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/61601201-Dumbbell-Frog-Hip-Thrust-(male)_Hips_thumbnail_@3x.jpg' },
   { name: 'Front Lever Hold', category: 'core', muscleGroup: 'core', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/72511201-Hanging-Front-Lever-Raise-(male)_Waist_thumbnail_@3x.jpg' },
   { name: 'Front Lever Raise', category: 'core', muscleGroup: 'core', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/72511201-Hanging-Front-Lever-Raise-(male)_Waist_thumbnail_@3x.jpg' },
   { name: 'Front Raise (Band)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/09781201-Band-front-raise_Shoulders_thumbnail_@3x.jpg' },
-  { name: 'Front Raise (Barbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00411101-Barbell-Front-Raise_Shoulders_thumbnail@3x.jpg' },
-  { name: 'Front Raise (Cable)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01621201-Cable-Front-Raise_Shoulders_thumbnail@3x.jpg' },
+  { name: 'Barbell Front Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00411101-Barbell-Front-Raise_Shoulders_thumbnail@3x.jpg' },
+  { name: 'Cable Straight Bar Front Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01621201-Cable-Front-Raise_Shoulders_thumbnail@3x.jpg' },
   { name: 'Front Raise (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03101201-Dumbbell-Front-Raise_Shoulders_thumbnail@3x.jpg' },
   { name: 'Front Raise (Suspension)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/10751201-Suspender-Front-Raise-(female)_Shoulders_thumbnail_@3x.jpg' },
   { name: 'Full Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00431201-Barbell-Full-Squat_Thighs_thumbnail@3x.jpg' },
-  { name: 'Glute Bridge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/101801201-Hamstring-Bridge-(VERSION-2)-(female)_Hips_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Glute Bridge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/101801201-Hamstring-Bridge-(VERSION-2)-(female)_Hips_thumbnail_@3x.jpg' },
   { name: 'Glute Kickback (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/10371201-Lever-Standing-Rear-Kick_Hips_thumbnail@3x.jpg' },
   { name: 'Glute Kickback on Floor', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14741201-Bent-Leg-Kickback-(kneeling)_Hips_thumbnail@3x.jpg' },
-  { name: 'Good Morning (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00441201-Barbell-Good-Morning_Thighs_thumbnail@3x.jpg' },
+  { name: 'Barbell Good Morning', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00441201-Barbell-Good-Morning_Thighs_thumbnail@3x.jpg' },
   { name: 'Gorilla Row (Kettlebell)', category: 'upper body', muscleGroup: 'back', equipment: 'kettlebell', difficulty: 'beginner', imageUrl: '/exercises/72301201-Kettlebell-Gorilla-Row-(male)_Back__thumbnail_@3x.jpg' },
   { name: 'Hack Squat (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07431201-Sled-Hack-Squat_Hips_thumbnail@3x.jpg' },
   { name: 'Hammer Curl (Band)', category: 'upper body', muscleGroup: 'arms', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/46191201-Band-Standing-Hammer-Curl_Upper-Arms_thumbnail_@3x.jpg' },
-  { name: 'Hammer Curl (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01661201-Cable-Hammer-Curl_Forearm_thumbnail@3x.jpg' },
+  { name: 'Cable Rope Hammer Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01661201-Cable-Hammer-Curl_Forearm_thumbnail@3x.jpg' },
   { name: 'Handstand Hold', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/33021101-Handstand_Upper-arms_small_thumbnail@3x.jpg' },
   { name: 'Handstand Push Up', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/04711201-Handstand-Push-Up_Shoulders_thumbnail_@3x.jpg' },
   { name: 'Hang Clean', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15201201-Barbell-Hang-Clean_Weightlifts-FIX_thumbnail_@3x.jpg' },
   { name: 'Hang Snatch', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15221101-Barbell-Hang-Snatch_Weightlifts_small_thumbnail@3x.jpg' },
-  { name: 'Hanging Knee Raise', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/98191201-Hanging-Knee-Raise-(male)_Waist_thumbnail_@3x.jpg' },
+  { name: 'Bar Hanging Knee Raise', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/98191201-Hanging-Knee-Raise-(male)_Waist_thumbnail_@3x.jpg' },
   { name: 'Heel Taps', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00061101-Alternate-Heel-Touchers_waist-FIX_small_thumbnail@3x.jpg' },
   { name: 'Hex Press (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/36811201-Dumbbell-Squeeze-Bench-Press_Chest-FIX__thumbnail_@3x.jpg' },
   { name: 'High Knee Skips', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/30911201-High-Knee-Skips-(male)_Cardio-FIX_thumbnail_@3x.jpg' },
   { name: 'High Knees', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/30911201-High-Knee-Skips-(male)_Cardio-FIX_thumbnail_@3x.jpg' },
   { name: 'Hip Abduction (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05971201-Lever-Seated-Hip-Abduction_Hips_thumbnail@3x.jpg' },
   { name: 'Hip Adduction (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05981201-Lever-Seated-Hip-Adduction_Thighs_thumbnail@3x.jpg' },
-  { name: 'Hip Thrust (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/10601101-Barbell-Hip-Thrust_Hips_small_thumbnail@3x.jpg' },
   { name: 'Hip Thrust (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/21461201-Lever-Hip-Thrust_Hips_thumbnail_@3x.jpg' },
   { name: 'Hip Thrust (Smith Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/57611201-Smith-Hip-Thrust-(female)_Hips_thumbnail_@3x.jpg' },
   { name: 'Hollow Rock', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/56491201-Hollow-Rock-(male)_Waist_thumbnail_@3x.jpg' },
-  { name: 'Incline Bench Press (Barbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00471201-Barbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Incline Bench Press (Smith Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07571201-Smith-Incline-Bench-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Incline Chest Fly (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03191201-Dumbbell-Incline-Fly_Chest_thumbnail@3x.jpg' },
   { name: 'Incline Chest Press (Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/14791201-Lever-Incline-Chest-Press_Chest_thumbnail@3x.jpg' },
   { name: 'Incline Push Ups', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/37851201-Incline-Push-Up-(on-box)_thumbnail@3x.jpg' },
-  { name: 'Inverted Row', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/04991201-Inverted-Row_Back_thumbnail@3x.jpg' },
+  { name: 'Barbell Inverted Row', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/04991201-Inverted-Row_Back_thumbnail@3x.jpg' },
   { name: 'Iso-Lateral Chest Press (Machine)', category: 'upper body', muscleGroup: 'chest', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05761201-Lever-Chest-Press-(plate-loaded)_Chest_thumbnail@3x.jpg' },
   { name: 'Iso-Lateral High Row (Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05811101-Lever-High-Row-(plate-loaded)_Back_small_thumbnail@3x.jpg' },
   { name: 'Iso-Lateral Low Row', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/42141201-Lever-Low-Row-(plate-loaded)_Back__thumbnail_@3x.jpg' },
@@ -244,7 +240,7 @@ const exercises = [
   { name: 'Jackknife Sit Up', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/38841201-Jack-knife-Sit-up-(female)_Waist_thumbnail_@3x.jpg' },
   { name: 'JM Press (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00521201-Barbell-JM-Bench-Press_Upper-Arms-FIX_-2_thumbnail_@3x.jpg' },
   { name: 'Jump Shrug', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/49641201-Jump-Shrug_Thighs_thumbnail_@3x.jpg' },
-  { name: 'Jump Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05141201-Jump-Squat_Thighs_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Squat Jump', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05141201-Jump-Squat_Thighs_thumbnail@3x.jpg' },
   { name: 'Jumping Jack', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/30941201-Jumping-Jack-(male)_Cardio_thumbnail_@3x.jpg' },
   { name: 'Jumping Lunge', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11661201-Jump-Split-m_Plyometrics_thumbnail@3x.jpg' },
   { name: 'Kettlebell Around the World', category: 'upper body', muscleGroup: 'shoulders', equipment: 'kettlebell', difficulty: 'beginner', imageUrl: '/exercises/45341201-Kettlebell-Standing-Slingshots-(female)_Shoulders_thumbnail_@3x.jpg' },
@@ -255,11 +251,10 @@ const exercises = [
   { name: 'Kettlebell High Pull', category: 'upper body', muscleGroup: 'back', equipment: 'kettlebell', difficulty: 'beginner', imageUrl: '/exercises/05481101-Kettlebell-Sumo-High-Pull_back_small_thumbnail@3x.jpg' },
   { name: 'Kettlebell Shoulder Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'kettlebell', difficulty: 'beginner', imageUrl: '/exercises/99571201-Kettlebell-Single-Arm-Shoulder-Press-(male)_Should_thumbnail_@3x.jpg' },
   { name: 'Kettlebell Snatch', category: 'upper body', muscleGroup: 'shoulders', equipment: 'kettlebell', difficulty: 'intermediate', imageUrl: '/exercises/05421101-Kettlebell-One-Arm-Snatch_Shoulders_small_thumbnail@3x.jpg' },
-  { name: 'Kettlebell Swing', category: 'lower body', muscleGroup: 'legs', equipment: 'kettlebell', difficulty: 'beginner', imageUrl: '/exercises/05491201-Kettlebell-Swing_Hips-FIX_thumbnail_@3x.jpg' },
   { name: 'Kettlebell Turkish Get Up', category: 'lower body', muscleGroup: 'legs', equipment: 'kettlebell', difficulty: 'beginner', imageUrl: '/exercises/05511101-Kettlebell-Turkish-Get-Up-(Squat-style)_Thighs_small_thumbnail@3x.jpg' },
   { name: 'Knee Raise Parallel Bars', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/21261201-Captains-chair-leg-raise_Hips_thumbnail@3x.jpg' },
   { name: 'Kneeling Pulldown (band)', category: 'upper body', muscleGroup: 'back', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/43581201-Band-Knelling-Lat-Pulldown_Back_thumbnail_@3x.jpg' },
-  { name: 'Kneeling Push Up', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/32111101-Kneeling-Push-up-(male)_small_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Kneeling Push Up', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/32111101-Kneeling-Push-up-(male)_small_thumbnail@3x.jpg' },
   { name: 'L-Sit Hold', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14021201-L-sit_Waist_thumbnail@3x.jpg' },
   { name: 'Landmine 180', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05621201-Landmine-180_waist_thumbnail@3x.jpg' },
   { name: 'Landmine Row', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/32001201-Lever-Bent-over-Row-with-V-bar-(plate-loaded)_Back_thumbnail_@3x.jpg' },
@@ -268,11 +263,11 @@ const exercises = [
   { name: 'Lat Pulldown (Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05791201-Lever-Front-Pulldown_Back_thumbnail@3x.jpg' },
   { name: 'Lat Pulldown - Close Grip (Cable)', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/63921201-Cable-Lateral-Pulldown-with-Mag-Grip_Back_thumbnail_@3x.jpg' },
   { name: 'Lateral Band Walks', category: 'lower body', muscleGroup: 'legs', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/24601101-Resistance-Band-Lateral-Walk_Hips_small_thumbnail@3x.jpg' },
-  { name: 'Lateral Box Jump', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05641201-Lateral-Box-Jump-(female)_Plyometrics-FIX_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Lateral Box Jump', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/05641201-Lateral-Box-Jump-(female)_Plyometrics-FIX_thumbnail_@3x.jpg' },
   { name: 'Lateral Leg Raises', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/86421201-Standing-Single-Side-Leg-Raise-Chair-Supported-(fe_thumbnail_@3x.jpg' },
-  { name: 'Lateral Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/29721201-Side-Lunge_Thighs_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Lateral Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/29721201-Side-Lunge_Thighs_thumbnail_@3x.jpg' },
   { name: 'Lateral Raise (Band)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/09071101-Band-lateral-raise_Shoulders_small_thumbnail@3x.jpg' },
-  { name: 'Lateral Raise (Cable)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01781201-Cable-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
+  { name: 'Single Arm Cable Lateral Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01781201-Cable-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
   { name: 'Lateral Raise (Machine)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05841201-Lever-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
   { name: 'Lateral Squat', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/69241201-Side-Step-Deep-Squat-(male)_Plyometrics_thumbnail_@3x.jpg' },
   { name: 'Leg Press Horizontal (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/22671201-Lever-Seated-Leg-Press_Thighs_thumbnail@3x.jpg' },
@@ -289,25 +284,24 @@ const exercises = [
   { name: 'Lying Neck Extension (Weighted)', category: 'flexibility', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/10421101-Weighted-Lying-Neck-Extension_neck_small_thumbnail_@3x.jpg' },
   { name: 'Meadows Rows (Barbell)', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'intermediate', imageUrl: '/exercises/40381201-Landmine-One-Arm-Bent-Over-Row_Back_thumbnail_@3x.jpg' },
   { name: 'Muscle Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/51941201-Bodyweight-Muscle-Up-(VERSION-2)_Back_thumbnail_@3x.jpg' },
-  { name: 'Negative Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/47741201-Pull-up-(negative)-(female)_Back__thumbnail_@3x.jpg' },
-  { name: 'Nordic Hamstrings Curls', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/77461201-Nordic-Hamstring-Curl-(male)_Thighs_thumbnail_@3x.jpg' },
-  { name: 'Oblique Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06351201-Oblique-Crunches-Floor_Waist_thumbnail@3x.jpg' },
-  { name: 'One Arm Push Up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/07251201-Single-Arm-Push-up_Chest_thumbnail@3x.jpg' },
+  { name: 'Bar Eccentric Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/47741201-Pull-up-(negative)-(female)_Back__thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Nordic Hamstring Curl', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/77461201-Nordic-Hamstring-Curl-(male)_Thighs_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Oblique Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06351201-Oblique-Crunches-Floor_Waist_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Single Arm Push Up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/07251201-Single-Arm-Push-up_Chest_thumbnail@3x.jpg' },
   { name: 'Overhead Curl (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/16361201-Cable-Overhead-Curl_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Overhead Dumbbell Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/50761201-Dumbbell-Overhead-Lunge_Thighs_thumbnail_@3x.jpg' },
   { name: 'Overhead Plate Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/101141201-Weighted-Plate-LU-Raise-(male)_Shoulders_thumbnail_@3x.jpg' },
-  { name: 'Overhead Press (Barbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders_thumbnail@3x.jpg' },
   { name: 'Overhead Press (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04261201-Dumbbell-Standing-Overhead-Press_shoulder_thumbnail@3x.jpg' },
   { name: 'Overhead Press (Smith Machine)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/12241201-Smith-Standing-Shoulder-Press_Shoulders_thumbnail@3x.jpg' },
-  { name: 'Overhead Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00691201-Barbell-Overhead-Squat_Thighs-FIX_thumbnail_@3x.jpg' },
+  { name: 'Barbell Overhead Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00691201-Barbell-Overhead-Squat_Thighs-FIX_thumbnail_@3x.jpg' },
   { name: 'Overhead Triceps Extension (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01941201-Cable-Overhead-Triceps-Extension-(rope-attachment)_Upper-Arms-FIX_thumbnail_@3x.jpg' },
   { name: 'Partial Glute Bridge (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/54511201-Barbell-KAS-Glute-Bridge-(female)_Hips_thumbnail_@3x.jpg' },
   { name: 'Pause Squat (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/50161201-Barbell-Pause-Full-Squat_Thighs__thumbnail_@3x.jpg' },
   { name: 'Pendlay Row (Barbell)', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/30171201-Barbell-Pendlay-Row_Back_thumbnail_@3x.jpg' },
   { name: 'Pendulum Squat (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/49511201-Lever-Pendulum-Squat-(plate-loaded)_Thighs__thumbnail_@3x.jpg' },
-  { name: 'Pike Pushup', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/29211101-Pike-Push-up_Chest_small_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Pike Push Up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/29211101-Pike-Push-up_Chest_small_thumbnail@3x.jpg' },
   { name: 'Pinwheel Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/16571201-Dumbbell-Cross-Body-Hammer-Curl-(Version-2)_Upper-Arms-FIX_thumbnail_@3x.jpg' },
-  { name: 'Pistol Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/17591101-Single-Leg-Squat-(pistol)-male_Thighs_small_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Pistol Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/17591101-Single-Leg-Squat-(pistol)-male_Thighs_small_thumbnail@3x.jpg' },
   { name: 'Plank Pushup', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/29781201-Elbow-Up-and-Down-Dynamic-Plank_thumbnail_@3x.jpg' },
   { name: 'Plate Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/66981201-Weighted-Plate-Standing-Biceps-Curl-(male)_Forearm_thumbnail_@3x.jpg' },
   { name: 'Plate Front Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08341201-Weighted-Front-Raise_Shoulders_thumbnail@3x.jpg' },
@@ -318,23 +312,22 @@ const exercises = [
   { name: 'Preacher Curl (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00701201-Barbell-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Preacher Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04021201-Dumbbell-Seated-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Preacher Curl (Machine)', category: 'upper body', muscleGroup: 'arms', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05921201-Lever-Preacher-Curl_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06521201-Pull-up_Back_thumbnail@3x.jpg' },
-  { name: 'Pull Up (Assisted)', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00171201-Assisted-Pull-up_Back_thumbnail@3x.jpg' },
-  { name: 'Pull Up (Band)', category: 'upper body', muscleGroup: 'back', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/38441201-Band-Assisted-Pull-Up-(VERSION-3)-(female)_Back_thumbnail_@3x.jpg' },
+  { name: 'Bar Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06521201-Pull-up_Back_thumbnail@3x.jpg' },
+  { name: 'Superband Assisted Bar Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00171201-Assisted-Pull-up_Back_thumbnail@3x.jpg' },
   { name: 'Pull Up (Weighted)', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/08411201-Weighted-Pull-Up_Back_thumbnail_@3x.jpg' },
-  { name: 'Pullover (Dumbbell)', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03751201-Dumbbell-Pullover_Chest_thumbnail@3x.jpg' },
+  { name: 'Dumbbell Pullover', category: 'upper body', muscleGroup: 'chest', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03751201-Dumbbell-Pullover_Chest_thumbnail@3x.jpg' },
   { name: 'Pullover (Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/22851201-Lever-Pullover-(plate-loaded)_Back__thumbnail_@3x.jpg' },
-  { name: 'Push Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/12001201-Push-Press_Shoulders_thumbnail@3x.jpg' },
+  { name: 'Barbell Push Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/12001201-Push-Press_Shoulders_thumbnail@3x.jpg' },
   { name: 'Push Up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06621201-Push-up-m_Chest_thumbnail@3x.jpg' },
   { name: 'Push Up (Weighted)', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/11721201-Assisted-Weighted-Push-up_Chest_thumbnail@3x.jpg' },
   { name: 'Push Up - Close Grip', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/02591201-Close-Grip-Push-up_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Rack Pull', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00741101-Barbell-Rack-Pull_Hips-FIX_thumbnail@3x.jpg' },
+  { name: 'Barbell Rack Pull', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/00741101-Barbell-Rack-Pull_Hips-FIX_thumbnail@3x.jpg' },
   { name: 'Rear Delt Reverse Fly (Cable)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02251201-Cable-Standing-Cross-over-High-Reverse-Fly_Shoulders_thumbnail_@3x.jpg' },
   { name: 'Rear Delt Reverse Fly (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/24871101-Dumbbell-Rear-Delt-Fly-(female)_Shoulders_small_thumbnail@3x.jpg' },
   { name: 'Rear Delt Reverse Fly (Machine)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/06021201-Lever-Seated-Reverse-Fly_Shoulders_thumbnail@3x.jpg' },
   { name: 'Rear Kick (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/99041201-Lever-Pure-Rear-Kick-(female)_Hips_thumbnail_@3x.jpg' },
   { name: 'Renegade Row (Dumbbell)', category: 'upper body', muscleGroup: 'back', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/29811201-Dumbbell-Renegade-Row-(female)_Back_thumbnail_@3x.jpg' },
-  { name: 'Reverse Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08721201-Reverse-Crunch-m_waist_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Reverse Crunch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08721201-Reverse-Crunch-m_waist_thumbnail@3x.jpg' },
   { name: 'Reverse Curl (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00801201-Barbell-Reverse-Curl_Forearm_thumbnail@3x.jpg' },
   { name: 'Reverse Curl (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02061201-Cable-Reverse-Curl_Forearm_thumbnail_@3x.jpg' },
   { name: 'Reverse Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03821201-Dumbbell-Revers-grip-Biceps-Curl_Forearms_thumbnail@3x.jpg' },
@@ -342,28 +335,27 @@ const exercises = [
   { name: 'Reverse Grip Concentration Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04031201-Dumbbell-Seated-Revers-grip-Concentration-Curl_Forearms_thumbnail_@3x.jpg' },
   { name: 'Reverse Grip Lat Pulldown (Cable)', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02081201-Cable-Reverse-grip-Straight-Back-Seated-High-Row_Back_thumbnail@3x.jpg' },
   { name: 'Reverse Hyperextension', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05931201-Lever-Reverse-Hyperextension-(plate-loaded)_Hips_thumbnail@3x.jpg' },
-  { name: 'Reverse Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/63881201-Bodyweight-Reverse-Lunge-(female)_Thighs_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Reverse Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/63881201-Bodyweight-Reverse-Lunge-(female)_Thighs_thumbnail_@3x.jpg' },
   { name: 'Reverse Lunge (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/22261201-Barbell-Rear-Lunge-(female)_Thighs_thumbnail_@3x.jpg' },
   { name: 'Reverse Lunge (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03811201-Dumbbell-Rear-Lunge_Thighs_thumbnail@3x.jpg' },
-  { name: 'Reverse Plank', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08671201-Reverse-plank_Back_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Reverse Plank', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08671201-Reverse-plank_Back_thumbnail@3x.jpg' },
   { name: 'Ring Dips', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06771201-Ring-Dip_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Ring Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/55221201-Ring-Pull-Up_Back_1_thumbnail_@3x.jpg' },
   { name: 'Ring Push Up', category: 'upper body', muscleGroup: 'chest', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08061201-Suspended-Push-Up_Chest_thumbnail_@3x.jpg' },
-  { name: 'Romanian Deadlift (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00851201-Barbell-Romanian-Deadlift_Hips-FIX_thumbnail_@3x.jpg' },
-  { name: 'Romanian Deadlift (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/14591201-Dumbbell-Romanian-Deadlift_Hips_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Romanian Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/14591201-Dumbbell-Romanian-Deadlift_Hips_thumbnail@3x.jpg' },
   { name: 'Rope Cable Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01651201-Cable-Hammer-Curl-(with-rope)-(male)_Forearms_thumbnail_@3x.jpg' },
   { name: 'Rope Straight Arm Pulldown', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02371201-Cable-Straight-Arm-Pulldown-(with-rope)_Back_thumbnail@3x.jpg' },
   { name: 'Rowing Machine', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/22701201-Rowing-Straight-Back-(with-rowing-machine)-(female)_Cardio_thumbnail@3x.jpg' },
   { name: 'Russian Twist (Bodyweight)', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06871201-Russian-Twist_waist_thumbnail@3x.jpg' },
   { name: 'Russian Twist (Weighted)', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/23711201-Weighted-Russian-Twist_Waist_thumbnail@3x.jpg' },
-  { name: 'Scapular Pull Ups', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06881201-Scapular-Pull-Up_Back_thumbnail_@3x.jpg' },
+  { name: 'Bar Scapular Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06881201-Scapular-Pull-Up_Back_thumbnail_@3x.jpg' },
   { name: 'Seated Cable Row - Bar Grip', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01801201-Cable-Low-Seated-Row_Back_thumbnail@3x.jpg' },
   { name: 'Seated Cable Row - Bar Wide Grip', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02181201-Cable-Seated-Wide-grip-Row_Back_thumbnail@3x.jpg' },
   { name: 'Seated Chest Flys (Cable)', category: 'upper body', muscleGroup: 'chest', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/38691101-Cable-Seated-Chest-Fly_Chest_small_thumbnail_@3x.jpg' },
   { name: 'Seated Dip Machine', category: 'upper body', muscleGroup: 'arms', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/14511201-Lever-Seated-Dip_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Seated Incline Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03151201-Dumbbell-Incline-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Seated Lateral Raise (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03961201-Dumbbell-Seated-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
-  { name: 'Seated Overhead Press (Barbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/68771201-Barbell-Incline-Shoulders-Press-(inside-squat-cage_thumbnail_@3x.jpg' },
+  { name: 'Double Dumbbell Seated Lateral Raise', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03961201-Dumbbell-Seated-Lateral-Raise_shoulder_thumbnail@3x.jpg' },
+  { name: 'Barbell Seated Overhead Press', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/68771201-Barbell-Incline-Shoulders-Press-(inside-squat-cage_thumbnail_@3x.jpg' },
   { name: 'Seated Overhead Press (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/02901201-Dumbbell-Bench-Seated-Press_Shoulders_thumbnail@3x.jpg' },
   { name: 'Seated Palms Up Wrist Curl', category: 'full body', muscleGroup: 'full body', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/26331201-Dumbbell-Seated-Palms-Up-Wrist-Curl-(female)_Forea_thumbnail_@3x.jpg' },
   { name: 'Seated Row (Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/22651201-Lever-Seated-Row-(version-2)_Back_thumbnail@3x.jpg' },
@@ -372,37 +364,35 @@ const exercises = [
   { name: 'Seated Wrist Extension (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00791201-Barbell-Revers-Wrist-Curl-II_Forearms_thumbnail@3x.jpg' },
   { name: 'Shoulder Press (Machine Plates)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/05871201-Lever-Military-Press-(plate-loaded)_shoulder_thumbnail_@3x.jpg' },
   { name: 'Shoulder Taps', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/06991201-Shoulder-Tap-Push-up_Plyometrics_thumbnail@3x.jpg' },
-  { name: 'Shrug (Barbell)', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00951201-Barbell-Shrug_Back_thumbnail@3x.jpg' },
+  { name: 'Barbell Shrug', category: 'upper body', muscleGroup: 'back', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00951201-Barbell-Shrug_Back_thumbnail@3x.jpg' },
   { name: 'Shrug (Cable)', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02201201-Cable-Shrug_Back_thumbnail@3x.jpg' },
   { name: 'Shrug (Dumbbell)', category: 'upper body', muscleGroup: 'back', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04061201-Dumbbell-Shrug_Back_thumbnail@3x.jpg' },
   { name: 'Shrug (Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/06041201-Lever-Shrug-(plate-loaded)_Back_thumbnail_@3x.jpg' },
   { name: 'Shrug (Smith Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07461201-Smith-Back-Shrug_Back_thumbnail@3x.jpg' },
   { name: 'Side Bend', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00021201-45-Side-Bend_Waist_thumbnail@3x.jpg' },
   { name: 'Side Bend (Dumbbell)', category: 'core', muscleGroup: 'core', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04071201-Dumbbell-Side-Bend_Waist_thumbnail@3x.jpg' },
-  { name: 'Side Plank', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/07151201-Side-Plank-m_Waist_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Side Plank', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/07151201-Side-Plank-m_Waist_thumbnail@3x.jpg' },
   { name: 'Single Arm Cable Crossover', category: 'upper body', muscleGroup: 'chest', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/62191201-Cable-Standing-Single-Arm-Fly_Chest_thumbnail_@3x.jpg' },
   { name: 'Single Arm Cable Row', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/75641201-Cable-Split-Stance-Single-Arm-Row-(male)_Back_thumbnail_@3x.jpg' },
   { name: 'Single Arm Curl (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01901201-Cable-One-Arm-Curl_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Single Arm Landmine Press (Barbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'intermediate', imageUrl: '/exercises/50941201-Landmine-Single-Arm-Press_Shoulders_thumbnail_@3x.jpg' },
   { name: 'Single Arm Lat Pulldown', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/12041101-Cable-one-arm-lat-pulldown_back_small_thumbnail@3x.jpg' },
-  { name: 'Single Arm Lateral Raise (Cable)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01921201-Cable-One-Arm-Lateral-Raise_Shoulders-3_thumbnail_@3x.jpg' },
   { name: 'Single Arm Tricep Extension (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03621201-Dumbbell-One-Arm-Triceps-Extension-(on-bench)_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Single Arm Triceps Pushdown (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/50331201-Cable-Single-Arm-Triceps-Pushdown-(rope-attachment_thumbnail_@3x.jpg' },
   { name: 'Single Leg Extensions', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/71081201-Lever-Seated-Leg-Extension-(VERSION-2)_Thighs_thumbnail_@3x.jpg' },
-  { name: 'Single Leg Glute Bridge', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/60001201-Single-Leg-Bridge-with-Outstretched-Leg-(left)-(ma_thumbnail_@3x.jpg' },
-  { name: 'Single Leg Hip Thrust', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/20711101-Single-Leg_Hip-Thrusts_Hips_small_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Single Leg Glute Bridge', category: 'full body', muscleGroup: 'full body', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/60001201-Single-Leg-Bridge-with-Outstretched-Leg-(left)-(ma_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Single Leg Hip Thrust', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/20711101-Single-Leg_Hip-Thrusts_Hips_small_thumbnail@3x.jpg' },
   { name: 'Single Leg Hip Thrust (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/47551101-Dumbbell-Single-Leg-Hip-Thrust_Hips_small_thumbnail_@3x.jpg' },
   { name: 'Single Leg Press (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/08831201-Lever-Horizontal-One-leg-Press_Hips_thumbnail@3x.jpg' },
-  { name: 'Single Leg Romanian Deadlift (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/17561201-Barbell-Single-Leg-Deadlift_Hips_thumbnail_@3x.jpg' },
-  { name: 'Single Leg Romanian Deadlift (Dumbbell)', category: 'full body', muscleGroup: 'full body', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/97541201-Dumbbell-Single-Leg-Romanian-Deadlift-Leg-Raise-(m_thumbnail_@3x.jpg' },
+  { name: 'Barbell Single Leg Romanian Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/17561201-Barbell-Single-Leg-Deadlift_Hips_thumbnail_@3x.jpg' },
+  { name: 'Double Dumbbell Single Leg Romanian Deadlift', category: 'full body', muscleGroup: 'full body', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/97541201-Dumbbell-Single-Leg-Romanian-Deadlift-Leg-Raise-(m_thumbnail_@3x.jpg' },
   { name: 'Single Leg Standing Calf Raise', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/50521201-Single-Leg-Calf-Raise-Off-Step_Calves_thumbnail_@3x.jpg' },
   { name: 'Single Leg Standing Calf Raise (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/101691201-Barbell-Standing-Single-Leg-Calf-Raise_Calves_thumbnail_@3x.jpg' },
   { name: 'Single Leg Standing Calf Raise (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/39731201-Dumbbell-Single-Leg-Calf-Raise-(female)-(VERSION-2)_Calves_thumbnail_@3x.jpg' },
   { name: 'Single Leg Standing Calf Raise (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/100761201-Lever-Standing-Single-Leg-Calf-Raise_Calves_thumbnail_@3x.jpg' },
   { name: 'Sissy Squat (Weighted)', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/08511201-Weighted-Sissy-Squat_Thighs_thumbnail@3x.jpg' },
-  { name: 'Sit Up', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00011201-3-4-Sit-up_Waist_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Sit Up', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00011201-3-4-Sit-up_Waist_thumbnail@3x.jpg' },
   { name: 'Sit Up (Weighted)', category: 'core', muscleGroup: 'core', equipment: 'dumbbells', difficulty: 'advanced', imageUrl: '/exercises/47561201-Dumbbell-Sit-up_Waist_thumbnail_@3x.jpg' },
-  { name: 'Skullcrusher (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00601201-Barbell-Lying-Triceps-Extension-Skull-Crusher_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Skullcrusher (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/22511201-Dumbbell-Lying-Triceps-Extension-(female)_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Sled Push', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/25241201-Power-Sled-Push-(female)_Thighs_thumbnail@3x.jpg' },
   { name: 'Snatch', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15331101-Barbell-Snatch_Weightlifts_small_thumbnail@3x.jpg' },
@@ -410,29 +400,28 @@ const exercises = [
   { name: 'Spider Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03741201-Dumbbell-Prone-Incline-Curl_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Spiderman', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/48791201-Spiderman-Plank_Waist_thumbnail_@3x.jpg' },
   { name: 'Spinning', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/22791201-Stationary-Bike-Run-(version-4)_Cardio_thumbnail@3x.jpg' },
-  { name: 'Split Jerk', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15381101-Barbell-Split-Jerk_Weightlifts_small_thumbnail@3x.jpg' },
-  { name: 'Split Squat (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/29601201-Dumbbell-Split-Squat_Thighs_thumbnail@3x.jpg' },
+  { name: 'Barbell Split Jerk', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/15381101-Barbell-Split-Jerk_Weightlifts_small_thumbnail@3x.jpg' },
+  { name: 'Dumbbell Goblet Split Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/29601201-Dumbbell-Split-Squat_Thighs_thumbnail@3x.jpg' },
   { name: 'Squat (Band)', category: 'lower body', muscleGroup: 'legs', equipment: 'other', difficulty: 'beginner', imageUrl: '/exercises/57491201-Band-squat-(female)_Hips_thumbnail_@3x.jpg' },
-  { name: 'Squat (Bodyweight)', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11971201-Squat-m_Thighs_thumbnail@3x.jpg' },
-  { name: 'Squat (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04131201-Dumbbell-Squat_Hips_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11971201-Squat-m_Thighs_thumbnail@3x.jpg' },
   { name: 'Squat (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/57881201-Lever-Squat-(plate-loaded)-(female)_Thighs_thumbnail_@3x.jpg' },
   { name: 'Squat (Smith Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/07501201-Smith-Chair-Squat_Thighs_thumbnail@3x.jpg' },
-  { name: 'Squat (Suspension)', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11431101-Suspender-Squat_Thighs_small_thumbnail@3x.jpg' },
+  { name: 'Suspension Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/11431101-Suspender-Squat_Thighs_small_thumbnail@3x.jpg' },
   { name: 'Squat Row', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/17171201-Cable-Squat-Row-(with-rope-attachment)_Back_Thighs_thumbnail_@3x.jpg' },
   { name: 'Stair Machine (Floors)', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/23111201-Walking-on-Stepmill_Cardio_thumbnail@3x.jpg' },
   { name: 'Stair Machine (Steps)', category: 'cardio', muscleGroup: 'cardiovascular', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/23111201-Walking-on-Stepmill_Cardio_thumbnail@3x.jpg' },
-  { name: 'Standing Cable Glute Kickbacks', category: 'lower body', muscleGroup: 'legs', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/60401201-Cable-Donkey-Kickback-(male)_Hips_thumbnail_@3x.jpg' },
+  { name: 'Cable Glute Kickback', category: 'lower body', muscleGroup: 'legs', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/60401201-Cable-Donkey-Kickback-(male)_Hips_thumbnail_@3x.jpg' },
   { name: 'Standing Calf Raise (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/01081101-Barbell-Standing-Leg-Calf-Raise_Calf_small_thumbnail@3x.jpg' },
   { name: 'Standing Calf Raise (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04171201-Dumbbell-Standing-Calf-Raise_Calves_thumbnail@3x.jpg' },
   { name: 'Standing Calf Raise (Machine)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/06051201-Lever-Standing-Calf-Raise_Calves_thumbnail@3x.jpg' },
   { name: 'Standing Calf Raise (Smith)', category: 'lower body', muscleGroup: 'legs', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/11641101-Smith-Calf-Raise-(version-2)_Calves_small_thumbnail_@3x.jpg' },
   { name: 'Standing Leg Curls', category: 'full body', muscleGroup: 'full body', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/51811201-Lever-Standing-Single-Leg-Curl-(plate-loaded)_Thig_thumbnail_@3x.jpg' },
   { name: 'Standing Military Press (Barbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/11651201-Barbell-Standing-Military-Press-(without-rack)_Shoulders_thumbnail@3x.jpg' },
-  { name: 'Step Up', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/94901201-Step-Up-on-Box_Thighs_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Step Up', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/94901201-Step-Up-on-Box_Thighs_thumbnail_@3x.jpg' },
   { name: 'Sternum Pull up (Gironda)', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/04661201-Sternum-Pull-up-(Gironda)_Back_thumbnail_@3x.jpg' },
   { name: 'Straight Arm Lat Pulldown (Cable)', category: 'upper body', muscleGroup: 'back', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02381201-Cable-Straight-Arm-Pulldown_Back_thumbnail@3x.jpg' },
   { name: 'Straight Leg Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/01161201-Barbell-Straight-Leg-Deadlift_Thighs_thumbnail@3x.jpg' },
-  { name: 'Sumo Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/01171201-Barbell-Sumo-Deadlift_Hips_thumbnail@3x.jpg' },
+  { name: 'Barbell Sumo Deadlift', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/01171201-Barbell-Sumo-Deadlift_Hips_thumbnail@3x.jpg' },
   { name: 'Sumo Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/10641201-Sumo-Squat-(male)_Thighs-FIX__thumbnail_@3x.jpg' },
   { name: 'Sumo Squat (Barbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/10631201-Barbell-sumo-squat_Thighs_thumbnail@3x.jpg' },
   { name: 'Sumo Squat (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/23221201-Dumbbell-Sumo-Squat-(female)_Thighs__thumbnail_@3x.jpg' },
@@ -442,34 +431,200 @@ const exercises = [
   { name: 'Thruster (Barbell)', category: 'full body', muscleGroup: 'full body', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/33051201-Barbell-Thruster_Weightlifting_thumbnail_@3x.jpg' },
   { name: 'Thruster (Kettlebell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'kettlebell', difficulty: 'intermediate', imageUrl: '/exercises/05501101-Kettlebell-Thruster_Shoulders_small_thumbnail@3x.jpg' },
   { name: 'Toe Touch', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/52751201-Lying-Toe-Touch_Waist_thumbnail_@3x.jpg' },
-  { name: 'Toes to Bar', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/04741201-Hanging-Straight-Leg-Hip-Raise_Waist_thumbnail@3x.jpg' },
+  { name: 'Bar Hanging Toes to Bar', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/04741201-Hanging-Straight-Leg-Hip-Raise_Waist_thumbnail@3x.jpg' },
   { name: 'Torso Rotation', category: 'core', muscleGroup: 'core', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/100651201-Lever-Torso-Rotation-(male)_Waist_thumbnail_@3x.jpg' },
-  { name: 'Triceps Dip', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08141201-Triceps-Dip_Upper-Arms_thumbnail@3x.jpg' },
-  { name: 'Triceps Dip (Assisted)', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/00191201-Assisted-Triceps-Dip-(kneeling)_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Bodyweight Dips', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08141201-Triceps-Dip_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Triceps Dip (Weighted)', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'advanced', imageUrl: '/exercises/17551201-Weighted-Tricep-Dips_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Triceps Extension (Barbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/00921201-Barbell-Seated-Overhead-Triceps-Extension_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Triceps Extension (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_thumbnail_@3x.jpg' },
   { name: 'Triceps Extension (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04301201-Dumbbell-Standing-Triceps-Extension_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Triceps Extension (Machine)', category: 'upper body', muscleGroup: 'arms', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/10331201-Lever-Triceps-Extension_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Triceps Extension (Suspension)', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/58761201-Suspension-Triceps-Extension-(male)_Upper-Arms_thumbnail_@3x.jpg' },
-  { name: 'Triceps Kickback (Cable)', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/45661101-Cable-Neutral-Grip-Kickback_Upper-arms_small_thumbnail_@3x.jpg' },
-  { name: 'Triceps Kickback (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03331201-Dumbbell-Kickback_Upper-Arms_thumbnail@3x.jpg' },
+  { name: 'Single Arm Cable Tricep Kickback', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/45661101-Cable-Neutral-Grip-Kickback_Upper-arms_small_thumbnail_@3x.jpg' },
+  { name: 'Single Arm Dumbbell Tricep Kickback', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/03331201-Dumbbell-Kickback_Upper-Arms_thumbnail@3x.jpg' },
   { name: 'Triceps Pressdown', category: 'upper body', muscleGroup: 'arms', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/16051201-Cable-Triceps-Pushdown-(SZ-bar)_Upper-arms_thumbnail_@3x.jpg' },
   { name: 'Upright Row (Barbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'barbell', difficulty: 'intermediate', imageUrl: '/exercises/01211201-Barbell-Upright-Row_Shoulders_thumbnail@3x.jpg' },
   { name: 'Upright Row (Cable)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'cable', difficulty: 'beginner', imageUrl: '/exercises/02461201-Cable-Upright-Row_shoulder_thumbnail@3x.jpg' },
   { name: 'Upright Row (Dumbbell)', category: 'upper body', muscleGroup: 'shoulders', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04371201-Dumbbell-Upright-Row_shoulder_thumbnail@3x.jpg' },
-  { name: 'V Up', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08251201-V-up_Waist_thumbnail@3x.jpg' },
+  { name: 'Bodyweight V Up', category: 'core', muscleGroup: 'core', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08251201-V-up_Waist_thumbnail@3x.jpg' },
   { name: 'Vertical Traction (Machine)', category: 'upper body', muscleGroup: 'back', equipment: 'machine', difficulty: 'beginner', imageUrl: '/exercises/71791201-Lever-Cross-Lat-Pulldown-(VERSION-2)-(male)_Back_thumbnail_@3x.jpg' },
-  { name: 'Waiter Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/52011201-Dumbbell-Waiter-Biceps-Curl_Upper-Arms_thumbnail_@3x.jpg' },
-  { name: 'Walking Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14601201-Walking-Lunge-Male_Hips_thumbnail@3x.jpg' },
+  { name: 'Dumbbell Waiter Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/52011201-Dumbbell-Waiter-Biceps-Curl_Upper-Arms_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Walking Lunge', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14601201-Walking-Lunge-Male_Hips_thumbnail@3x.jpg' },
   { name: 'Walking Lunge (Dumbbell)', category: 'lower body', muscleGroup: 'legs', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/15571201-Dumbbell-Walking-Lunges_Thighs___thumbnail_@3x.png' },
-  { name: 'Wall Ball', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/51611201-Medicine-Ball-Throw-Squat-with-Wall_Shoulders_thumbnail_@3x.jpg' },
-  { name: 'Wall Sit', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/66961201-Sit-(wall)-(female)_Thighs_thumbnail_@3x.jpg' },
+  { name: 'Wall Ball Toss', category: 'upper body', muscleGroup: 'shoulders', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/51611201-Medicine-Ball-Throw-Squat-with-Wall_Shoulders_thumbnail_@3x.jpg' },
+  { name: 'Bodyweight Wall Sit', category: 'lower body', muscleGroup: 'legs', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/66961201-Sit-(wall)-(female)_Thighs_thumbnail_@3x.jpg' },
   { name: 'Wide Pull Up', category: 'upper body', muscleGroup: 'back', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/14291201-Wide-Grip-Pull-Up_Back_thumbnail@3x.jpg' },
   { name: 'Wide-Elbow Triceps Press (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04361201-Dumbbell-Tate-Press_Triceps_thumbnail_@3x.jpg' },
   { name: 'Wrist Roller', category: 'upper body', muscleGroup: 'arms', equipment: 'bodyweight', difficulty: 'beginner', imageUrl: '/exercises/08591101-Wrist-Roller_Forearms_small_thumbnail@3x.jpg' },
-  { name: 'Zercher Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/15451101-Barbell-full-Zercher-Squat_Thighs_small_thumbnail@3x.jpg' },
-  { name: 'Zottman Curl (Dumbbell)', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04391201-Dumbbell-Zottman-Curl_Upper-Arms-FIX_thumbnail@3x.jpg' },
+  { name: 'Barbell Zercher Squat', category: 'lower body', muscleGroup: 'legs', equipment: 'barbell', difficulty: 'beginner', imageUrl: '/exercises/15451101-Barbell-full-Zercher-Squat_Thighs_small_thumbnail@3x.jpg' },
+  { name: 'Double Dumbbell Zottman Curl', category: 'upper body', muscleGroup: 'arms', equipment: 'dumbbells', difficulty: 'beginner', imageUrl: '/exercises/04391201-Dumbbell-Zottman-Curl_Upper-Arms-FIX_thumbnail@3x.jpg' },
 ];
 
-module.exports = exercises;
+// Generate exercise-specific how-to instructions
+function generateHowTo(ex) {
+  const name = ex.name;
+  const eq = ex.equipment;
+  const mg = ex.muscleGroup;
+
+  const equipSetup = {
+    barbell: 'Load the barbell with appropriate weight and secure the collars',
+    dumbbells: 'Select the appropriate dumbbell weight',
+    cable: 'Set the cable pulley to the correct height and attach the handle',
+    machine: 'Adjust the machine seat and settings to fit your body',
+    bodyweight: 'Position your body in the starting stance',
+    kettlebell: 'Select the appropriate kettlebell weight',
+    none: 'Set up in the designated area',
+    other: 'Set up the equipment as needed',
+  };
+
+  const isPushUp = /push.?up/i.test(name);
+  const isPress = !isPushUp && /press|push/i.test(name);
+  const isCurl = /curl/i.test(name);
+  const isPullUp = /pull.?up|chin.?up/i.test(name);
+  const isPull = !isPullUp && /pull|row/i.test(name);
+  const isRaise = /raise|fly|flye|lateral|front/i.test(name);
+  const isSquat = /squat|lunge|split/i.test(name);
+  const isDeadlift = /deadlift|rdl/i.test(name);
+  const isExtension = /extension|pushdown|kickback|skull/i.test(name);
+  const isPlank = /plank|dead bug|bird dog/i.test(name);
+  const isCrunch = /crunch|sit.?up|twist/i.test(name);
+  const isHangLeg = /hanging.*raise|captain/i.test(name);
+  const isSwing = /swing|snatch|clean/i.test(name);
+  const isDip = /dip/i.test(name);
+  const isShrug = /shrug/i.test(name);
+  const isHipThrust = /hip thrust|glute bridge/i.test(name);
+  const isCalf = /calf/i.test(name);
+  const isRollout = /rollout|wheel/i.test(name);
+
+  if (mg === 'cardiovascular') {
+    return {
+      steps: ['Begin with a 2-3 minute warm-up at low intensity', 'Gradually increase to your target pace and intensity', 'Maintain proper posture — keep your back straight and core engaged', 'Breathe rhythmically and stay hydrated', 'Cool down for 2-3 minutes at reduced intensity'],
+      tips: ['Monitor your heart rate to stay in your target zone', 'Stay consistent with your breathing pattern', 'Increase duration before increasing intensity'],
+    };
+  }
+  if (isPlank) {
+    return {
+      steps: ['Start face down with forearms or hands on the floor', 'Lift your body into a straight line from head to heels', 'Engage your core and squeeze your glutes', 'Hold the position for the target duration', 'Lower with control when the set is complete'],
+      tips: ["Keep your hips level — don't let them sag or pike up", 'Breathe steadily throughout the hold', 'Start with shorter holds and build up over time'],
+    };
+  }
+  if (isRollout) {
+    return {
+      steps: ['Kneel on a mat and grip the ab wheel or barbell', 'Brace your core and tuck your hips slightly', 'Roll forward slowly, extending your arms', 'Go as far as you can while maintaining a flat back', 'Contract your abs to pull yourself back to the start'],
+      tips: ["Don't let your lower back arch", 'Start with partial range of motion and progress', 'Keep the movement slow and controlled'],
+    };
+  }
+  if (isHangLeg) {
+    return {
+      steps: ["Hang from a pull-up bar or position yourself in the captain's chair", 'Engage your core and stabilize your upper body', 'Raise your legs by flexing at the hips', 'Lift until your thighs are at least parallel to the floor', 'Lower your legs slowly back to the starting position'],
+      tips: ['Avoid swinging — use controlled movement', 'Exhale as you raise your legs', 'Bend your knees to make it easier'],
+    };
+  }
+  if (isCrunch) {
+    return {
+      steps: [equipSetup[eq] || 'Position yourself on the floor or machine', 'Engage your core and set your starting position', 'Contract your abs to curl your torso forward', 'Squeeze at the top of the movement', "Lower back with control — don't relax completely"],
+      tips: ["Don't pull on your neck with your hands", 'Focus on the contraction, not the range of motion', 'Exhale on the crunch, inhale on the return'],
+    };
+  }
+  if (isHipThrust) {
+    return {
+      steps: ['Sit on the floor with your upper back against a bench', eq === 'barbell' ? 'Roll a loaded barbell over your hips and pad it' : 'Position the weight across your hips', 'Plant your feet flat, shoulder-width apart', 'Drive through your heels and thrust your hips upward', 'Squeeze your glutes at the top, then lower with control'],
+      tips: ['Keep your chin tucked throughout the movement', "Don't hyperextend your lower back at the top", 'Push through your heels, not your toes'],
+    };
+  }
+  if (isCalf) {
+    return {
+      steps: [equipSetup[eq] || 'Position yourself on the calf raise machine', 'Place the balls of your feet on the edge of the platform', 'Lower your heels below the platform for a full stretch', 'Push up onto your toes as high as possible', 'Hold the top contraction briefly, then lower slowly'],
+      tips: ['Use a full range of motion for maximum benefit', 'Pause at the top and bottom of each rep', 'Try different foot angles to target different areas'],
+    };
+  }
+  if (isSwing) {
+    return {
+      steps: [equipSetup[eq] || 'Stand with feet shoulder-width apart', 'Hinge at the hips and grip the weight with both hands', 'Swing the weight back between your legs', 'Drive your hips forward explosively to swing the weight up', 'Control the descent and repeat in a fluid motion'],
+      tips: ['Power comes from the hips, not the arms', 'Keep your back flat throughout', 'Brace your core at the top of each swing'],
+    };
+  }
+  if (isShrug) {
+    return {
+      steps: [equipSetup[eq], 'Stand upright with the weight at your sides or in front', 'Elevate your shoulders straight up toward your ears', 'Hold the contraction at the top for 1-2 seconds', 'Lower slowly back to the starting position'],
+      tips: ["Don't roll your shoulders — move straight up and down", 'Use a controlled tempo, not momentum', 'Focus on squeezing the traps at the top'],
+    };
+  }
+  if (isDip) {
+    return {
+      steps: ['Grip the dip bars or bench and support your body weight', 'Start with arms fully extended (or hands behind you on bench)', 'Lower your body by bending your elbows', 'Descend until your upper arms are parallel to the floor', 'Push back up to full arm extension'],
+      tips: ['Lean forward slightly to target chest, stay upright for triceps', "Don't go too deep if you have shoulder issues", "Control the descent — don't drop"],
+    };
+  }
+  if (isPushUp) {
+    return {
+      steps: ['Get into a high plank position with hands slightly wider than shoulder-width', 'Keep your body in a straight line from head to heels', 'Lower your chest toward the floor by bending your elbows', 'Go down until your chest nearly touches the ground', 'Push back up to full arm extension'],
+      tips: ['Keep your core tight and hips level throughout', "Don't flare your elbows out too wide — keep them at about 45 degrees", 'Scale by doing knee push-ups or incline push-ups if needed'],
+    };
+  }
+  if (isPullUp) {
+    return {
+      steps: ['Grip the bar with hands shoulder-width apart (overhand for pull-ups, underhand for chin-ups)', 'Hang with arms fully extended and shoulders engaged', 'Pull yourself up by driving your elbows down and back', 'Continue until your chin is over the bar', 'Lower yourself with control to a full hang'],
+      tips: ['Avoid kipping or swinging — use strict form', 'Engage your lats by depressing your shoulders before pulling', 'Use a band for assistance if you cannot complete full reps'],
+    };
+  }
+  if (isSquat) {
+    return {
+      steps: [equipSetup[eq], eq === 'barbell' ? 'Position the bar on your upper back (or front rack) and unrack' : 'Hold the weight in the appropriate position', 'Stand with feet shoulder-width apart, toes slightly out', 'Bend at the hips and knees to lower into the squat', 'Drive through your feet to stand back up'],
+      tips: ['Keep your chest up and core braced throughout', 'Push your knees out in line with your toes', 'Aim for at least parallel depth'],
+    };
+  }
+  if (isDeadlift) {
+    return {
+      steps: [equipSetup[eq], 'Stand with feet hip-width apart, weight close to your shins', 'Hinge at the hips and grip the weight', 'Brace your core, flatten your back, and lift by extending hips and knees', 'Stand tall at the top, then reverse the movement to lower'],
+      tips: ['Keep the weight close to your body throughout', "Don't round your lower back", 'Drive through your heels and engage your glutes'],
+    };
+  }
+  if (isCurl) {
+    return {
+      steps: [equipSetup[eq], 'Stand or sit with arms extended, palms facing up (or neutral for hammer grip)', 'Keep your elbows pinned to your sides', 'Curl the weight up by contracting your biceps', 'Squeeze at the top, then lower slowly to full extension'],
+      tips: ["Don't swing your body — isolate the biceps", 'Control the negative (lowering) phase', 'Full range of motion is more effective than heavy partial reps'],
+    };
+  }
+  if (isExtension) {
+    return {
+      steps: [equipSetup[eq], 'Position your arms so your elbows are fixed in place', 'Extend your arms fully, contracting your triceps', 'Hold the contraction briefly at full extension', 'Return to the starting position with control'],
+      tips: ['Keep your elbows stationary — only your forearms should move', "Don't use momentum or swing", 'Focus on the squeeze at full extension'],
+    };
+  }
+  if (isPress) {
+    return {
+      steps: [equipSetup[eq], mg === 'shoulders' ? 'Position the weight at shoulder height' : 'Position yourself on the bench or seat', 'Grip the weight with hands slightly wider than shoulder-width', 'Press the weight upward in a controlled arc', 'Lower with control back to the starting position'],
+      tips: [mg === 'chest' ? 'Keep your shoulder blades retracted and chest up' : 'Keep your core braced and avoid arching your back', "Control the eccentric (lowering) phase — don't bounce", 'Breathe out on the press, in on the return'],
+    };
+  }
+  if (isPull) {
+    return {
+      steps: [equipSetup[eq], 'Set your grip and get into the starting position', 'Initiate the pull by squeezing your shoulder blades together', 'Pull the weight toward your torso (or pull yourself up)', 'Control the return to the stretched position'],
+      tips: ['Think about driving your elbows back, not pulling with your hands', 'Keep your core engaged and avoid excessive body swing', 'Squeeze at peak contraction for 1 second'],
+    };
+  }
+  if (isRaise) {
+    return {
+      steps: [equipSetup[eq], 'Stand or sit with the weight at your sides or in front', 'With a slight bend in your elbows, raise the weight outward or forward', 'Lift to shoulder height (or as the exercise requires)', 'Lower slowly with control back to the start'],
+      tips: ['Use lighter weight with strict form for raises', 'Lead with your elbows, not your hands', "Don't shrug your shoulders during the movement"],
+    };
+  }
+  // Generic fallback
+  return {
+    steps: [equipSetup[eq] || 'Set up with proper form', 'Position yourself in the starting stance', 'Perform the movement with controlled tempo', 'Focus on the target muscle contraction', 'Return to start position and repeat'],
+    tips: ['Maintain proper form throughout all reps', 'Use a weight that allows full range of motion', 'Breathe steadily — exhale on exertion'],
+  };
+}
+
+const videoMap = require('./videoMap.json');
+
+module.exports = exercises.map((ex) => {
+  const videos = videoMap[ex.name];
+  return {
+    ...ex,
+    howTo: generateHowTo(ex),
+    ...(videos?.demoUrl && { demoUrl: videos.demoUrl }),
+    ...(videos?.explainUrl && { explainUrl: videos.explainUrl }),
+  };
+});

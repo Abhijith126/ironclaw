@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Save, GripVertical, Dumbbell } from 'lucide-react';
 import {
@@ -22,6 +22,7 @@ import { userAPI } from '../../services/api';
 import { Button, Card, Badge, DayCarousel } from '../../components/ui';
 import { DAYS_OF_WEEK } from '../../constants';
 import { useExerciseMap, useDayCarousel } from '../../hooks';
+import { getTodayName } from '../../utils';
 import type { ExerciseMap } from '../../hooks/useExerciseMap';
 
 interface ScheduleExercise {
@@ -132,8 +133,9 @@ function ManageWorkouts({ onSave }: { onSave?: () => void }) {
 
   const { t } = useTranslation();
   const { exerciseMap } = useExerciseMap();
+  const todayName = useMemo(() => getTodayName(), []);
   const { selectedDay, carouselPos, animated, selectDay, handleTouchStart, handleTouchEnd } =
-    useDayCarousel('Monday');
+    useDayCarousel(todayName);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

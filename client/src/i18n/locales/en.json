@@ -91,6 +91,8 @@
     "history": "History",
     "steps": "Steps",
     "tips": "Tips",
+    "watchDemo": "Quick Demo",
+    "watchExplain": "Full Explanation",
     "noHistory": "No workout history yet",
     "noHistoryHint": "Complete this exercise in your workout to see history here",
     "muscles": {

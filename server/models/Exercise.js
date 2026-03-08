@@ -40,10 +40,20 @@ const exerciseSchema = new mongoose.Schema({
     type: String,
     maxlength: [500, 'Description cannot exceed 500 characters']
   },
+  howTo: {
+    steps: [{ type: String }],
+    tips: [{ type: String }],
+  },
   imageUrl: {
     type: String
   },
   videoUrl: {
+    type: String
+  },
+  demoUrl: {
+    type: String
+  },
+  explainUrl: {
     type: String
   },
   createdAt: {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dumbbell, ArrowLeft, ChevronRight } from 'lucide-react';
+import { Dumbbell, ArrowLeft, ChevronRight, Play, BookOpen } from 'lucide-react';
 import { PageHeader, SearchInput, Badge, EmptyState } from '../../components/ui';
 import { getExercises } from '../../services/api';
 
@@ -13,6 +13,12 @@ interface APIExercise {
   difficulty: string;
   imageUrl?: string;
   description?: string;
+  howTo?: {
+    steps: string[];
+    tips: string[];
+  };
+  demoUrl?: string;
+  explainUrl?: string;
 }
 
 const MUSCLE_GROUPS = [
@@ -23,125 +29,10 @@ const EQUIPMENT_FILTERS = [
   '', 'barbell', 'dumbbells', 'cable', 'machine', 'bodyweight', 'kettlebell',
 ];
 
-const HOW_TO: Record<string, { steps: string[]; tips: string[] }> = {
-  'chest': {
-    steps: [
-      'Set up the bench or position yourself correctly',
-      'Grip the weight with proper hand placement',
-      'Lower the weight with control to chest level',
-      'Press upward, extending your arms fully',
-      'Repeat for the desired number of reps',
-    ],
-    tips: [
-      'Keep your shoulder blades retracted',
-      'Maintain a slight arch in your lower back',
-      'Control the eccentric (lowering) phase',
-    ],
-  },
-  'back': {
-    steps: [
-      'Set up with proper grip width and stance',
-      'Initiate the pull by engaging your lats',
-      'Pull the weight toward your torso',
-      'Squeeze your shoulder blades at peak contraction',
-      'Lower with control back to start',
-    ],
-    tips: [
-      'Focus on pulling with your elbows, not your hands',
-      'Keep your core engaged throughout',
-      'Avoid using momentum',
-    ],
-  },
-  'shoulders': {
-    steps: [
-      'Start with the weight at shoulder height',
-      'Engage your core and set your stance',
-      'Press or raise the weight in a controlled motion',
-      'Hold briefly at the top of the movement',
-      'Lower slowly back to the starting position',
-    ],
-    tips: [
-      'Avoid shrugging your shoulders up',
-      'Keep a slight bend in your elbows for raises',
-      'Use lighter weight with strict form',
-    ],
-  },
-  'arms': {
-    steps: [
-      'Position your arms and grip the weight',
-      'Keep your elbows fixed in position',
-      'Curl or extend through the full range of motion',
-      'Squeeze the muscle at peak contraction',
-      'Lower with control, resisting gravity',
-    ],
-    tips: [
-      'Avoid swinging or using body momentum',
-      'Focus on the mind-muscle connection',
-      'Full range of motion beats heavy weight',
-    ],
-  },
-  'legs': {
-    steps: [
-      'Set up with proper foot placement and stance',
-      'Brace your core before initiating the movement',
-      'Lower yourself with control through the full range',
-      'Drive through your feet to return to start',
-      'Keep your knees tracking over your toes',
-    ],
-    tips: [
-      'Warm up thoroughly before heavy leg work',
-      'Focus on depth over weight',
-      'Keep your core tight throughout',
-    ],
-  },
-  'core': {
-    steps: [
-      'Position yourself on the floor or apparatus',
-      'Engage your core by bracing your abdominals',
-      'Perform the movement with control',
-      'Hold the contraction briefly',
-      'Return to start position slowly',
-    ],
-    tips: [
-      'Breathe out during the contraction',
-      'Avoid pulling on your neck',
-      'Quality reps beat quantity',
-    ],
-  },
-  'cardiovascular': {
-    steps: [
-      'Set your pace and intensity level',
-      'Maintain proper form and posture',
-      'Keep a steady breathing rhythm',
-      'Monitor your heart rate',
-      'Cool down gradually',
-    ],
-    tips: [
-      'Start with a warm-up period',
-      'Stay hydrated throughout',
-      'Gradually increase intensity over time',
-    ],
-  },
-  'full body': {
-    steps: [
-      'Set up with proper form and stance',
-      'Engage multiple muscle groups simultaneously',
-      'Move through the full range of motion',
-      'Maintain coordination throughout',
-      'Reset between reps if needed',
-    ],
-    tips: [
-      'Master the movement pattern before adding weight',
-      'Focus on form over speed',
-      'These exercises burn more calories due to multi-joint engagement',
-    ],
-  },
-};
-
 function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: () => void }) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'howto' | 'history'>('howto');
-  const howTo = HOW_TO[exercise.muscleGroup] || HOW_TO['chest'];
+  const howTo = exercise.howTo || { steps: ['Perform the exercise with proper form'], tips: ['Focus on controlled movement'] };
 
   return (
     <div className="flex flex-col gap-4">
@@ -166,10 +57,10 @@ function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: (
             <h2 className="font-display text-xl font-bold text-white">{exercise.name}</h2>
             <div className="flex flex-wrap gap-2 mt-2">
               <Badge variant={getDifficultyVariant(exercise.difficulty)} size="sm">
-                {exercise.difficulty}
+                <span className="capitalize">{exercise.difficulty}</span>
               </Badge>
-              <Badge variant="default" size="sm">{exercise.equipment}</Badge>
-              <Badge variant="default" size="sm">{exercise.muscleGroup}</Badge>
+              <Badge variant="default" size="sm"><span className="capitalize">{exercise.equipment}</span></Badge>
+              <Badge variant="default" size="sm"><span className="capitalize">{exercise.muscleGroup}</span></Badge>
             </div>
           </div>
         </div>
@@ -200,6 +91,33 @@ function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: (
 
       {activeTab === 'howto' ? (
         <div className="flex flex-col gap-4">
+          {(exercise.demoUrl || exercise.explainUrl) && (
+            <div className="flex gap-2">
+              {exercise.demoUrl && (
+                <a
+                  href={exercise.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-red-600/15 border border-red-600/30 rounded-xl text-red-400 hover:bg-red-600/25 transition-colors"
+                >
+                  <Play size={16} />
+                  <span className="text-sm font-semibold">{t('exercises.watchDemo')}</span>
+                </a>
+              )}
+              {exercise.explainUrl && (
+                <a
+                  href={exercise.explainUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600/15 border border-blue-600/30 rounded-xl text-blue-400 hover:bg-blue-600/25 transition-colors"
+                >
+                  <BookOpen size={16} />
+                  <span className="text-sm font-semibold">{t('exercises.watchExplain')}</span>
+                </a>
+              )}
+            </div>
+          )}
+
           <div className="p-4 bg-muted rounded-2xl border border-steel">
             <h3 className="text-xs font-bold uppercase tracking-wider text-lime mb-3">{t('exercises.steps')}</h3>
             <div className="flex flex-col gap-3">
@@ -353,9 +271,9 @@ export default function ExercisesTracker() {
                 <p className="text-chalk text-sm font-semibold truncate">{exercise.name}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <Badge variant={getDifficultyVariant(exercise.difficulty)} size="sm">
-                    {exercise.difficulty}
+                    <span className="capitalize">{exercise.difficulty}</span>
                   </Badge>
-                  <span className="text-[10px] text-silver">{exercise.equipment}</span>
+                  <span className="text-[10px] text-silver capitalize">{exercise.equipment}</span>
                 </div>
               </div>
               <ChevronRight size={16} className="text-steel group-hover:text-lime transition-colors shrink-0" />

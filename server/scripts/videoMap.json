@@ -1,0 +1,618 @@
+{
+  "Barbell Incline Bench Press": {
+    "demoUrl": "https://youtu.be/2jFFCy8JBU8?si=BCYplSL2-ewJ8kiB",
+    "explainUrl": "https://youtu.be/SrqOu55lrYU"
+  },
+  "Barbell Bench Press": {
+    "demoUrl": "https://youtu.be/SCVCLChPQFY",
+    "explainUrl": "https://youtu.be/rxD321l2svE"
+  },
+  "Push-up": {
+    "demoUrl": "https://youtu.be/_l3ySVKYVJ8?si=PZh3DAAcRNF9txaZ",
+    "explainUrl": "https://youtu.be/IODxDxX7oi4?si=WwbQkUnT1DXcYujC"
+  },
+  "Dumbbell Bench Press": {
+    "demoUrl": "https://youtu.be/ZaDlbm8E8Tg?si=BvNUvyhh8eTuBDsz",
+    "explainUrl": "https://youtu.be/xphvjGDZeYE"
+  },
+  "Chest Fly": {
+    "demoUrl": "https://youtu.be/Nhvz9EzdJ4U?si=MdnuiWNh7Wkz1qK_",
+    "explainUrl": "https://youtu.be/QENKPHhQVi4"
+  },
+  "Pull-up": {
+    "demoUrl": "https://youtu.be/HRV5YKKaeVw?si=2FwPXMnKZC4QXyAO",
+    "explainUrl": "https://youtu.be/sIvJTfGxdFo?si=EayZv3-AEz3Y3pBa"
+  },
+  "Cable Face Pull": {
+    "demoUrl": "https://youtu.be/l3prcz-3FbI?si=qvb-6gLh-aavLGWK",
+    "explainUrl": "https://youtu.be/1dzR5IW0cL8"
+  },
+  "Barbell Bent Over Row": {
+    "demoUrl": "https://youtu.be/9Gf-Ourup_k?si=qt-DlqHLDICtOmju",
+    "explainUrl": null
+  },
+  "Chin-up": {
+    "demoUrl": "https://youtu.be/8mryJ3w2S78?si=feHRqrceUl_6Xatw",
+    "explainUrl": null
+  },
+  "Lateral Raise": {
+    "demoUrl": "https://youtu.be/XPPfnSEATJA?si=yNFrwT2Aj4G98NVF",
+    "explainUrl": "https://youtu.be/3VcKaXpzqRo"
+  },
+  "Rear Delt Fly": {
+    "demoUrl": "https://youtu.be/hf7jnF45N_I?si=1OHNa_B7yazQ9w4L",
+    "explainUrl": null
+  },
+  "Dumbbell Shoulder Press": {
+    "demoUrl": "https://youtu.be/AqzDJHxynwo?si=FpgeOvlc1u-WxGMb",
+    "explainUrl": "https://youtu.be/M2rwvNhTOu0"
+  },
+  "Barbell Overhead Press": {
+    "demoUrl": "https://youtu.be/43GSKivZnw4?si=OIfasYK8gG4sUDBW",
+    "explainUrl": "https://youtu.be/8dacy5hjaE8"
+  },
+  "Arnold Press": {
+    "demoUrl": "https://youtu.be/sbGP9VjnjEg?si=QtatKrbr2B5FgS6F",
+    "explainUrl": null
+  },
+  "Front Raise": {
+    "demoUrl": "https://youtu.be/67-J94MVJUg?si=TUVKne9uaJdYMy3x",
+    "explainUrl": null
+  },
+  "Shrug": {
+    "demoUrl": "https://youtu.be/llSrlpd7TEE?si=7L7ARn0S6ByQmI59",
+    "explainUrl": "https://youtu.be/cJRVVxmytaM"
+  },
+  "Tricep Pushdown": {
+    "demoUrl": "https://youtu.be/LXkCrxn3caQ?si=24dygODdgdRhEqJK",
+    "explainUrl": "https://youtu.be/zEHmnpgi-dg?si=gojDTRhS6wpAdM5x"
+  },
+  "Hammer Curl": {
+    "demoUrl": "https://youtu.be/fM0TQLoesLs?si=Jdgh0xyXpZA-KwyM",
+    "explainUrl": null
+  },
+  "Dumbbell Overhead Tricep Extension": {
+    "demoUrl": "https://youtu.be/7h3lG2WnLXg",
+    "explainUrl": "https://youtu.be/-Vyt2QdsR7E"
+  },
+  "Bicep Curl": {
+    "demoUrl": "https://youtu.be/HnHuhf4hEWY?si=WSqsCA9Khdbz3ag0",
+    "explainUrl": null
+  },
+  "Tricep Dip": {
+    "demoUrl": "https://youtu.be/vJhFJJu7ock?si=fw1wLN_DqI1nQovZ",
+    "explainUrl": "https://youtu.be/yN6Q1UI_xkE?si=0VQVw7_b_8FgH05e"
+  },
+  "Barbell Skull Crusher": {
+    "demoUrl": null,
+    "explainUrl": "https://youtu.be/v6uHja-uSHY?si=TxCpvOrcAQAlPb1w"
+  },
+  "Tricep Kickback": {
+    "demoUrl": "https://youtu.be/m_UlDFNX4mk?si=FAleOyAOFc4IiSBT",
+    "explainUrl": "https://youtu.be/ShCYaoHmWmk"
+  },
+  "EZ Bar Skull Crusher": {
+    "demoUrl": "https://youtu.be/eiCMrII3j9k?si=J2G1ZmeiFQDhnfxT",
+    "explainUrl": "https://youtu.be/jR7Y5YcugYc?feature=shared"
+  },
+  "Barbell Hip Thrust": {
+    "demoUrl": "https://youtu.be/5S8SApGU_Lk",
+    "explainUrl": "https://youtu.be/LM8XHLYJoYs"
+  },
+  "Barbell Romanian Deadlift": {
+    "demoUrl": "https://youtu.be/LURGDIX3adY?si=fHh3AAX-mZB09HXi",
+    "explainUrl": "https://youtu.be/XowKMitOVNc"
+  },
+  "Bulgarian Split Squat": {
+    "demoUrl": "https://youtu.be/EeNk8sLr9z8?si=kN5JtBlDa5WiKxzK",
+    "explainUrl": "https://youtu.be/ygPXImMvA0o?si=Wft_lt3TWoza9u8Z"
+  },
+  "Dumbbell Goblet Squat": {
+    "demoUrl": "https://youtu.be/a-dqF4NL2K4",
+    "explainUrl": "https://youtu.be/9W5KAqHfDe8"
+  },
+  "Seated Calf Raise": {
+    "demoUrl": "https://youtu.be/3ZRe_QpvRPg?si=X5ees0OsHDogPrA9",
+    "explainUrl": "https://youtu.be/v_49uUA_87Y?si=ELs6WJVxlAxiBxc1"
+  },
+  "Cable Kneeling Crunch": {
+    "demoUrl": "https://youtu.be/ToJeyhydUxU",
+    "explainUrl": "https://youtu.be/vsAPBAg0fb0"
+  },
+  "Russian Twist": {
+    "demoUrl": "https://youtu.be/m-dlg3v8SkY?si=KI1hgOAtTqI0ty6r",
+    "explainUrl": "https://youtu.be/hg7xqoWmYhw?si=cUMpM7AIyf--MpHB"
+  },
+  "Leg Raise": {
+    "demoUrl": "https://youtu.be/q0JVBRHoLz4",
+    "explainUrl": null
+  },
+  "Crunch": {
+    "demoUrl": "https://youtu.be/Gala3hWxFTw?si=5Qrh2TKQB1NMQpCG",
+    "explainUrl": "https://youtu.be/z6LRile4YiE?si=1_nlGdr2ALt1LXF2"
+  },
+  "Ab Wheel Kneeling Rollout": {
+    "demoUrl": "https://youtu.be/QB2Gj1QGfjQ",
+    "explainUrl": "https://youtu.be/A3uK5TPzHq8"
+  },
+  "Dead Bug": {
+    "demoUrl": "https://youtu.be/jbWmbhElf3Q",
+    "explainUrl": "https://youtu.be/g_BYB0R-4Ws"
+  },
+  "Burpee": {
+    "demoUrl": "https://youtu.be/auBLPXO8Fww",
+    "explainUrl": "https://youtu.be/wS4OsJ4yzx4"
+  },
+  "Mountain Climber": {
+    "demoUrl": "https://youtu.be/kLh-uczlPLg?si=WfwS9PlCOc9d1t1N",
+    "explainUrl": "https://youtu.be/cnyTQDSE884?si=-R4zNi4l233bGK8A"
+  },
+  "Burpees": {
+    "demoUrl": "https://youtu.be/auBLPXO8Fww",
+    "explainUrl": "https://youtu.be/wS4OsJ4yzx4"
+  },
+  "Kettlebell Swing": {
+    "demoUrl": "https://youtu.be/1cVT3ee9mgU",
+    "explainUrl": "https://youtu.be/Buz6gaVzVZs"
+  },
+  "Double Dumbbell Bench Press": {
+    "demoUrl": "https://youtu.be/ZaDlbm8E8Tg?si=BvNUvyhh8eTuBDsz",
+    "explainUrl": "https://youtu.be/xphvjGDZeYE"
+  },
+  "Double Dumbbell Bicep Curl": {
+    "demoUrl": "https://youtu.be/HnHuhf4hEWY?si=WSqsCA9Khdbz3ag0",
+    "explainUrl": null
+  },
+  "Barbell Conventional Deadlift": {
+    "demoUrl": "https://youtu.be/op9kVnSso6Q",
+    "explainUrl": "https://youtu.be/p2OPUi4xGrM"
+  },
+  "Double Dumbbell Hammer Curl": {
+    "demoUrl": "https://youtu.be/fM0TQLoesLs?si=Jdgh0xyXpZA-KwyM",
+    "explainUrl": null
+  },
+  "Double Dumbbell Incline Bench Press": {
+    "demoUrl": "https://youtu.be/7QUcsq019Qs?si=rxXGikxFs6Y3YwPL",
+    "explainUrl": "https://youtu.be/0G2_XV7slIg"
+  },
+  "Double Dumbbell Lateral Raise": {
+    "demoUrl": "https://youtu.be/XPPfnSEATJA?si=yNFrwT2Aj4G98NVF",
+    "explainUrl": "https://youtu.be/3VcKaXpzqRo"
+  },
+  "Double Dumbbell Overhead Press": {
+    "demoUrl": "https://youtu.be/AqzDJHxynwo?si=FpgeOvlc1u-WxGMb",
+    "explainUrl": "https://youtu.be/M2rwvNhTOu0"
+  },
+  "Cable Straight Bar Tricep Pushdown": {
+    "demoUrl": "https://youtu.be/LXkCrxn3caQ?si=24dygODdgdRhEqJK",
+    "explainUrl": "https://youtu.be/zEHmnpgi-dg?si=gojDTRhS6wpAdM5x"
+  },
+  "Cable Rope Tricep Pushdown": {
+    "demoUrl": "https://youtu.be/e5aj8hhCPkA",
+    "explainUrl": "https://youtu.be/kiuVA0gs3EI"
+  },
+  "Ab Wheel": {
+    "demoUrl": "https://youtu.be/QB2Gj1QGfjQ",
+    "explainUrl": "https://youtu.be/A3uK5TPzHq8"
+  },
+  "Double Dumbbell Arnold Press": {
+    "demoUrl": "https://youtu.be/sbGP9VjnjEg?si=QtatKrbr2B5FgS6F",
+    "explainUrl": null
+  },
+  "Barbell Close Grip Bench Press": {
+    "demoUrl": "https://youtu.be/XEFDMwmrLAM",
+    "explainUrl": "https://youtu.be/cXbSJHtjrQQ"
+  },
+  "Single Arm Dumbbell Bent Over Row": {
+    "demoUrl": "https://youtu.be/ma__uqUlYmE?si=Yw6Iw4KOA3T7mJeL",
+    "explainUrl": null
+  },
+  "Barbell Bicep Curl": {
+    "demoUrl": "https://youtu.be/BVrlItPBX8M?si=4NJpARumV7sAFCki",
+    "explainUrl": "https://youtu.be/bAWLx7PPK10"
+  },
+  "Bicep Curl (Cable)": {
+    "demoUrl": "https://youtu.be/hBC7lPyEkVM",
+    "explainUrl": null
+  },
+  "Bodyweight Bicycle Crunch": {
+    "demoUrl": "https://youtu.be/fHXcyedPCPo?si=haa5Z5z5wbVY6loh",
+    "explainUrl": "https://youtu.be/lv6BT8_5iIs?si=1SKpBjIi2BRf2k0f"
+  },
+  "Bodyweight Bird Dog": {
+    "demoUrl": "https://youtu.be/tU-WZsouVjo?si=Ti1JUU03OqgnmtX6",
+    "explainUrl": "https://youtu.be/-LRjkbEy-qU"
+  },
+  "Bodyweight Box Jump": {
+    "demoUrl": "https://youtu.be/-IzhFO7lOEU?si=Aftwsw6k2KY2-jf0",
+    "explainUrl": null
+  },
+  "Cable Pull Through": {
+    "demoUrl": "https://youtu.be/NEDrQPoITMc?si=ZeJ1LOUbzrjgk-_8",
+    "explainUrl": "https://youtu.be/DbSF7ipBh5Y"
+  },
+  "Chest Dip": {
+    "demoUrl": "https://youtu.be/vJhFJJu7ock?si=fw1wLN_DqI1nQovZ",
+    "explainUrl": "https://youtu.be/yN6Q1UI_xkE?si=0VQVw7_b_8FgH05e"
+  },
+  "Superband Assisted Dips": {
+    "demoUrl": "https://youtu.be/QjzY6vf495U?si=dG_1Ixlx0Man-AIC",
+    "explainUrl": "https://youtu.be/a2zGgwyVv38"
+  },
+  "Double Dumbbell Chest Fly": {
+    "demoUrl": "https://youtu.be/Nhvz9EzdJ4U?si=MdnuiWNh7Wkz1qK_",
+    "explainUrl": "https://youtu.be/QENKPHhQVi4"
+  },
+  "Suspension Chest Fly": {
+    "demoUrl": "https://youtu.be/ELmdfR9JvEA",
+    "explainUrl": "https://youtu.be/VeiB4nfSpeQ"
+  },
+  "Bar Chin Up": {
+    "demoUrl": "https://youtu.be/8mryJ3w2S78?si=feHRqrceUl_6Xatw",
+    "explainUrl": null
+  },
+  "Superband Assisted Bar Chin Up": {
+    "demoUrl": "https://youtu.be/tKZ_IjDX7fA?si=ymbKZ_6m6CiddaOL",
+    "explainUrl": "https://youtu.be/6NoWVtcSUyI?si=1L8vLidqZV1vtBGK"
+  },
+  "Bodyweight Side Lying Clamshell": {
+    "demoUrl": "https://youtu.be/G3yQITNPIz8?si=V_AVSgSWE_RFAsSE",
+    "explainUrl": "https://youtu.be/fOCd_nC1HBQ?si=6ti9IkrenmKRDFGm"
+  },
+  "Clean": {
+    "demoUrl": "https://youtu.be/KwYJTpQ_x5A",
+    "explainUrl": "https://youtu.be/5vVSGITznQk"
+  },
+  "Clean and Press": {
+    "demoUrl": null,
+    "explainUrl": "https://youtu.be/NwQVfcvesOs"
+  },
+  "Single Arm Dumbbell Cross Body Hammer Curl": {
+    "demoUrl": "https://youtu.be/_aiZoy57VFI?si=skTwggqvw_kxkno5",
+    "explainUrl": "https://youtu.be/n4J53LpjvUk?si=P8g1wW_RnUgwerf4"
+  },
+  "Trap Bar Deadlift": {
+    "demoUrl": "https://youtu.be/FYx76NSijfU?si=SQ4p_SUWbJGUlk0N",
+    "explainUrl": "https://youtu.be/EsqwERaSTMI?si=46F4WdMC1GtBTszu"
+  },
+  "Barbell Decline Bench Press": {
+    "demoUrl": "https://youtu.be/6yGZ0KCaiWM",
+    "explainUrl": "https://youtu.be/LfyQBUKR8SE"
+  },
+  "Double Dumbbell Decline Bench Press": {
+    "demoUrl": "https://youtu.be/2B6WxyLaIrE?si=YFskQesFUqPMQA7s",
+    "explainUrl": "https://youtu.be/Pf1nDoqx_1A"
+  },
+  "Bodyweight Diamond Push Up": {
+    "demoUrl": "https://youtu.be/XtU2VQVuLYs",
+    "explainUrl": "https://youtu.be/J0DnG1_S92I"
+  },
+  "Bodyweight Dragon Flag": {
+    "demoUrl": "https://youtu.be/LXmJg15hurY?si=kuUaXsoiL3fnTOE7",
+    "explainUrl": "https://youtu.be/3FuwY3Z4ux8"
+  },
+  "Bodyweight Fire Hydrant": {
+    "demoUrl": "https://youtu.be/IFrN8GELc-k?feature=shared",
+    "explainUrl": "https://youtu.be/La3xYT8MGks"
+  },
+  "Barbell Floor Press": {
+    "demoUrl": "https://youtu.be/YdiVxhxufG8?si=pMAxf531BcAPvatO",
+    "explainUrl": null
+  },
+  "Double Dumbbell Floor Press": {
+    "demoUrl": "https://youtu.be/3u2DR9HL0tY?si=3Bcig3xQ4BI89qLa",
+    "explainUrl": "https://youtu.be/Zt1s1YhZ8Ag?si=VdqFI6Yr9LCxrUfE"
+  },
+  "Bodyweight Flutter Kicks": {
+    "demoUrl": "https://youtu.be/e_s7uBNPnow",
+    "explainUrl": "https://youtu.be/DNx0PYv7_L8"
+  },
+  "Barbell Front Raise": {
+    "demoUrl": "https://youtu.be/DL-HN35sxdg",
+    "explainUrl": "https://youtu.be/Ofo2DQdT7DA"
+  },
+  "Cable Straight Bar Front Raise": {
+    "demoUrl": "https://youtu.be/PgSZlX32WTo",
+    "explainUrl": "https://youtu.be/wxzEul89zR0"
+  },
+  "Front Raise (Dumbbell)": {
+    "demoUrl": "https://youtu.be/67-J94MVJUg?si=TUVKne9uaJdYMy3x",
+    "explainUrl": null
+  },
+  "Bodyweight Glute Bridge": {
+    "demoUrl": "https://youtu.be/ncpMkhXAykg?si=a_b3ot2rsThtz4DE",
+    "explainUrl": "https://youtu.be/wPM8icPu6H8"
+  },
+  "Barbell Good Morning": {
+    "demoUrl": "https://youtu.be/F8dCjzbed-4",
+    "explainUrl": "https://youtu.be/f23vXjoG2e8"
+  },
+  "Cable Rope Hammer Curl": {
+    "demoUrl": "https://youtu.be/BXcSLzXrab4?si=KZPHi7uurh7Nb31j",
+    "explainUrl": "https://youtu.be/vsarApmqJmo"
+  },
+  "Bar Hanging Knee Raise": {
+    "demoUrl": "https://youtu.be/KNzJ3GuIpB8?si=va7oq1yMev2p_dQ2",
+    "explainUrl": null
+  },
+  "Heel Taps": {
+    "demoUrl": "https://youtu.be/URWXz0DmE7s",
+    "explainUrl": "https://youtu.be/IVppNiu0hvw"
+  },
+  "Barbell Inverted Row": {
+    "demoUrl": "https://youtu.be/bHO0A4ZF_Zg",
+    "explainUrl": null
+  },
+  "Bodyweight Squat Jump": {
+    "demoUrl": "https://youtu.be/YGGq0AE5Uyc?si=or6Xddi0YaAkHuXV",
+    "explainUrl": null
+  },
+  "Kettlebell Around the World": {
+    "demoUrl": "https://youtu.be/6AzrdFj3Qfc?si=52vAx7-XXfvkSz_l",
+    "explainUrl": "https://youtu.be/91citDXgmoE"
+  },
+  "Kettlebell Clean": {
+    "demoUrl": "https://youtu.be/TQT7hBXVcOo",
+    "explainUrl": "https://youtu.be/lYh7Kf_lEMY"
+  },
+  "Kettlebell Curl": {
+    "demoUrl": "https://youtu.be/f3LvSVbDINk?si=fJJqDtL6UzxX6HF2",
+    "explainUrl": null
+  },
+  "Kettlebell Goblet Squat": {
+    "demoUrl": "https://youtu.be/f-Vf2yRRqOg",
+    "explainUrl": "https://youtu.be/fnuHKfySEsU"
+  },
+  "Kettlebell High Pull": {
+    "demoUrl": "https://youtu.be/mP1BHxBeAEM",
+    "explainUrl": "https://youtu.be/KxWTo2LavJU"
+  },
+  "Kettlebell Shoulder Press": {
+    "demoUrl": "https://youtu.be/CwhbuoGqyug?si=Q9nkDUY4NvpGPqak",
+    "explainUrl": "https://youtu.be/IlMFcqpg1T8"
+  },
+  "Kettlebell Snatch": {
+    "demoUrl": "https://youtu.be/VdNC_xicfyg",
+    "explainUrl": "https://youtu.be/OO7y9cIz0lU"
+  },
+  "Bodyweight Kneeling Push Up": {
+    "demoUrl": "https://youtu.be/TBpk09QuVN8",
+    "explainUrl": "https://youtu.be/utzhPQuXWcA"
+  },
+  "Landmine Row": {
+    "demoUrl": "https://youtu.be/tiETx7VNDf0",
+    "explainUrl": null
+  },
+  "Bodyweight Lateral Box Jump": {
+    "demoUrl": "https://youtu.be/GFdBbtdUfIU?si=GoMi96WWph2nlJpr",
+    "explainUrl": "https://youtu.be/bNHwR90FO0I?si=QZlMLdh6UGORYnRa"
+  },
+  "Bodyweight Lateral Lunge": {
+    "demoUrl": "https://youtu.be/vwOrd9umMOc?si=dTiEBNYBRJajSW4a",
+    "explainUrl": "https://youtu.be/4NlJdSzHeUg?si=2E1_ojqfTLq4NlAF"
+  },
+  "Single Arm Cable Lateral Raise": {
+    "demoUrl": "https://youtu.be/9s0F9lgTG0E?si=hlzVQJ0I5qgbvM45",
+    "explainUrl": "https://youtu.be/FGU9j1P5L-w"
+  },
+  "Bar Eccentric Pull Up": {
+    "demoUrl": "https://youtu.be/T4Jv__fWjZ8?si=sbUarOu5VD7qBK4s",
+    "explainUrl": null
+  },
+  "Bodyweight Nordic Hamstring Curl": {
+    "demoUrl": "https://youtu.be/kjv4WQXWl_A",
+    "explainUrl": "https://youtu.be/yfBOocr2fHA"
+  },
+  "Bodyweight Oblique Crunch": {
+    "demoUrl": null,
+    "explainUrl": "https://youtu.be/teZDcxypX54?si=5hPKSeI_xcW5yftV"
+  },
+  "Bodyweight Single Arm Push Up": {
+    "demoUrl": "https://youtu.be/CQ6VEzQAI7w?si=_nTW1Yq_iP18uBgt",
+    "explainUrl": "https://youtu.be/azjQG10quYw"
+  },
+  "Overhead Press (Dumbbell)": {
+    "demoUrl": "https://youtu.be/AqzDJHxynwo?si=FpgeOvlc1u-WxGMb",
+    "explainUrl": "https://youtu.be/M2rwvNhTOu0"
+  },
+  "Barbell Overhead Squat": {
+    "demoUrl": "https://youtu.be/pn8mqlG0nkE",
+    "explainUrl": "https://youtu.be/Ow58yHEl_Ls"
+  },
+  "Bodyweight Pike Push Up": {
+    "demoUrl": "https://youtu.be/QIZ6RXq72ZI",
+    "explainUrl": "https://youtu.be/2avz4xI25vQ"
+  },
+  "Bodyweight Pistol Squat": {
+    "demoUrl": "https://youtu.be/qDcniqddTeE?si=G4KPahZUmlQQChZ_",
+    "explainUrl": "https://youtu.be/hHxm3VbuS-w"
+  },
+  "Power Clean": {
+    "demoUrl": "https://youtu.be/KwYJTpQ_x5A",
+    "explainUrl": "https://youtu.be/5vVSGITznQk"
+  },
+  "Power Snatch": {
+    "demoUrl": "https://youtu.be/TL8SMp7RdXQ",
+    "explainUrl": "https://youtu.be/Aq8Tp5r-DZo"
+  },
+  "Bar Pull Up": {
+    "demoUrl": "https://youtu.be/HRV5YKKaeVw?si=2FwPXMnKZC4QXyAO",
+    "explainUrl": "https://youtu.be/sIvJTfGxdFo?si=EayZv3-AEz3Y3pBa"
+  },
+  "Superband Assisted Bar Pull Up": {
+    "demoUrl": "https://youtu.be/__TzXC-Hc_4?si=Z59SDF6EfXOY4pa_",
+    "explainUrl": "https://youtu.be/4yE-XGDWJPg?si=3XGTgo0KrcE1Rl3M"
+  },
+  "Dumbbell Pullover": {
+    "demoUrl": "https://youtu.be/owr5y-s6-Qk?si=gd2Nfg1PVMbahXjx",
+    "explainUrl": "https://youtu.be/tcHaHIQStsk?si=PqW1mpuuLU_9M5qj"
+  },
+  "Barbell Push Press": {
+    "demoUrl": "https://youtu.be/iaBVSJm78ko",
+    "explainUrl": "https://youtu.be/a8HQo8z20Uo"
+  },
+  "Push Up": {
+    "demoUrl": "https://youtu.be/_l3ySVKYVJ8?si=PZh3DAAcRNF9txaZ",
+    "explainUrl": "https://youtu.be/IODxDxX7oi4?si=WwbQkUnT1DXcYujC"
+  },
+  "Barbell Rack Pull": {
+    "demoUrl": "https://youtu.be/zdaEWO0S5HU",
+    "explainUrl": "https://youtu.be/cxVrqTqD_J4"
+  },
+  "Bodyweight Reverse Crunch": {
+    "demoUrl": "https://youtu.be/aIyadD7d7OA?si=I96m4yP0SA4lVKvH",
+    "explainUrl": "https://youtu.be/YDvaOlhaA1U?si=4UJmTafdK-goIcb5"
+  },
+  "Bodyweight Reverse Lunge": {
+    "demoUrl": "https://youtu.be/U7Nrwyu6Uqo?si=i10Myq56LE1Wlzzn",
+    "explainUrl": "https://youtu.be/qeJ3Si5r5y0?si=dVhY6YtUfCR-tcMl"
+  },
+  "Bodyweight Reverse Plank": {
+    "demoUrl": "https://youtu.be/_oFQ3G5iwtc?si=3F2p69DpOKAmGXoE",
+    "explainUrl": null
+  },
+  "Ring Dips": {
+    "demoUrl": "https://youtu.be/EznLCDBAPIU",
+    "explainUrl": "https://youtu.be/Kr5Uuuy5DAI"
+  },
+  "Ring Pull Up": {
+    "demoUrl": "https://youtu.be/cLqkGqiva1M",
+    "explainUrl": null
+  },
+  "Ring Push Up": {
+    "demoUrl": "https://youtu.be/u8tOhNwiL70",
+    "explainUrl": "https://youtu.be/QD8yeUtH-QM"
+  },
+  "Double Dumbbell Romanian Deadlift": {
+    "demoUrl": "https://youtu.be/Cf3CaHui43A?si=dFPcP6jQEQECmXmY",
+    "explainUrl": "https://youtu.be/hQgFixeXdZo"
+  },
+  "Russian Twist (Bodyweight)": {
+    "demoUrl": "https://youtu.be/m-dlg3v8SkY?si=KI1hgOAtTqI0ty6r",
+    "explainUrl": "https://youtu.be/hg7xqoWmYhw?si=cUMpM7AIyf--MpHB"
+  },
+  "Bar Scapular Pull Up": {
+    "demoUrl": "https://youtu.be/pE8PJsWEV7k?si=sXWG_h39gmTbgsNw",
+    "explainUrl": null
+  },
+  "Double Dumbbell Seated Lateral Raise": {
+    "demoUrl": "https://youtu.be/GBo4Cj8i9VI?si=_ZCYRalndjXZl58y",
+    "explainUrl": "https://youtu.be/3zohLHTjFH0"
+  },
+  "Barbell Seated Overhead Press": {
+    "demoUrl": "https://youtu.be/Mdx1V3v7E5g",
+    "explainUrl": null
+  },
+  "Barbell Shrug": {
+    "demoUrl": null,
+    "explainUrl": "https://youtu.be/pqYr_lb04O4"
+  },
+  "Shrug (Dumbbell)": {
+    "demoUrl": "https://youtu.be/llSrlpd7TEE?si=7L7ARn0S6ByQmI59",
+    "explainUrl": "https://youtu.be/cJRVVxmytaM"
+  },
+  "Bodyweight Side Plank": {
+    "demoUrl": "https://youtu.be/_R389Jk0tIo",
+    "explainUrl": "https://youtu.be/rCxF2nG9vQ0"
+  },
+  "Bodyweight Single Leg Glute Bridge": {
+    "demoUrl": "https://youtu.be/z4J188sFD4g",
+    "explainUrl": "https://youtu.be/_K_di6h2-Wg"
+  },
+  "Bodyweight Single Leg Hip Thrust": {
+    "demoUrl": "https://youtu.be/1Dbd7wStRJg?si=Yx13oEQ5A4kl4YJ5",
+    "explainUrl": "https://youtu.be/qCObDXTe4KY?si=gnfQ6Ju2Wvq1ZkY0"
+  },
+  "Barbell Single Leg Romanian Deadlift": {
+    "demoUrl": null,
+    "explainUrl": "https://youtu.be/-IaQkgdQgfM"
+  },
+  "Double Dumbbell Single Leg Romanian Deadlift": {
+    "demoUrl": "https://youtu.be/vexyZD8S1B8?si=qmrB8iZUTuht69xJ",
+    "explainUrl": "https://youtu.be/HsQDqJ66FKA?si=RJhp0WTei2W3CfdW"
+  },
+  "Bodyweight Sit Up": {
+    "demoUrl": "https://youtu.be/bT8NVeDvuQg?si=paUR-bam-jwd-xPx",
+    "explainUrl": "https://youtu.be/-WSon5E798w"
+  },
+  "Sled Push": {
+    "demoUrl": "https://youtu.be/MbQWu3GdWfc?si=KbIZoybRZD3g6-FW",
+    "explainUrl": "https://youtu.be/9XRRXaUpnLk?si=2IFvs6fVDMa6H8H-"
+  },
+  "Snatch": {
+    "demoUrl": "https://youtu.be/TL8SMp7RdXQ",
+    "explainUrl": "https://youtu.be/Aq8Tp5r-DZo"
+  },
+  "Barbell Split Jerk": {
+    "demoUrl": "https://youtu.be/GUDkOtraHHY?si=rRrpCqPIVW7T-7T5",
+    "explainUrl": "https://youtu.be/yyZAPfOaONk?si=ylej6-jrchib31VF"
+  },
+  "Dumbbell Goblet Split Squat": {
+    "demoUrl": "https://youtu.be/EUHaKY3aA1Q?si=H2a-9iB71twMingb",
+    "explainUrl": "https://youtu.be/O_XaZR7-5lo?si=V-7vvAXlgmxto7UI"
+  },
+  "Bodyweight Squat": {
+    "demoUrl": "https://youtu.be/C_VtOYc6j5c",
+    "explainUrl": "https://youtu.be/X8DnpBl7Hwk?si=-pUtkTHlnl_1sYvs"
+  },
+  "Suspension Squat": {
+    "demoUrl": "https://youtu.be/MafftY-3lC0?si=bGTlr29qg0ZvBtT_",
+    "explainUrl": "https://youtu.be/ViV9wM5aGPg?si=d4iDv53YNJSLeN5e"
+  },
+  "Cable Glute Kickback": {
+    "demoUrl": "https://youtu.be/qJxwJ1e1HxI?si=5y999i_uPybFFDol",
+    "explainUrl": "https://youtu.be/dJa_Nf4zdik"
+  },
+  "Bodyweight Step Up": {
+    "demoUrl": "https://youtu.be/V9ButqpLLcw?si=W7rot5ocLsfGP3zd",
+    "explainUrl": "https://youtu.be/gF9mAgwFV0U?si=-l753jr2phBx6o3o"
+  },
+  "Barbell Sumo Deadlift": {
+    "demoUrl": "https://youtu.be/wQHSYDSgDn8",
+    "explainUrl": "https://youtu.be/cDlOSfu-zHY"
+  },
+  "Bar Hanging Toes to Bar": {
+    "demoUrl": "https://youtu.be/xX9Hzi7Onnw?si=DF7ySd87D6LcLvwN",
+    "explainUrl": "https://youtu.be/S2QVHl6DoNo?si=_wSbbPfIY45-7i8d"
+  },
+  "Bodyweight Dips": {
+    "demoUrl": "https://youtu.be/vJhFJJu7ock?si=fw1wLN_DqI1nQovZ",
+    "explainUrl": "https://youtu.be/yN6Q1UI_xkE?si=0VQVw7_b_8FgH05e"
+  },
+  "Single Arm Cable Tricep Kickback": {
+    "demoUrl": "https://youtu.be/DYsQWSbj7UM?si=XUOYSUKOaqGmOCQP",
+    "explainUrl": "https://youtu.be/ZvF4Oi_6Vtg?si=Pu0EfDBC9h0ygyq-"
+  },
+  "Single Arm Dumbbell Tricep Kickback": {
+    "demoUrl": "https://youtu.be/MQOnCts9N9c?si=0NLgrLb84fi_4vxZ",
+    "explainUrl": null
+  },
+  "Bodyweight V Up": {
+    "demoUrl": "https://youtu.be/7UVgs18Y1P4?si=o0GvxxE-1wAYvgfE",
+    "explainUrl": "https://youtu.be/WTmnP0xIdq8?si=fMOoyGheRtiFA8qN"
+  },
+  "Dumbbell Waiter Curl": {
+    "demoUrl": "https://youtu.be/DjgrEWlgGaY",
+    "explainUrl": null
+  },
+  "Bodyweight Walking Lunge": {
+    "demoUrl": "https://youtu.be/tlbTz6IamaE",
+    "explainUrl": null
+  },
+  "Wall Ball Toss": {
+    "demoUrl": "https://youtu.be/fpUD0mcFp_0?si=Ymlmi7cDC_sfB1zE",
+    "explainUrl": "https://youtu.be/ryJoFCMNIr8?si=MXodcxnqxCF_bcKW"
+  },
+  "Bodyweight Wall Sit": {
+    "demoUrl": "https://youtu.be/SszDMOZvFuw",
+    "explainUrl": "https://youtu.be/y-wV4Venusw"
+  },
+  "Barbell Zercher Squat": {
+    "demoUrl": "https://youtu.be/nwx6Ip7hd3I",
+    "explainUrl": "https://youtu.be/eIMAXB7xy58"
+  },
+  "Double Dumbbell Zottman Curl": {
+    "demoUrl": "https://youtu.be/wrjEdVZrkhk",
+    "explainUrl": "https://youtu.be/aAuOsw9D7Hc"
+  }
+}
