@@ -17,6 +17,9 @@ if [ -f "client/android/app/build/outputs/apk/debug/app-release.apk" ]; then
     echo "📱 APK copied to dist/"
 fi
 
+
+docker-compose up -d
+
 echo ""
 echo "📋 Container status:"
 docker-compose ps
