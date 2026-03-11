@@ -18,7 +18,7 @@ interface ExerciseMapEntry {
 }
 
 function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerProps) {
-  const [exercises, setExercises] = useState<{ _id: string; name: string; category?: string }[]>(
+  const [exercises, setExercises] = useState<{ id: string; name: string; category?: string }[]>(
     []
   );
   const [search, setSearch] = useState('');
@@ -53,7 +53,7 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
     try {
       const map = (await getExerciseMap()) as Record<string, ExerciseMapEntry>;
       const exerciseList = Object.entries(map).map(([id, ex]) => ({
-        _id: id,
+        id,
         name: ex.name,
         category: ex.equipment
           ? ex.equipment.charAt(0).toUpperCase() + ex.equipment.slice(1)
@@ -67,8 +67,8 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
     }
   };
 
-  const handleSelect = (ex: { _id: string; name: string; category?: string }) => {
-    onSelect({ id: ex._id, name: ex.name, category: ex.category });
+  const handleSelect = (ex: { id: string; name: string; category?: string }) => {
+    onSelect({ id: ex.id, name: ex.name, category: ex.category });
     handleClose();
   };
 
@@ -77,7 +77,7 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
       !search ||
       ex.name.toLowerCase().includes(search.toLowerCase()) ||
       ex.category?.toLowerCase().includes(search.toLowerCase());
-    const notSelected = !selectedIds.includes(ex._id);
+    const notSelected = !selectedIds.includes(ex.id);
     return matchesSearch && notSelected;
   });
 
@@ -129,7 +129,7 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
             <div className="space-y-2">
               {filteredExercises.map((ex) => (
                 <button
-                  key={ex._id}
+                  key={ex.id}
                   onClick={() => handleSelect(ex)}
                   className="w-full flex items-center justify-between p-4 bg-graphite/50 border border-steel/50 rounded-xl hover:bg-lime/10 hover:border-lime/30 active:scale-[0.98] transition-all text-left"
                 >

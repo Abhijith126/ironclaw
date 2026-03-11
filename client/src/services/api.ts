@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 interface APIExercise {
-  _id: string;
+  id: string;
   name: string;
   category: string;
   muscleGroup: string;
@@ -121,7 +121,7 @@ export const getExerciseMap = async (): Promise<Record<string, ExerciseMapEntry>
   const exercises = await getExercises();
   const map: Record<string, ExerciseMapEntry> = {};
   exercises.forEach((ex) => {
-    map[ex._id] = { name: ex.name, equipment: ex.equipment, imageUrl: ex.imageUrl };
+    map[ex.id] = { name: ex.name, equipment: ex.equipment, imageUrl: ex.imageUrl };
   });
   exerciseMapCache = map;
   return map;
@@ -132,7 +132,7 @@ export const getExerciseNameMap = async (): Promise<Record<string, ExerciseNameM
   const exercises = await getExercises();
   const map: Record<string, ExerciseNameMapEntry> = {};
   (exercises || []).forEach((ex) => {
-    map[ex.name.toLowerCase()] = { id: ex._id, name: ex.name, equipment: ex.equipment };
+    map[ex.name.toLowerCase()] = { id: ex.id, name: ex.name, equipment: ex.equipment };
   });
   exerciseNameMapCache = map;
   return map;
@@ -150,7 +150,7 @@ export const transformExercisesForPicker = async (): Promise<Record<string, Cate
       };
     }
     categories[ex.category].exercises.push({
-      id: ex._id,
+      id: ex.id,
       name: ex.name,
       equipment: ex.equipment,
     });

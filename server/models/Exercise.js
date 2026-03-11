@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const exerciseSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    required: [true, 'Exercise ID is required'],
+    unique: true,
+    index: true
+  },
   name: {
     type: String,
     required: [true, 'Exercise name is required'],

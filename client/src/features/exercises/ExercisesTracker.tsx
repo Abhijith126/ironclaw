@@ -5,7 +5,7 @@ import { PageHeader, SearchInput, Badge, EmptyState } from '../../components/ui'
 import { getExercises } from '../../services/api';
 
 interface APIExercise {
-  _id: string;
+  id: string;
   name: string;
   category: string;
   muscleGroup: string;
@@ -256,7 +256,7 @@ export default function ExercisesTracker() {
         <div className="flex flex-col gap-2">
           {filteredExercises.map((exercise) => (
             <button
-              key={exercise._id}
+              key={exercise.id}
               onClick={() => setSelectedExercise(exercise)}
               className="flex items-center gap-3 p-3 bg-muted rounded-xl border border-steel hover:border-iron transition-all text-left group"
             >

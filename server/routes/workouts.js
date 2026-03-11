@@ -9,7 +9,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const workouts = await Workout.find({ userId: req.user._id })
       .sort({ createdAt: -1 })
-      .populate('exercises.exerciseId', 'name category muscleGroup');
+      .populate('exercises.exerciseId', 'id name category muscleGroup');
 
     res.json({ workouts });
   } catch (error) {
@@ -27,7 +27,7 @@ router.get('/:id', auth, async (req, res) => {
     const workout = await Workout.findOne({
       _id: req.params.id,
       userId: req.user._id
-    }).populate('exercises.exerciseId', 'name category muscleGroup');
+    }).populate('exercises.exerciseId', 'id name category muscleGroup');
 
     if (!workout) {
       return res.status(404).json({ message: 'Workout not found' });

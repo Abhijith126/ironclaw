@@ -64,10 +64,7 @@ router.get('/equipment/:equipment', async (req, res) => {
 // Get a specific exercise by ID
 router.get('/:id', async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: 'Not found' });
-    }
-    const exercise = await Exercise.findById(req.params.id);
+    const exercise = await Exercise.findOne({ id: req.params.id });
 
     if (!exercise) {
       return res.status(404).json({ message: 'Exercise not found' });
@@ -83,7 +80,7 @@ router.get('/:id', async (req, res) => {
 // Create a new exercise (admin only)
 router.post('/', auth, requireAdmin, async (req, res) => {
   try {
-    const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
+    const { name, id, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
       req.body;
 
     // Check if exercise already exists
@@ -92,7 +89,10 @@ router.post('/', auth, requireAdmin, async (req, res) => {
       return res.status(400).json({ message: 'Exercise already exists' });
     }
 
+    const exerciseId = id || name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+
     const exercise = new Exercise({
+      id: exerciseId,
       name,
       category,
       muscleGroup,
@@ -118,13 +118,10 @@ router.post('/', auth, requireAdmin, async (req, res) => {
 // Update an exercise (admin only)
 router.put('/:id', auth, requireAdmin, async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: 'Not found' });
-    }
     const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
       req.body;
 
-    const exercise = await Exercise.findById(req.params.id);
+    const exercise = await Exercise.findOne({ id: req.params.id });
     if (!exercise) {
       return res.status(404).json({ message: 'Exercise not found' });
     }
@@ -154,10 +151,7 @@ router.put('/:id', auth, requireAdmin, async (req, res) => {
 // Delete an exercise (admin only)
 router.delete('/:id', auth, requireAdmin, async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: 'Not found' });
-    }
-    const exercise = await Exercise.findByIdAndDelete(req.params.id);
+    const exercise = await Exercise.findOneAndDelete({ id: req.params.id });
 
     if (!exercise) {
       return res.status(404).json({ message: 'Exercise not found' });
