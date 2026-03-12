@@ -1,11 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const auth = require('../middleware/auth');
 const Exercise = require('../models/Exercise');
 const router = express.Router();
 
 const requireAdmin = (req, res, next) => {
-  if (req.user.role !== 'admin') {
+  if (!req.user || req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Admin access required' });
   }
   next();
@@ -14,7 +12,7 @@ const requireAdmin = (req, res, next) => {
 // Get all exercises
 router.get('/', async (req, res) => {
   try {
-    const exercises = await Exercise.find().sort({ name: 1 });
+    const exercises = await Exercise.find({}).lean();
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises error:', error);
@@ -26,8 +24,10 @@ router.get('/', async (req, res) => {
 router.get('/category/:category', async (req, res) => {
   try {
     const { category } = req.params;
-    const exercises = await Exercise.find({ category }).sort({ name: 1 });
-
+    const exercises = await Exercise.find({ 
+      category: { $regex: new RegExp(`^${category}$`, 'i') }
+    }).lean();
+    
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises by category error:', error);
@@ -39,8 +39,10 @@ router.get('/category/:category', async (req, res) => {
 router.get('/muscle/:muscleGroup', async (req, res) => {
   try {
     const { muscleGroup } = req.params;
-    const exercises = await Exercise.find({ muscleGroup }).sort({ name: 1 });
-
+    const exercises = await Exercise.find({ 
+      muscleGroup: { $regex: new RegExp(muscleGroup, 'i') }
+    }).lean();
+    
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises by muscle group error:', error);
@@ -52,8 +54,10 @@ router.get('/muscle/:muscleGroup', async (req, res) => {
 router.get('/equipment/:equipment', async (req, res) => {
   try {
     const { equipment } = req.params;
-    const exercises = await Exercise.find({ equipment }).sort({ name: 1 });
-
+    const exercises = await Exercise.find({ 
+      equipment: { $regex: new RegExp(equipment, 'i') }
+    }).lean();
+    
     res.json({ exercises });
   } catch (error) {
     console.error('Get exercises by equipment error:', error);
@@ -64,8 +68,9 @@ router.get('/equipment/:equipment', async (req, res) => {
 // Get a specific exercise by ID
 router.get('/:id', async (req, res) => {
   try {
-    const exercise = await Exercise.findOne({ id: req.params.id });
-
+    const { id } = req.params;
+    const exercise = await Exercise.findOne({ id }).lean();
+    
     if (!exercise) {
       return res.status(404).json({ message: 'Exercise not found' });
     }
@@ -77,91 +82,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create a new exercise (admin only)
-router.post('/', auth, requireAdmin, async (req, res) => {
-  try {
-    const { name, id, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
-      req.body;
-
-    // Check if exercise already exists
-    const existingExercise = await Exercise.findOne({ name });
-    if (existingExercise) {
-      return res.status(400).json({ message: 'Exercise already exists' });
-    }
-
-    const exerciseId = id || name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
-
-    const exercise = new Exercise({
-      id: exerciseId,
-      name,
-      category,
-      muscleGroup,
-      equipment,
-      difficulty,
-      description,
-      imageUrl,
-      videoUrl
-    });
-
-    await exercise.save();
-
-    res.status(201).json({
-      message: 'Exercise created successfully',
-      exercise
-    });
-  } catch (error) {
-    console.error('Create exercise error:', error);
-    res.status(500).json({ message: 'Server error while creating exercise' });
-  }
+// Create a new exercise (admin only) - Disabled, using wger
+router.post('/', async (req, res) => {
+  res.status(403).json({ message: 'Cannot create exercises - using wger API' });
 });
 
-// Update an exercise (admin only)
-router.put('/:id', auth, requireAdmin, async (req, res) => {
-  try {
-    const { name, category, muscleGroup, equipment, difficulty, description, imageUrl, videoUrl } =
-      req.body;
-
-    const exercise = await Exercise.findOne({ id: req.params.id });
-    if (!exercise) {
-      return res.status(404).json({ message: 'Exercise not found' });
-    }
-
-    // Update exercise fields
-    if (name) exercise.name = name;
-    if (category) exercise.category = category;
-    if (muscleGroup) exercise.muscleGroup = muscleGroup;
-    if (equipment) exercise.equipment = equipment;
-    if (difficulty) exercise.difficulty = difficulty;
-    if (description) exercise.description = description;
-    if (imageUrl !== undefined) exercise.imageUrl = imageUrl;
-    if (videoUrl !== undefined) exercise.videoUrl = videoUrl;
-
-    await exercise.save();
-
-    res.json({
-      message: 'Exercise updated successfully',
-      exercise
-    });
-  } catch (error) {
-    console.error('Update exercise error:', error);
-    res.status(500).json({ message: 'Server error while updating exercise' });
-  }
+// Update an exercise (admin only) - Disabled
+router.put('/:id', async (req, res) => {
+  res.status(403).json({ message: 'Cannot update exercises - using wger API' });
 });
 
-// Delete an exercise (admin only)
-router.delete('/:id', auth, requireAdmin, async (req, res) => {
-  try {
-    const exercise = await Exercise.findOneAndDelete({ id: req.params.id });
-
-    if (!exercise) {
-      return res.status(404).json({ message: 'Exercise not found' });
-    }
-
-    res.json({ message: 'Exercise deleted successfully' });
-  } catch (error) {
-    console.error('Delete exercise error:', error);
-    res.status(500).json({ message: 'Server error while deleting exercise' });
-  }
+// Delete an exercise (admin only) - Disabled
+router.delete('/:id', async (req, res) => {
+  res.status(403).json({ message: 'Cannot delete exercises - using wger API' });
 });
 
 module.exports = router;

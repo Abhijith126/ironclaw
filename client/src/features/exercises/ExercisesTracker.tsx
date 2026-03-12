@@ -17,22 +17,25 @@ interface APIExercise {
     steps: string[];
     tips: string[];
   };
+  muscles?: string[];
+  musclesSecondary?: string[];
+  equipmentList?: string[];
   demoUrl?: string;
   explainUrl?: string;
 }
 
 const MUSCLE_GROUPS = [
-  'all', 'chest', 'back', 'shoulders', 'arms', 'legs', 'core', 'cardiovascular', 'full body',
+  'all', 'chest', 'back', 'shoulders', 'arms', 'legs', 'abs', 'calves', 'cardio',
 ];
 
 const EQUIPMENT_FILTERS = [
-  '', 'barbell', 'dumbbells', 'cable', 'machine', 'bodyweight', 'kettlebell',
+  '', 'barbell', 'dumbbells', 'cable', 'machine', 'bodyweight', 'kettlebell', 'other'
 ];
 
 function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: () => void }) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<'howto' | 'history'>('howto');
-  const howTo = exercise.howTo || { steps: ['Perform the exercise with proper form'], tips: ['Focus on controlled movement'] };
+  const [activeTab, setActiveTab] = useState<'howto' | 'muscles'>('howto');
+  const howTo = exercise.howTo || { steps: exercise.instructions || ['Perform the exercise with proper form'], tips: ['Focus on controlled movement'] };
 
   return (
     <div className="flex flex-col gap-4">
@@ -59,8 +62,12 @@ function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: (
               <Badge variant={getDifficultyVariant(exercise.difficulty)} size="sm">
                 <span className="capitalize">{exercise.difficulty}</span>
               </Badge>
-              <Badge variant="default" size="sm"><span className="capitalize">{exercise.equipment}</span></Badge>
-              <Badge variant="default" size="sm"><span className="capitalize">{exercise.muscleGroup}</span></Badge>
+              {(exercise.equipmentList || []).slice(0, 2).map(eq => (
+                <Badge key={eq} variant="default" size="sm"><span className="capitalize">{eq}</span></Badge>
+              ))}
+              {(exercise.muscles || []).slice(0, 2).map(m => (
+                <Badge key={m} variant="default" size="sm"><span className="capitalize">{m}</span></Badge>
+              ))}
             </div>
           </div>
         </div>
@@ -78,14 +85,14 @@ function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: (
           {t('exercises.howTo')}
         </button>
         <button
-          onClick={() => setActiveTab('history')}
+          onClick={() => setActiveTab('muscles')}
           className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${
-            activeTab === 'history'
+            activeTab === 'muscles'
               ? 'bg-lime text-obsidian'
               : 'text-silver hover:text-white'
           }`}
         >
-          {t('exercises.history')}
+          Muscles
         </button>
       </div>
 
@@ -145,12 +152,39 @@ function ExerciseDetail({ exercise, onBack }: { exercise: APIExercise; onBack: (
           </div>
         </div>
       ) : (
-        <div className="p-6 bg-muted rounded-2xl border border-steel">
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <Dumbbell size={40} className="text-steel mb-3" />
-            <p className="text-silver text-sm">{t('exercises.noHistory')}</p>
-            <p className="text-steel text-xs mt-1">{t('exercises.noHistoryHint')}</p>
-          </div>
+        <div className="flex flex-col gap-4">
+          {(exercise.muscles || []).length > 0 && (
+            <div className="p-4 bg-muted rounded-2xl border border-steel">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-lime mb-3">Primary Muscles</h3>
+              <div className="flex flex-wrap gap-2">
+                {(exercise.muscles || []).map(m => (
+                  <Badge key={m} variant="default" size="sm">{m}</Badge>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {(exercise.musclesSecondary || []).length > 0 && (
+            <div className="p-4 bg-muted rounded-2xl border border-steel">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-silver mb-3">Secondary Muscles</h3>
+              <div className="flex flex-wrap gap-2">
+                {(exercise.musclesSecondary || []).map(m => (
+                  <Badge key={m} variant="default" size="sm">{m}</Badge>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {(exercise.equipmentList || []).length > 0 && (
+            <div className="p-4 bg-muted rounded-2xl border border-steel">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-silver mb-3">Equipment Needed</h3>
+              <div className="flex flex-wrap gap-2">
+                {(exercise.equipmentList || []).map(eq => (
+                  <Badge key={eq} variant="default" size="sm">{eq}</Badge>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -180,12 +214,20 @@ export default function ExercisesTracker() {
   }, []);
 
   const filteredExercises = useMemo(() => {
-    return exercises.filter((ex) => {
-      const matchesMuscle = selectedMuscle === 'all' || ex.muscleGroup === selectedMuscle;
-      const matchesEquipment = !selectedEquipment || ex.equipment === selectedEquipment;
-      const matchesSearch = !search || ex.name.toLowerCase().includes(search.toLowerCase());
-      return matchesMuscle && matchesEquipment && matchesSearch;
-    });
+    return exercises
+      .filter((ex) => {
+        const muscleValue = ex.muscleGroup?.toLowerCase() || ex.category?.toLowerCase() || '';
+        const equipmentValue = ex.equipment?.toLowerCase() || '';
+        
+        const matchesMuscle = selectedMuscle === 'all' || 
+          muscleValue === selectedMuscle.toLowerCase();
+        const matchesEquipment = !selectedEquipment || 
+          equipmentValue.includes(selectedEquipment.toLowerCase()) ||
+          (selectedEquipment === 'bodyweight' && equipmentValue === 'none');
+        const matchesSearch = !search || ex.name.toLowerCase().includes(search.toLowerCase());
+        return matchesMuscle && matchesEquipment && matchesSearch;
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
   }, [exercises, selectedMuscle, selectedEquipment, search]);
 
   if (selectedExercise) {

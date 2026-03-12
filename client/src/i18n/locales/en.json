@@ -102,9 +102,9 @@
       "shoulders": "Shoulders",
       "arms": "Arms",
       "legs": "Legs",
-      "core": "Core",
-      "cardiovascular": "Cardio",
-      "full body": "Full Body"
+      "abs": "Abs",
+      "calves": "Calves",
+      "cardio": "Cardio"
     },
     "equipmentFilter": {
       "all": "All",
@@ -113,7 +113,8 @@
       "bodyweight": "Bodyweight",
       "cable": "Cable",
       "machine": "Machine",
-      "kettlebell": "Kettlebell"
+      "kettlebell": "Kettlebell",
+      "other": "Other"
     }
   },
   "weight": {

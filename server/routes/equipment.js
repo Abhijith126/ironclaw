@@ -1,28 +1,32 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const Equipment = require('../models/Equipment');
+const wger = require('../services/wger');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { search, category } = req.query;
-    let query = {};
+    const { search } = req.query;
+    const equipment = await wger.fetchEquipment();
+    
+    let filtered = equipment;
     
     if (search) {
-      query.$or = [
-        { machineName: { $regex: search, $options: 'i' } },
-        { primaryMuscles: { $regex: search, $options: 'i' } },
-        { secondaryMuscles: { $regex: search, $options: 'i' } },
-      ];
+      filtered = equipment.filter(eq => 
+        eq.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
     
-    if (category) {
-      query.category = category;
-    }
+    const mapped = filtered.map(eq => ({
+      id: eq.id,
+      machineName: eq.name,
+      category: 'Equipment',
+      primaryMuscles: [],
+      secondaryMuscles: [],
+      difficultyLevel: null,
+      notes: null
+    }));
     
-    const equipment = await Equipment.find(query).sort({ machineName: 1 });
-    res.json({ equipment });
+    res.json({ equipment: mapped });
   } catch (error) {
     console.error('Get equipment error:', error);
     res.status(500).json({ message: 'Server error while fetching equipment' });
@@ -31,7 +35,7 @@ router.get('/', async (req, res) => {
 
 router.get('/categories', async (req, res) => {
   try {
-    const categories = await Equipment.distinct('category');
+    const categories = ['Cardio', 'Strength', 'Core', 'Free Weights', 'Functional'];
     res.json({ categories });
   } catch (error) {
     console.error('Get categories error:', error);
@@ -41,14 +45,26 @@ router.get('/categories', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: 'Not found' });
-    }
-    const equipment = await Equipment.findById(req.params.id);
-    if (!equipment) {
+    const { id } = req.params;
+    const equipment = await wger.fetchEquipment();
+    
+    const eq = equipment.find(e => e.id === parseInt(id));
+    
+    if (!eq) {
       return res.status(404).json({ message: 'Equipment not found' });
     }
-    res.json({ equipment });
+
+    res.json({ 
+      equipment: {
+        id: eq.id,
+        machineName: eq.name,
+        category: 'Equipment',
+        primaryMuscles: [],
+        secondaryMuscles: [],
+        difficultyLevel: null,
+        notes: null
+      }
+    });
   } catch (error) {
     console.error('Get equipment error:', error);
     res.status(500).json({ message: 'Server error while fetching equipment' });

@@ -8,6 +8,14 @@ interface APIExercise {
   equipment: string;
   difficulty: string;
   imageUrl?: string;
+  description?: string;
+  howTo?: {
+    steps: string[];
+    tips: string[];
+  };
+  muscles?: string[];
+  musclesSecondary?: string[];
+  equipmentList?: string[];
 }
 
 interface ExerciseMapEntry {

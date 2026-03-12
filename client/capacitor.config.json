@@ -5,7 +5,7 @@
   "bundledWebRuntime": false,
   "server": {
     "androidScheme": "https",
-    "hostname": "localhost"
+    "hostname": "workout-app.abhijith.top"
   },
   "android": {
     "allowMixedContent": true

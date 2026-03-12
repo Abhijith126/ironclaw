@@ -145,17 +145,18 @@ function AppContent({
       ]);
       const schedule = (scheduleRes.data as Record<string, unknown>).weeklySchedule;
 
-      const scheduleWithNames: Record<string, { id: string; sets: number; reps: number }[]> = {};
+      const scheduleWithNames: Record<string, { id: string; name: string; sets: number; reps: number }[]> = {};
       for (const [day, exercises] of Object.entries(schedule || {})) {
         const exList = (exercises as { id: string; sets: number; reps: number }[]) || [];
         scheduleWithNames[day] = exList.map((ex) => ({
-          id: (exerciseMap as Record<string, { name: string }>)[ex.id]?.name || ex.id,
+          id: ex.id,
+          name: (exerciseMap as Record<string, { name: string }>)[ex.id]?.name || ex.id,
           sets: ex.sets,
           reps: ex.reps,
         }));
       }
 
-      const data = { weeklySchedule: scheduleWithNames, exportedAt: new Date().toISOString() };
+      const data = { weeklySchedule: scheduleWithNames, exportedAt: new Date().toISOString(), version: '2' };
       const filename = `workout-schedule-${new Date().toISOString().split('T')[0]}.json`;
       downloadJSON(data, filename);
       setAlert({
@@ -196,7 +197,12 @@ function AppContent({
         return;
       }
 
-      const exerciseMap = (await getExerciseNameMap()) as Record<string, { id: string }>;
+      const exerciseMap = (await getExerciseNameMap()) as Record<string, { id: string; name: string }>;
+      const exerciseMapById: Record<string, string> = {};
+      Object.values(exerciseMap).forEach((info) => {
+        exerciseMapById[info.id] = info.name;
+      });
+
       const validDays = [
         'Monday',
         'Tuesday',
@@ -208,38 +214,38 @@ function AppContent({
       ];
       const normalized: Record<string, { id: string; sets: number; reps: number }[]> = {};
 
-      const idToMongoId: Record<string, string> = {};
-      Object.entries(exerciseMap).forEach(([name, info]) => {
-        const kebabName = name.replace(/\s+/g, '-').toLowerCase();
-        idToMongoId[kebabName] = info.id;
-      });
-
       for (const day of validDays) {
         const exercises = (data.weeklySchedule as Record<string, unknown>)[day];
         if (Array.isArray(exercises)) {
-          normalized[day] = (exercises as { id: string; sets: number; reps: number }[])
-            .filter((ex) => ex && ex.id && ex.sets)
+          normalized[day] = (exercises as { id?: string; name?: string; sets: number; reps: number }[])
+            .filter((ex) => ex && (ex.id || ex.name) && ex.sets)
             .map((ex) => {
-              const exerciseKey = String(ex.id).toLowerCase().trim();
+              const exerciseId = ex.id;
+              const exerciseName = ex.name;
               let matchedId: string | null = null;
 
-              if (exerciseKey.match(/^[0-9a-f]{24}$/)) {
-                matchedId = exerciseKey;
-              } else {
-                matchedId = idToMongoId[exerciseKey];
+              if (exerciseId) {
+                if (exerciseMapById[exerciseId]) {
+                  matchedId = exerciseId;
+                } else if (exerciseId.startsWith('wger_')) {
+                  matchedId = exerciseId;
+                } else if (exerciseId.match(/^[0-9a-f]{24}$/)) {
+                  matchedId = exerciseId;
+                }
+              }
 
-                if (!matchedId) {
-                  for (const [name, info] of Object.entries(exerciseMap)) {
-                    if (name === exerciseKey || name.replace(/\s+/g, '-') === exerciseKey) {
-                      matchedId = info.id;
-                      break;
-                    }
+              if (!matchedId && exerciseName) {
+                const nameKey = exerciseName.toLowerCase().trim();
+                for (const [name, info] of Object.entries(exerciseMap)) {
+                  if (name === nameKey || name.replace(/\s+/g, '_') === nameKey) {
+                    matchedId = info.id;
+                    break;
                   }
                 }
               }
 
               return {
-                id: matchedId || ex.id,
+                id: matchedId || exerciseId || exerciseName || 'unknown',
                 sets: ex.sets,
                 reps: ex.reps,
               };
