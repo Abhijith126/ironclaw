@@ -23,7 +23,6 @@ import { WeightTracker } from './features/weight';
 import { Settings } from './features/settings';
 import { AboutPage } from './features/about';
 import { AuthForm } from './features/auth';
-import InstallPage from './components/InstallPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -58,11 +57,6 @@ function App() {
               )
             }
           />
-          <Route path={ROUTES.INSTALL} element={
-            typeof window !== 'undefined' && window.Android !== undefined ? 
-              <Navigate to={ROUTES.DASHBOARD} replace /> : 
-              <InstallPage />
-          } />
           <Route
             path="/*"
             element={

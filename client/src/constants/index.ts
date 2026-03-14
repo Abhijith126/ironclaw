@@ -41,7 +41,6 @@ export const ROUTES = {
   SETTINGS: '/settings',
   ABOUT: '/about',
   AUTH: '/auth',
-  INSTALL: '/install',
 };
 
 export const STORAGE_KEYS = {

@@ -60,8 +60,9 @@ const AuthForm = ({ onAuthSuccess }) => {
         onAuthSuccess(response.data.user);
         navigate('/dashboard');
       }
-    } catch (err) {
-      setError(err.response?.data?.message || t('auth.authFailed'));
+    } catch (err: any) {
+      const message = err?.response?.data?.message || err?.message || t('auth.authFailed');
+      setError(message);
     } finally {
       setIsLoading(false);
     }

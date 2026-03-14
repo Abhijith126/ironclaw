@@ -1,40 +1,5 @@
 import axios from 'axios';
 
-interface APIExercise {
-  id: string;
-  name: string;
-  category: string;
-  muscleGroup: string;
-  equipment: string;
-  difficulty: string;
-  imageUrl?: string;
-  description?: string;
-  howTo?: {
-    steps: string[];
-    tips: string[];
-  };
-  muscles?: string[];
-  musclesSecondary?: string[];
-  equipmentList?: string[];
-}
-
-interface ExerciseMapEntry {
-  name: string;
-  equipment: string;
-  imageUrl?: string;
-}
-
-interface ExerciseNameMapEntry {
-  id: string;
-  name: string;
-  equipment: string;
-}
-
-interface CategoryEntry {
-  name: string;
-  exercises: { id: string; name: string; equipment: string }[];
-}
-
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 // Create axios instance with default config

@@ -2,8 +2,14 @@
 
 set -e
 
-echo "🔨 Building Iron Log Release APK..."
+echo "🔨 Building Iron Log Android APK..."
 echo ""
+
+if ! command -v java &> /dev/null || ! java -version 2>&1 | grep -q "21"; then
+    echo "⚠️  Java 21 required. Set JAVA_HOME:"
+    echo "    export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+    exit 1
+fi
 
 echo "🧹 Cleaning old builds..."
 rm -rf client/dist
@@ -18,12 +24,13 @@ cd ..
 echo ""
 echo "🤖 Syncing to Android..."
 cd client
-npx capacitor sync android
+npx cap sync android
 cd ..
 
 echo ""
-echo "🤖 Building Android APK..."
+echo "🔨 Building Android APK..."
 cd client/android
+export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
 ./gradlew clean assembleRelease
 cd ../..
 
@@ -32,7 +39,7 @@ echo "📦 Copying APK..."
 cp client/android/app/build/outputs/apk/release/app-release.apk client/iron-log-release.apk
 
 echo ""
-echo "✅ Release APK built successfully!"
+echo "✅ Done!"
 echo ""
-echo "📍 APK location: client/iron-log-release.apk"
+echo "📍 APK: client/iron-log-release.apk"
 ls -lh client/iron-log-release.apk
