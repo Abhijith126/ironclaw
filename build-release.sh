@@ -5,23 +5,34 @@ set -e
 echo "🔨 Building Iron Log Release APK..."
 echo ""
 
+echo "🧹 Cleaning old builds..."
+rm -rf client/dist
+rm -rf client/android/app/build
+
+echo ""
 echo "📦 Building web assets..."
 cd client
 npm run build
+cd ..
+
+echo ""
+echo "🤖 Syncing to Android..."
+cd client
+npx capacitor sync android
+cd ..
 
 echo ""
 echo "🤖 Building Android APK..."
-cd android
-./gradlew assembleRelease
+cd client/android
+./gradlew clean assembleRelease
+cd ../..
 
 echo ""
-echo "📁 Copying APK to public and dist folders..."
-cp app/build/outputs/apk/release/app-release.apk ../../public/
-cp app/build/outputs/apk/release/app-release.apk ../../dist/
+echo "📦 Copying APK..."
+cp client/android/app/build/outputs/apk/release/app-release.apk client/iron-log-release.apk
 
 echo ""
 echo "✅ Release APK built successfully!"
 echo ""
-echo "📍 APK locations:"
-echo "   - client/public/app-release.apk"
-echo "   - client/dist/app-release.apk"
+echo "📍 APK location: client/iron-log-release.apk"
+ls -lh client/iron-log-release.apk

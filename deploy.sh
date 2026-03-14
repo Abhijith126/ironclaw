@@ -1,39 +1,43 @@
 #!/bin/bash
 
-set -e
+echo "🧹 Cleaning up old containers..."
 
-echo "🧹 Cleaning old builds..."
+docker-compose down 2>/dev/null
+docker rm -f workout-server workout-client 2>/dev/null
 
-rm -rf client/dist
-rm -rf client/android/app/build
-
-echo "✅ Clean done!"
+echo "✅ Cleanup done!"
 echo ""
-echo "🔨 Building frontend..."
+echo "🔨 Building and starting containers..."
 
-cd client
-npm run build
-cd ..
+docker-compose up -d --build
 
 echo ""
-echo "🔨 Syncing to Android..."
+echo "🧹 Removing old images..."
 
-cd client
-npx capacitor sync android
-cd ..
+docker image prune -f
+
+CURRENT_CLIENT=$(docker-compose images -q client 2>/dev/null)
+CURRENT_SERVER=$(docker-compose images -q server 2>/dev/null)
+
+for img in $(docker images --format '{{.ID}}' | grep 'workout-tracker'); do
+    if [ "$img" != "$CURRENT_CLIENT" ] && [ "$img" != "$CURRENT_SERVER" ]; then
+        docker rmi "$img" 2>/dev/null || true
+    fi
+done
+
+echo "✅ Image cleanup done!"
+
+if [ -f "client/android/app/build/outputs/apk/debug/app-release.apk" ]; then
+    cp client/android/app/build/outputs/apk/debug/app-release.apk client/dist/
+    echo "📱 APK copied to dist/"
+fi
+
+
+docker-compose up -d
 
 echo ""
-echo "🔨 Building Android APK..."
-
-cd client/android
-./gradlew clean assembleRelease
-cd ../..
+echo "📋 Container status:"
+docker-compose ps
 
 echo ""
-echo "📦 Copying APK..."
-
-cp client/android/app/build/outputs/apk/release/app-release.apk client/iron-log-release.apk
-
-echo ""
-echo "✅ Build complete! APK at: client/iron-log-release.apk"
-ls -lh client/iron-log-release.apk
+echo "✅ Deploy complete!"
