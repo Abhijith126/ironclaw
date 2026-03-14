@@ -1,28 +1,39 @@
 #!/bin/bash
 
-echo "🧹 Cleaning up old containers..."
+set -e
 
-docker-compose down 2>/dev/null
-docker rm -f workout-server workout-client 2>/dev/null
+echo "🧹 Cleaning old builds..."
 
-echo "✅ Cleanup done!"
+rm -rf client/dist
+rm -rf client/android/app/build
+
+echo "✅ Clean done!"
 echo ""
-echo "🔨 Building and starting containers..."
+echo "🔨 Building frontend..."
 
-docker-compose up -d --build
-
-# Copy APK to dist if it exists
-if [ -f "client/android/app/build/outputs/apk/debug/app-release.apk" ]; then
-    cp client/android/app/build/outputs/apk/debug/app-release.apk client/dist/
-    echo "📱 APK copied to dist/"
-fi
-
-
-docker-compose up -d
+cd client
+npm run build
+cd ..
 
 echo ""
-echo "📋 Container status:"
-docker-compose ps
+echo "🔨 Syncing to Android..."
+
+cd client
+npx capacitor sync android
+cd ..
 
 echo ""
-echo "✅ Deploy complete!"
+echo "🔨 Building Android APK..."
+
+cd client/android
+./gradlew clean assembleRelease
+cd ../..
+
+echo ""
+echo "📦 Copying APK..."
+
+cp client/android/app/build/outputs/apk/release/app-release.apk client/iron-log-release.apk
+
+echo ""
+echo "✅ Build complete! APK at: client/iron-log-release.apk"
+ls -lh client/iron-log-release.apk

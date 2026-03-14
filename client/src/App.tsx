@@ -58,7 +58,11 @@ function App() {
               )
             }
           />
-          <Route path={ROUTES.INSTALL} element={<InstallPage />} />
+          <Route path={ROUTES.INSTALL} element={
+            typeof window !== 'undefined' && window.Android !== undefined ? 
+              <Navigate to={ROUTES.DASHBOARD} replace /> : 
+              <InstallPage />
+          } />
           <Route
             path="/*"
             element={
@@ -308,7 +312,7 @@ function AppContent({
       <header
         className="sticky top-0 z-40 flex justify-between items-center px-5 py-3 bg-carbon/95 backdrop-blur-xl border-b border-steel/50"
         style={{
-          paddingTop: hasNotch ? `${safeAreaTop + 12}px` : undefined,
+          paddingTop: `${safeAreaTop + 12}px`,
         }}
       >
         <div className="flex flex-col">
@@ -321,7 +325,7 @@ function AppContent({
 
       <main
         className="flex-1 px-5 py-5"
-        style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 96}px` : '96px' }}
+        style={{ paddingBottom: `${safeAreaBottom + 96}px` }}
       >
         <div className="max-w-150 mx-auto">
           <Routes>
@@ -359,7 +363,7 @@ function AppContent({
 
       <nav
         className="fixed bottom-0 left-0 right-0 z-50 bg-carbon/95 backdrop-blur-xl border-t border-steel/50"
-        style={{ paddingBottom: hasBottomInset ? `${safeAreaBottom + 4}px` : undefined }}
+        style={{ paddingBottom: `${safeAreaBottom + 4}px` }}
       >
         <div className="flex justify-around items-start pt-1.5 pb-2 px-1">
           {tabs.map((tab) => {

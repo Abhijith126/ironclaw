@@ -67,9 +67,6 @@ const AuthForm = ({ onAuthSuccess }) => {
     }
   };
 
-  const isStandalone =
-    typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches;
-
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
       <div className="absolute inset-0">
@@ -175,16 +172,7 @@ const AuthForm = ({ onAuthSuccess }) => {
           </Button>
         </form>
 
-        {!isStandalone && (
-          <div className="text-center pb-4">
-            <a
-              href="/install"
-              className="text-sm text-lime bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity"
-            >
-              {t('auth.getAndroidApp')}
-            </a>
-          </div>
-        )}
+
 
         <div className="flex items-center justify-center gap-2">
           <span className="text-sm text-silver">

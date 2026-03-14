@@ -4,6 +4,15 @@ import { Card } from '../components/ui';
 
 const InstallPage = () => {
   const { t } = useTranslation();
+  const isAndroidApp = typeof window !== 'undefined' && window.Android !== undefined;
+
+  if (isAndroidApp) {
+    return (
+      <div className="min-h-screen bg-obsidian flex items-center justify-center p-6">
+        <p className="text-silver">App already installed</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-obsidian flex items-center justify-center p-6">
