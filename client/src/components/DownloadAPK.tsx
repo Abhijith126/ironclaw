@@ -1,7 +1,7 @@
 import { Download } from 'lucide-react';
 import { isRunningInApp } from '../utils/platform';
 
-const APK_URL = import.meta.env.VITE_APK_URL || '/iron-log-release.apk';
+const APK_URL = '/downloads/app.apk';
 
 export function DownloadAPK() {
   if (isRunningInApp()) {
