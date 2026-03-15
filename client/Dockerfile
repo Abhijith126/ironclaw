@@ -20,6 +20,9 @@ FROM nginx:alpine
 # Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html
 
+# Copy public folder
+COPY --from=builder /app/public /usr/share/nginx/html
+
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 

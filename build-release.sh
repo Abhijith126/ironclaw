@@ -5,15 +5,19 @@ set -e
 echo "🔨 Building Iron Log Android APK..."
 echo ""
 
-if ! command -v java &> /dev/null || ! java -version 2>&1 | grep -q "21"; then
-    echo "⚠️  Java 21 required. Set JAVA_HOME:"
-    echo "    export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
+export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
+
+if [ ! -d "$JAVA_HOME" ]; then
+    echo "⚠️  Java 21 not found at $JAVA_HOME"
+    echo "   Install with: brew install openjdk@21"
     exit 1
 fi
 
 echo "🧹 Cleaning old builds..."
 rm -rf client/dist
 rm -rf client/android/app/build
+rm -rf client/android/.gradle
+rm -rf client/public/downloads
 
 echo ""
 echo "📦 Building web assets..."
@@ -30,16 +34,16 @@ cd ..
 echo ""
 echo "🔨 Building Android APK..."
 cd client/android
-export JAVA_HOME=/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home
 ./gradlew clean assembleRelease
 cd ../..
 
 echo ""
 echo "📦 Copying APK..."
-cp client/android/app/build/outputs/apk/release/app-release.apk client/iron-log-release.apk
+mkdir -p client/public/downloads
+cp client/android/app/build/outputs/apk/release/app-release.apk client/public/downloads/app.apk
 
 echo ""
 echo "✅ Done!"
 echo ""
-echo "📍 APK: client/iron-log-release.apk"
-ls -lh client/iron-log-release.apk
+echo "📍 Web APK: /downloads/app.apk"
+ls -lh client/public/downloads/app.apk

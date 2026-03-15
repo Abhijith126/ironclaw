@@ -4,6 +4,7 @@ import { authAPI } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Dumbbell, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { Button, Input } from '../../components/ui';
+import { DownloadAPK } from '../../components/DownloadAPK';
 
 const AuthForm = ({ onAuthSuccess }) => {
   const { t } = useTranslation();
@@ -192,6 +193,7 @@ const AuthForm = ({ onAuthSuccess }) => {
           </button>
         </div>
 
+        <DownloadAPK />
         <div className="text-center pt-4 border-t border-steel">
           <p className="text-[10px] text-silver/70">{t('app.tagline')}</p>
         </div>

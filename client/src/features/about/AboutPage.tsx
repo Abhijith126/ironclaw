@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Dumbbell, Target, TrendingUp, Calendar, ArrowLeft } from 'lucide-react';
 import { PageHeader, Card, Badge, ListItem } from '../../components/ui';
 import { APP_NAME, APP_TAGLINE } from '../../constants';
+import { DownloadAPK } from '../../components/DownloadAPK';
 
 const AboutPage = () => {
   const { t } = useTranslation();
@@ -63,6 +64,8 @@ const AboutPage = () => {
           ))}
         </ul>
       </Card>
+
+      <DownloadAPK />
     </div>
   );
 };
