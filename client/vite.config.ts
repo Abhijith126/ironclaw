@@ -30,6 +30,8 @@ export default defineConfig({
         ]
       },
       workbox: {
+        globIgnores: ['**/*.apk'],
+        navigateFallbackDenylist: [/^\/downloads\//],
         globPatterns: ['**/*.{js,css,html,svg,woff2}'],
         runtimeCaching: [
           {

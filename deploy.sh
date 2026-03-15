@@ -7,6 +7,10 @@ docker rm -f workout-server workout-client 2>/dev/null
 
 echo "✅ Cleanup done!"
 echo ""
+echo "📦 Copying APK to dist..."
+mkdir -p client/dist/downloads
+cp client/public/downloads/app.apk client/dist/downloads/app.apk 2>/dev/null || echo "⚠️  No APK found, skipping..."
+echo ""
 echo "🔨 Building and starting containers..."
 
 docker-compose up -d --build
@@ -26,12 +30,6 @@ for img in $(docker images --format '{{.ID}}' | grep 'workout-tracker'); do
 done
 
 echo "✅ Image cleanup done!"
-
-if [ -f "client/android/app/build/outputs/apk/debug/app-release.apk" ]; then
-    cp client/android/app/build/outputs/apk/debug/app-release.apk client/dist/
-    echo "📱 APK copied to dist/"
-fi
-
 
 docker-compose up -d
 
