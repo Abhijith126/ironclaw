@@ -137,18 +137,17 @@ function AppContent({
 
   const handleExport = async () => {
     try {
-      const [scheduleRes, exerciseMap] = await Promise.all([
-        userAPI.getWeeklySchedule(),
-        getExerciseNameMap(),
-      ]);
+      const scheduleRes = await userAPI.getWeeklySchedule();
       const schedule = (scheduleRes.data as Record<string, unknown>).weeklySchedule;
 
-      const scheduleWithNames: Record<string, { id: string; name: string; sets: number; reps: number }[]> = {};
+      const scheduleWithNames: Record<string, { id: string; exerciseId: string; name: string; imageUrl?: string; sets: number; reps: number }[]> = {};
       for (const [day, exercises] of Object.entries(schedule || {})) {
-        const exList = (exercises as { id: string; sets: number; reps: number }[]) || [];
+        const exList = (exercises as { id: string; name?: string; imageUrl?: string; sets: number; reps: number }[]) || [];
         scheduleWithNames[day] = exList.map((ex) => ({
           id: ex.id,
-          name: (exerciseMap as Record<string, { name: string }>)[ex.id]?.name || ex.id,
+          exerciseId: ex.id,
+          name: ex.name || ex.id,
+          imageUrl: ex.imageUrl,
           sets: ex.sets,
           reps: ex.reps,
         }));
@@ -210,30 +209,24 @@ function AppContent({
         'Saturday',
         'Sunday',
       ];
-      const normalized: Record<string, { id: string; sets: number; reps: number }[]> = {};
+      const normalized: Record<string, { id: string; name?: string; imageUrl?: string; sets: number; reps: number }[]> = {};
 
       for (const day of validDays) {
         const exercises = (data.weeklySchedule as Record<string, unknown>)[day];
         if (Array.isArray(exercises)) {
-          normalized[day] = (exercises as { id?: string; name?: string; sets: number; reps: number }[])
-            .filter((ex) => ex && (ex.id || ex.name) && ex.sets)
+          normalized[day] = (exercises as { id?: string; exerciseId?: string; name?: string; imageUrl?: string; sets: number; reps: number }[])
+            .filter((ex) => ex && (ex.id || ex.exerciseId || ex.name) && ex.sets)
             .map((ex) => {
-              const exerciseId = ex.id;
-              const exerciseName = ex.name;
+              const importedId = ex.id;
+              const importedExerciseId = ex.exerciseId;
+              const importedName = ex.name;
+              const importedImageUrl = ex.imageUrl;
               let matchedId: string | null = null;
 
-              if (exerciseId) {
-                if (exerciseMapById[exerciseId]) {
-                  matchedId = exerciseId;
-                } else if (exerciseId.startsWith('wger_')) {
-                  matchedId = exerciseId;
-                } else if (exerciseId.match(/^[0-9a-f]{24}$/)) {
-                  matchedId = exerciseId;
-                }
-              }
-
-              if (!matchedId && exerciseName) {
-                const nameKey = exerciseName.toLowerCase().trim();
+              if (importedExerciseId && exerciseMap[importedExerciseId]) {
+                matchedId = importedExerciseId;
+              } else if (importedName) {
+                const nameKey = importedName.toLowerCase().trim();
                 for (const [name, info] of Object.entries(exerciseMap)) {
                   if (name === nameKey || name.replace(/\s+/g, '_') === nameKey) {
                     matchedId = info.id;
@@ -241,9 +234,19 @@ function AppContent({
                   }
                 }
               }
+              else if (importedId) {
+                if (importedId.startsWith('wger_') || importedId.match(/^[0-9a-f]{24}$/)) {
+                  matchedId = importedId;
+                }
+              }
+
+              const finalId = matchedId || importedId || importedExerciseId || importedName || 'unknown';
+              const finalImageUrl = importedImageUrl || (finalId !== 'unknown' ? exerciseMap[finalId]?.imageUrl : undefined);
 
               return {
-                id: matchedId || exerciseId || exerciseName || 'unknown',
+                id: finalId,
+                name: importedName,
+                imageUrl: finalImageUrl,
                 sets: ex.sets,
                 reps: ex.reps,
               };

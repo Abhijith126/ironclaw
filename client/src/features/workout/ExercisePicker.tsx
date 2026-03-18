@@ -5,7 +5,7 @@ import { getExerciseMap } from '../../services/api';
 import { SearchInput, Badge } from '../../components/ui';
 
 interface ExercisePickerProps {
-  onSelect: (exercise: { id: string; name: string; category?: string }) => void;
+  onSelect: (exercise: { id: string; name: string; imageUrl?: string; category?: string }) => void;
   onClose: () => void;
   selectedIds?: string[];
 }
@@ -15,6 +15,7 @@ interface ExerciseMapEntry {
   name: string;
   equipment?: string;
   category?: string;
+  imageUrl?: string;
 }
 
 function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerProps) {
@@ -55,6 +56,7 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
       const exerciseList = Object.entries(map).map(([id, ex]) => ({
         id,
         name: ex.name,
+        imageUrl: ex.imageUrl,
         category: ex.equipment
           ? ex.equipment.charAt(0).toUpperCase() + ex.equipment.slice(1)
           : undefined,
@@ -67,8 +69,8 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
     }
   };
 
-  const handleSelect = (ex: { id: string; name: string; category?: string }) => {
-    onSelect({ id: ex.id, name: ex.name, category: ex.category });
+  const handleSelect = (ex: { id: string; name: string; imageUrl?: string; category?: string }) => {
+    onSelect({ id: ex.id, name: ex.name, imageUrl: ex.imageUrl, category: ex.category });
     handleClose();
   };
 

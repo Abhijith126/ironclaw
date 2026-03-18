@@ -120,9 +120,21 @@ router.get('/weekly-schedule', auth, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json({
-      weeklySchedule: user.weeklySchedule || new Map()
-    });
+    const schedule = {};
+    if (user.weeklySchedule) {
+      for (const [day, dayExercises] of user.weeklySchedule) {
+        schedule[day] = dayExercises.map((ex) => ({
+          id: ex.id,
+          name: ex.name,
+          imageUrl: ex.imageUrl,
+          sets: ex.sets,
+          reps: ex.reps,
+          pr: ex.pr || null,
+        }));
+      }
+    }
+
+    res.json({ weeklySchedule: schedule });
   } catch (error) {
     console.error('Weekly schedule fetch error:', error);
     res.status(500).json({ message: 'Server error while fetching weekly schedule' });
@@ -157,9 +169,21 @@ router.put('/weekly-schedule', auth, async (req, res) => {
     user.weeklySchedule = new Map(Object.entries(weeklySchedule));
     await user.save();
 
+    const responseSchedule = {};
+    for (const [day, dayExercises] of user.weeklySchedule) {
+      responseSchedule[day] = dayExercises.map((ex) => ({
+        id: ex.id,
+        name: ex.name,
+        imageUrl: ex.imageUrl,
+        sets: ex.sets,
+        reps: ex.reps,
+        pr: ex.pr || null,
+      }));
+    }
+
     res.json({
       message: 'Weekly schedule updated successfully',
-      weeklySchedule: user.weeklySchedule
+      weeklySchedule: responseSchedule
     });
   } catch (error) {
     console.error('Weekly schedule update error:', error);

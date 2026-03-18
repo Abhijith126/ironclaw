@@ -183,7 +183,7 @@ function ManageWorkouts({ onSave }: { onSave?: () => void }) {
     }
   };
 
-  const addExercise = (exercise: { id: string; name: string }) => {
+  const addExercise = (exercise: { id: string; name: string; imageUrl?: string }) => {
     setSchedule((prev) => ({
       ...prev,
       [selectedDay]: [
@@ -193,6 +193,7 @@ function ManageWorkouts({ onSave }: { onSave?: () => void }) {
           sets: 3,
           reps: 10,
           name: exercise.name,
+          imageUrl: exercise.imageUrl,
         },
       ],
     }));

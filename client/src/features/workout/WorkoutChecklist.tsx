@@ -87,9 +87,12 @@ function WorkoutChecklist() {
     if (userWeekly && userWeekly[dayName]) {
       const exList = (userWeekly[dayName] || []).map((e) => {
         const exercise = exerciseMap[e.id];
+        const displayName = e.name || exercise?.name || e.id;
+        const displayImageUrl = e.imageUrl || exercise?.imageUrl;
         return {
           id: e.id,
-          name: exercise?.name || e.id,
+          name: displayName,
+          imageUrl: displayImageUrl,
           sets: e.sets,
           reps: e.reps,
           pr: e.pr || null,
@@ -258,17 +261,16 @@ function WorkoutChecklist() {
             ) : (
               <div className="flex flex-col gap-2">
                 {selectedWorkout.exercises.map((exercise) => {
-                  const exData = exerciseMap[exercise.id];
-                  const imageUrl = exData?.imageUrl;
+                  const storedImageUrl = exercise.imageUrl;
                   return (
                     <div
                       key={exercise.id}
                       className="flex items-center gap-3 p-3 bg-graphite/50 rounded-xl border border-steel/30"
                     >
                       <div className="w-10 h-10 rounded-lg bg-steel/50 overflow-hidden shrink-0 flex items-center justify-center">
-                        {imageUrl ? (
+                        {storedImageUrl ? (
                           <img
-                            src={imageUrl}
+                            src={storedImageUrl}
                             alt={exercise.name}
                             className="w-full h-full object-cover"
                           />

@@ -67,6 +67,8 @@ const userSchema = new mongoose.Schema({
     of: [
       {
         id: String,
+        name: String,
+        imageUrl: String,
         sets: Number,
         reps: String,
         pr: {
