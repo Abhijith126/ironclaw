@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Dumbbell, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { Button, Input } from '../../components/ui';
 import { DownloadAPK } from '../../components/DownloadAPK';
+import { useAuth } from '../../contexts';
+import { STORAGE_KEYS } from '../../constants';
 
-const AuthForm = ({ onAuthSuccess }) => {
+const AuthForm = function AuthForm() {
   const { t } = useTranslation();
+  const { login } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,12 +25,12 @@ const AuthForm = ({ onAuthSuccess }) => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
-  };
+  }, [formData]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -43,9 +46,9 @@ const AuthForm = ({ onAuthSuccess }) => {
 
       if (isLogin) {
         const response = await authAPI.login(credentials);
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        onAuthSuccess(response.data.user);
+        localStorage.setItem(STORAGE_KEYS.TOKEN, response.data.token);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
+        login(response.data.user);
         navigate('/dashboard');
       } else {
         const registerData = {
@@ -56,18 +59,19 @@ const AuthForm = ({ onAuthSuccess }) => {
           weight: parseInt(formData.weight),
         };
         const response = await authAPI.register(registerData);
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        onAuthSuccess(response.data.user);
+        localStorage.setItem(STORAGE_KEYS.TOKEN, response.data.token);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
+        login(response.data.user);
         navigate('/dashboard');
       }
-    } catch (err: any) {
-      const message = err?.response?.data?.message || err?.message || t('auth.authFailed');
-      setError(message);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : t('auth.authFailed');
+      const responseMessage = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(responseMessage || errorMessage);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [formData, isLogin, login, navigate, t]);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">

@@ -18,10 +18,9 @@ import {
 import { userAPI } from '../../services/api';
 import { Card, Button, Input, LanguageSwitcher, SettingsMenuItem } from '../../components/ui';
 import { getInitials } from '../../utils';
+import { useAuth } from '../../contexts';
 
 interface SettingsProps {
-  user: Record<string, unknown> | null;
-  setUser: (user: Record<string, unknown> | null) => void;
   theme: string;
   toggleTheme: () => void;
   onLogout: () => void;
@@ -30,8 +29,6 @@ interface SettingsProps {
 }
 
 const Settings = ({
-  user,
-  setUser,
   theme,
   toggleTheme,
   onLogout,
@@ -40,6 +37,7 @@ const Settings = ({
 }: SettingsProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user, setUser, updateUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });

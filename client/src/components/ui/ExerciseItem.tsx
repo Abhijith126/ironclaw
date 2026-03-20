@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { CheckCircle, Circle, Edit, Dumbbell } from 'lucide-react';
-import { Exercise } from '../../types';
+import { memo, useCallback } from 'react';
+import { CheckCircle, Edit, Dumbbell } from 'lucide-react';
+import type { Exercise } from '../../types';
 
 interface ExerciseItemProps {
   exercise: Exercise;
@@ -19,7 +20,7 @@ interface ExerciseItemProps {
   className?: string;
 }
 
-const ExerciseItem: React.FC<ExerciseItemProps> = ({
+const ExerciseItem = memo(function ExerciseItem({
   exercise,
   imageUrl,
   isCompleted,
@@ -34,13 +35,32 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
   setPRLabel,
   updatePRLabel,
   className = '',
-}) => {
+}: ExerciseItemProps) {
   const { t } = useTranslation();
   const { id, name, sets, reps, pr } = exercise;
 
   const resolvedDoneLabel = doneLabel ?? t('workout.done');
   const resolvedSetPRLabel = setPRLabel ?? t('workout.setYourPR');
   const resolvedUpdatePRLabel = updatePRLabel ?? t('workout.updateYourPR');
+
+  const handleToggle = useCallback(() => {
+    onToggle(id);
+  }, [onToggle, id]);
+
+  const handleEditPR = useCallback(() => {
+    onEditPR(exercise);
+  }, [onEditPR, exercise]);
+
+  const handlePRChange = useCallback(
+    (field: 'weight' | 'reps', value: string) => {
+      onPRChange(id, field, value);
+    },
+    [onPRChange, id]
+  );
+
+  const handleSavePR = useCallback(() => {
+    onSavePR(id);
+  }, [onSavePR, id]);
 
   return (
     <div
@@ -50,7 +70,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           : 'bg-muted border-steel hover:border-iron'
       } ${className}`}
     >
-      <button onClick={() => onToggle(id)} className="w-full flex items-center gap-4 p-4 text-left">
+      <button onClick={handleToggle} className="w-full flex items-center gap-4 p-4 text-left">
         <div className="relative shrink-0">
           <div
             className={`w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center transition-all ${
@@ -102,7 +122,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
                   <input
                     type="number"
                     value={prValues.weight}
-                    onChange={(e) => onPRChange(id, 'weight', e.target.value)}
+                    onChange={(e) => handlePRChange('weight', e.target.value)}
                     className="w-full px-4 py-3 bg-graphite border border-lime/50 rounded-xl text-white text-center font-display font-bold text-lg focus:border-lime outline-none"
                     placeholder="0"
                     autoFocus
@@ -116,7 +136,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
                   <input
                     type="number"
                     value={prValues.reps}
-                    onChange={(e) => onPRChange(id, 'reps', e.target.value)}
+                    onChange={(e) => handlePRChange('reps', e.target.value)}
                     className="w-full px-4 py-3 bg-graphite border border-lime/50 rounded-xl text-white text-center font-display font-bold text-lg focus:border-lime outline-none"
                     placeholder="0"
                   />
@@ -125,7 +145,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
                   </span>
                 </div>
                 <button
-                  onClick={() => onSavePR(id)}
+                  onClick={handleSavePR}
                   aria-label="Save personal record"
                   className="px-4 py-3 bg-lime text-obsidian rounded-xl font-display font-bold hover:bg-lime-dim transition-colors"
                 >
@@ -144,7 +164,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  onEditPR(exercise);
+                  handleEditPR();
                 }}
                 aria-label="Edit personal record"
                 className="p-2 text-lime/60 hover:text-lime transition-colors"
@@ -161,7 +181,7 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onEditPR(exercise);
+              handleEditPR();
             }}
             className="mt-3 w-full py-2.5 border border-dashed border-lime/30 rounded-xl text-lime text-xs font-semibold hover:bg-lime/5 transition-colors"
           >
@@ -171,6 +191,6 @@ const ExerciseItem: React.FC<ExerciseItemProps> = ({
       )}
     </div>
   );
-};
+});
 
 export default ExerciseItem;

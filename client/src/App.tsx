@@ -1,20 +1,18 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
   useLocation,
-  useNavigate,
 } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LayoutDashboard, Dumbbell, Scale, UserCircle, Cpu } from 'lucide-react';
 import './App.css';
 import { ConfirmModal, AlertModal } from './components/ui';
-import { useDeviceInsets, useTheme } from './hooks';
-import { userAPI, getExerciseNameMap } from './services/api';
-import { downloadJSON, readJSONFile } from './utils';
-import { STORAGE_KEYS, ROUTES } from './constants';
+import { useDeviceInsets, useTheme, useImportExport, useAppNavigation } from './hooks';
+import { AuthProvider, useAuth } from './contexts';
+import { ROUTES } from './constants';
 
 import { Dashboard } from './features/dashboard';
 import { WorkoutChecklist } from './features/workout';
@@ -25,278 +23,49 @@ import { AboutPage } from './features/about';
 import { AuthForm } from './features/auth';
 import ProtectedRoute from './components/ProtectedRoute';
 
-function App() {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-
-  const { theme, toggleTheme } = useTheme();
-
-  const handleAuthSuccess = (userData) => {
-    setUser(userData);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem(STORAGE_KEYS.TOKEN);
-    localStorage.removeItem(STORAGE_KEYS.USER);
-    setUser(null);
-  };
-
-  return (
-    <Router>
-      <div className="app">
-        <Routes>
-          <Route
-            path={ROUTES.AUTH}
-            element={
-              user ? (
-                <Navigate to={ROUTES.DASHBOARD} replace />
-              ) : (
-                <AuthForm onAuthSuccess={handleAuthSuccess} />
-              )
-            }
-          />
-          <Route
-            path="/*"
-            element={
-              <ProtectedRoute>
-                <AppContent
-                  user={user}
-                  onLogout={handleLogout}
-                  theme={theme}
-                  toggleTheme={toggleTheme}
-                  setUser={setUser}
-                />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
-
-function AppContent({
-  user,
-  onLogout,
-  theme,
-  toggleTheme,
-  setUser,
-}: {
-  user: Record<string, unknown> | null;
-  onLogout: () => void;
-  theme: string;
-  toggleTheme: () => void;
-  setUser: (user: Record<string, unknown> | null) => void;
-}) {
+function AppContent() {
   const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate();
-  const [importData, setImportData] = useState(null);
+  const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
+  const { top: safeAreaTop, bottom: safeAreaBottom } = useDeviceInsets();
+
+  const {
+    importData,
+    handleExport,
+    handleImportClick,
+    handleImport,
+    confirmImport,
+    clearImportData,
+    fileInputRef,
+  } = useImportExport();
+
   const [alert, setAlert] = useState<{
     isOpen: boolean;
     type: 'success' | 'error';
     title: string;
     message: string;
   }>({ isOpen: false, type: 'success', title: '', message: '' });
-  const fileInputRef = useRef(null);
-  const { top: safeAreaTop, bottom: safeAreaBottom, hasNotch, hasBottomInset } = useDeviceInsets();
+
+  const { activeTab, tabs, navigateTo } = useAppNavigation(
+    {
+      home: t('nav.home'),
+      workout: t('nav.workout'),
+      exercises: t('nav.exercises'),
+      progress: t('nav.progress'),
+      profile: t('nav.profile'),
+    },
+    { LayoutDashboard, Dumbbell, Scale, UserCircle, Cpu }
+  );
 
   // Scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const getActiveTab = () => {
-    const path = location.pathname;
-    if (path.includes('/checklist') || path.includes('/workout')) return 'workout';
-    if (path.includes('/exercises')) return 'exercises';
-    if (path.includes('/weight')) return 'weight';
-    if (path.includes('/settings') || path.includes('/about')) return 'profile';
-    return 'dashboard';
-  };
-
-  const activeTab = getActiveTab();
-
-  const navigateTo = (tab: string) => {
-    const routes: Record<string, string> = {
-      dashboard: ROUTES.DASHBOARD,
-      workout: '/checklist',
-      exercises: '/exercises',
-      weight: ROUTES.WEIGHT,
-      profile: ROUTES.SETTINGS,
-    };
-    navigate(routes[tab]);
-  };
-
-  const handleLogout = () => {
-    onLogout();
-    navigate(ROUTES.AUTH);
-  };
-
-  const handleExport = async () => {
-    try {
-      const scheduleRes = await userAPI.getWeeklySchedule();
-      const schedule = (scheduleRes.data as Record<string, unknown>).weeklySchedule;
-
-      const scheduleWithNames: Record<string, { id: string; exerciseId: string; name: string; imageUrl?: string; sets: number; reps: number }[]> = {};
-      for (const [day, exercises] of Object.entries(schedule || {})) {
-        const exList = (exercises as { id: string; name?: string; imageUrl?: string; sets: number; reps: number }[]) || [];
-        scheduleWithNames[day] = exList.map((ex) => ({
-          id: ex.id,
-          exerciseId: ex.id,
-          name: ex.name || ex.id,
-          imageUrl: ex.imageUrl,
-          sets: ex.sets,
-          reps: ex.reps,
-        }));
-      }
-
-      const data = { weeklySchedule: scheduleWithNames, exportedAt: new Date().toISOString(), version: '2' };
-      const filename = `workout-schedule-${new Date().toISOString().split('T')[0]}.json`;
-      downloadJSON(data, filename);
-      setAlert({
-        isOpen: true,
-        type: 'success',
-        title: t('common.success'),
-        message: t('importExport.importSuccess'),
-      });
-    } catch (err) {
-      console.error('Export failed:', err);
-      setAlert({
-        isOpen: true,
-        type: 'error',
-        title: t('common.error'),
-        message: t('importExport.importFailed'),
-      });
-    }
-  };
-
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const data = (await readJSONFile(file)) as Record<string, unknown>;
-
-      if (!data.weeklySchedule || typeof data.weeklySchedule !== 'object') {
-        setAlert({
-          isOpen: true,
-          type: 'error',
-          title: t('importExport.invalidFormat'),
-          message: t('importExport.invalidFormatMessage'),
-        });
-        return;
-      }
-
-      const exerciseMap = (await getExerciseNameMap()) as Record<string, { id: string; name: string }>;
-      const exerciseMapById: Record<string, string> = {};
-      Object.values(exerciseMap).forEach((info) => {
-        exerciseMapById[info.id] = info.name;
-      });
-
-      const validDays = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ];
-      const normalized: Record<string, { id: string; name?: string; imageUrl?: string; sets: number; reps: number }[]> = {};
-
-      for (const day of validDays) {
-        const exercises = (data.weeklySchedule as Record<string, unknown>)[day];
-        if (Array.isArray(exercises)) {
-          normalized[day] = (exercises as { id?: string; exerciseId?: string; name?: string; imageUrl?: string; sets: number; reps: number }[])
-            .filter((ex) => ex && (ex.id || ex.exerciseId || ex.name) && ex.sets)
-            .map((ex) => {
-              const importedId = ex.id;
-              const importedExerciseId = ex.exerciseId;
-              const importedName = ex.name;
-              const importedImageUrl = ex.imageUrl;
-              let matchedId: string | null = null;
-
-              if (importedExerciseId && exerciseMap[importedExerciseId]) {
-                matchedId = importedExerciseId;
-              } else if (importedName) {
-                const nameKey = importedName.toLowerCase().trim();
-                for (const [name, info] of Object.entries(exerciseMap)) {
-                  if (name === nameKey || name.replace(/\s+/g, '_') === nameKey) {
-                    matchedId = info.id;
-                    break;
-                  }
-                }
-              }
-              else if (importedId) {
-                if (importedId.startsWith('wger_') || importedId.match(/^[0-9a-f]{24}$/)) {
-                  matchedId = importedId;
-                }
-              }
-
-              const finalId = matchedId || importedId || importedExerciseId || importedName || 'unknown';
-              const finalImageUrl = importedImageUrl || (finalId !== 'unknown' ? exerciseMap[finalId]?.imageUrl : undefined);
-
-              return {
-                id: finalId,
-                name: importedName,
-                imageUrl: finalImageUrl,
-                sets: ex.sets,
-                reps: ex.reps,
-              };
-            });
-        } else {
-          normalized[day] = [];
-        }
-      }
-
-      setImportData(normalized);
-    } catch (err) {
-      console.error('Import failed:', err);
-      setAlert({
-        isOpen: true,
-        type: 'error',
-        title: t('importExport.importFailed'),
-        message: t('importExport.invalidFormatMessage'),
-      });
-    }
-
-    e.target.value = '';
-  };
-
-  const confirmImport = async () => {
-    try {
-      await userAPI.updateWeeklySchedule({ weeklySchedule: importData });
-      setAlert({
-        isOpen: true,
-        type: 'success',
-        title: t('common.success'),
-        message: t('importExport.importSuccess'),
-      });
-      setImportData(null);
-    } catch (err) {
-      setAlert({
-        isOpen: true,
-        type: 'error',
-        title: t('common.error'),
-        message: t('importExport.importFailed'),
-      });
-    }
-  };
-
-  const tabs = [
-    { id: 'dashboard', label: t('nav.home'), icon: LayoutDashboard },
-    { id: 'workout', label: t('nav.workout'), icon: Dumbbell },
-    { id: 'exercises', label: t('nav.exercises'), icon: Cpu },
-    { id: 'weight', label: t('nav.progress'), icon: Scale },
-    { id: 'profile', label: t('nav.profile'), icon: UserCircle },
-  ];
+  const handleLogout = useCallback(() => {
+    logout();
+  }, [logout]);
 
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'short',
@@ -334,8 +103,6 @@ function AppContent({
               path={ROUTES.SETTINGS}
               element={
                 <Settings
-                  user={user}
-                  setUser={setUser}
                   theme={theme}
                   toggleTheme={toggleTheme}
                   onLogout={handleLogout}
@@ -390,7 +157,7 @@ function AppContent({
 
       <ConfirmModal
         isOpen={!!importData}
-        onClose={() => setImportData(null)}
+        onClose={clearImportData}
         onConfirm={confirmImport}
         title={t('importExport.importConfirm')}
         message={t('importExport.importConfirmMessage')}
@@ -409,4 +176,43 @@ function AppContent({
   );
 }
 
-export default App;
+function App() {
+  const { user } = useAuth();
+
+  return (
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route
+            path={ROUTES.AUTH}
+            element={
+              user ? (
+                <Navigate to={ROUTES.DASHBOARD} replace />
+              ) : (
+                <AuthForm />
+              )
+            }
+          />
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <AppContent />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+function AppWrapper() {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+}
+
+export default AppWrapper;

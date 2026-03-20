@@ -1,0 +1,348 @@
+{
+  "weeklySchedule": {
+    "Monday": [
+      {
+        "id": "69b1da7775ec0c6a556f6925",
+        "exerciseId": "treadmill",
+        "name": "Treadmill",
+        "imageUrl": "/exercises/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg",
+        "sets": 1,
+        "reps": "15 min"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6903",
+        "exerciseId": "leg_press",
+        "name": "Leg Press",
+        "imageUrl": "/exercises/07391201-Sled-45-Leg-Press_Hips_thumbnail@3x.jpg",
+        "sets": 4,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6904",
+        "exerciseId": "leg_curl",
+        "name": "Leg Curl",
+        "imageUrl": "/exercises/05861201-Lever-Lying-Leg-Curl_Thighs_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6905",
+        "exerciseId": "leg_extension",
+        "name": "Leg Extension",
+        "imageUrl": "/exercises/05851201-Lever-Leg-Extension_Thighs_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6a3d",
+        "exerciseId": "squat_smith_machine",
+        "name": "Squat (Smith Machine)",
+        "imageUrl": "/exercises/07501201-Smith-Chair-Squat_Thighs_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6906",
+        "exerciseId": "barbell_hip_thrust",
+        "name": "Barbell Hip Thrust",
+        "imageUrl": "/exercises/80151201-Glute-Bridge-from-Bench-(male)_Hips_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6907",
+        "exerciseId": "calf_raise",
+        "name": "Calf Raise",
+        "imageUrl": "/exercises/05941201-Lever-Seated-Calf-Raise-(plate-loaded)_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "15"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6909",
+        "exerciseId": "abductor_machine",
+        "name": "Abductor Machine",
+        "imageUrl": "/exercises/05971201-Lever-Seated-Hip-Abduction_Hips_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6910",
+        "exerciseId": "adductor_machine",
+        "name": "Adductor Machine",
+        "imageUrl": "/exercises/05981201-Lever-Seated-Hip-Adduction_Thighs_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6925",
+        "exerciseId": "treadmill",
+        "name": "Treadmill",
+        "imageUrl": "/exercises/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg",
+        "sets": 1,
+        "reps": "20 min"
+      }
+    ],
+    "Tuesday": [
+      {
+        "id": "69b1da7775ec0c6a556f6925",
+        "exerciseId": "treadmill",
+        "name": "Treadmill",
+        "imageUrl": "/exercises/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg",
+        "sets": 1,
+        "reps": "30 min"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6913",
+        "exerciseId": "cable_kneeling_crunch",
+        "name": "Cable Kneeling Crunch",
+        "imageUrl": "/exercises/01751201-Cable-Kneeling-Crunch_Waist_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6912",
+        "exerciseId": "plank",
+        "name": "Plank",
+        "imageUrl": "/exercises/04631201-Front-Plank-m_waist_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "45 sec"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f692f",
+        "exerciseId": "back_extension_hyperextension",
+        "name": "Back Extension (Hyperextension)",
+        "imageUrl": "/exercises/18601201-Hyperextension-(VERSION-2)_Hips_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      }
+    ],
+    "Wednesday": [
+      {
+        "id": "69b1da7775ec0c6a556f6925",
+        "exerciseId": "treadmill",
+        "name": "Treadmill",
+        "imageUrl": "/exercises/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg",
+        "sets": 1,
+        "reps": "10 min"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68dc",
+        "exerciseId": "chest_press_machine",
+        "name": "Chest Press Machine",
+        "imageUrl": "/exercises/05771201-Lever-Chest-Press_Chest_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68dd",
+        "exerciseId": "barbell_incline_bench_press",
+        "name": "Barbell Incline Bench Press",
+        "imageUrl": "/exercises/00471201-Barbell-Incline-Bench-Press_Chest_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e4",
+        "exerciseId": "lat_pulldown",
+        "name": "Lat Pulldown",
+        "imageUrl": "/exercises/01501201-Cable-Bar-Lateral-Pulldown_Back_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e5",
+        "exerciseId": "seated_cable_row",
+        "name": "Seated Cable Row",
+        "imageUrl": "/exercises/26611201-Cable-Seated-Row-with-V-bar_Back_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e7",
+        "exerciseId": "t_bar_row",
+        "name": "T-Bar Row",
+        "imageUrl": "/exercises/06061201-Lever-T-bar-Row-(plate-loaded)_Back_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e8",
+        "exerciseId": "cable_face_pull",
+        "name": "Cable Face Pull",
+        "imageUrl": "/exercises/77441201-Cable-Standing-Supinated-Face-Pull-(with-rope)_Sho_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      }
+    ],
+    "Thursday": [
+      {
+        "id": "69b1da7775ec0c6a556f68ed",
+        "exerciseId": "shoulder_press_machine",
+        "name": "Shoulder Press Machine",
+        "imageUrl": "/exercises/05871201-Lever-Military-Press-(plate-loaded)_shoulder_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68ee",
+        "exerciseId": "lateral_raise",
+        "name": "Lateral Raise",
+        "imageUrl": "/exercises/03341201-Dumbbell-Lateral-Raise_shoulder_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68ef",
+        "exerciseId": "rear_delt_fly",
+        "name": "Rear Delt Fly",
+        "imageUrl": "/exercises/03831201-Dumbbell-Reverse-Fly_Shoulders_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68f8",
+        "exerciseId": "hammer_curl",
+        "name": "Hammer Curl",
+        "imageUrl": "/exercises/03121201-Dumbbell-Hammer-Curl-(version-2)_Upper-Arms_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68f9",
+        "exerciseId": "dumbbell_overhead_tricep_extension",
+        "name": "Dumbbell Overhead Tricep Extension",
+        "imageUrl": "/exercises/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68f6",
+        "exerciseId": "tricep_pushdown",
+        "name": "Tricep Pushdown",
+        "imageUrl": "/exercises/02011201-Cable-Pushdown_Upper-Arms_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68f9",
+        "exerciseId": "dumbbell_overhead_tricep_extension",
+        "name": "Dumbbell Overhead Tricep Extension",
+        "imageUrl": "/exercises/01491201-Cable-Alternate-Triceps-Extension_Upper-Arms_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      }
+    ],
+    "Friday": [
+      {
+        "id": "69b1da7775ec0c6a556f6925",
+        "exerciseId": "treadmill",
+        "name": "Treadmill",
+        "imageUrl": "/exercises/21971201-Run-on-Treadmill-(female)_Cardio_thumbnail@3x.jpg",
+        "sets": 1,
+        "reps": "30 min"
+      }
+    ],
+    "Saturday": [
+      {
+        "id": "69b1da7775ec0c6a556f6903",
+        "exerciseId": "leg_press",
+        "name": "Leg Press",
+        "imageUrl": "/exercises/07391201-Sled-45-Leg-Press_Hips_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6908",
+        "exerciseId": "barbell_romanian_deadlift",
+        "name": "Barbell Romanian Deadlift",
+        "imageUrl": "/exercises/00851201-Barbell-Romanian-Deadlift_Hips-FIX_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e4",
+        "exerciseId": "lat_pulldown",
+        "name": "Lat Pulldown",
+        "imageUrl": "/exercises/01501201-Cable-Bar-Lateral-Pulldown_Back_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e5",
+        "exerciseId": "seated_cable_row",
+        "name": "Seated Cable Row",
+        "imageUrl": "/exercises/26611201-Cable-Seated-Row-with-V-bar_Back_thumbnail_@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6909",
+        "exerciseId": "abductor_machine",
+        "name": "Abductor Machine",
+        "imageUrl": "/exercises/05971201-Lever-Seated-Hip-Abduction_Hips_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6907",
+        "exerciseId": "calf_raise",
+        "name": "Calf Raise",
+        "imageUrl": "/exercises/05941201-Lever-Seated-Calf-Raise-(plate-loaded)_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "15"
+      }
+    ],
+    "Sunday": [
+      {
+        "id": "69b1da7775ec0c6a556f68dc",
+        "exerciseId": "chest_press_machine",
+        "name": "Chest Press Machine",
+        "imageUrl": "/exercises/05771201-Lever-Chest-Press_Chest_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68e4",
+        "exerciseId": "lat_pulldown",
+        "name": "Lat Pulldown",
+        "imageUrl": "/exercises/01501201-Cable-Bar-Lateral-Pulldown_Back_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68ee",
+        "exerciseId": "lateral_raise",
+        "name": "Lateral Raise",
+        "imageUrl": "/exercises/03341201-Dumbbell-Lateral-Raise_shoulder_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68fa",
+        "exerciseId": "bicep_curl",
+        "name": "Bicep Curl",
+        "imageUrl": "/exercises/02941201-Dumbbell-Biceps-Curl_Upper-Arms_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f68f6",
+        "exerciseId": "tricep_pushdown",
+        "name": "Tricep Pushdown",
+        "imageUrl": "/exercises/02011201-Cable-Pushdown_Upper-Arms_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "10"
+      },
+      {
+        "id": "69b1da7775ec0c6a556f6913",
+        "exerciseId": "cable_kneeling_crunch",
+        "name": "Cable Kneeling Crunch",
+        "imageUrl": "/exercises/01751201-Cable-Kneeling-Crunch_Waist_thumbnail@3x.jpg",
+        "sets": 3,
+        "reps": "12"
+      }
+    ]
+  },
+  "exportedAt": "2026-03-18T19:45:05.202Z",
+  "version": "2"
+}

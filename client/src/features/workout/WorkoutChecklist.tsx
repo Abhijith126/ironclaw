@@ -13,17 +13,16 @@ import {
   DayCarousel,
 } from '../../components/ui';
 import { getTodayName, getTomorrowName, getDateKey } from '../../utils';
-import { useExerciseMap, useDayCarousel } from '../../hooks';
+import { useDayCarousel } from '../../hooks';
 
 function WorkoutChecklist() {
   const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
-  const [userWeekly, setUserWeekly] = useState<Record<string, Array<{id: string; sets: number; reps: string; pr?: {weight: number; reps: number} | null}>> | null>(null);
+  const [userWeekly, setUserWeekly] = useState<Record<string, Array<{id: string; name?: string; imageUrl?: string; sets: number; reps: string; pr?: {weight: number; reps: number} | null}>> | null>(null);
   const [completedMap, setCompletedMap] = useState<Record<string, string[]>>({});
   const [editingPR, setEditingPR] = useState<string | null>(null);
   const [prValues, setPrValues] = useState({ weight: '', reps: '' });
 
-  const { exerciseMap } = useExerciseMap();
   const todayName = useMemo(() => getTodayName(), []);
   const tomorrowName = useMemo(() => getTomorrowName(), []);
   const { selectedDay, carouselPos, animated, selectDay, handleTouchStart, handleTouchEnd } =
@@ -85,19 +84,14 @@ function WorkoutChecklist() {
 
   const getWorkoutByName = (dayName) => {
     if (userWeekly && userWeekly[dayName]) {
-      const exList = (userWeekly[dayName] || []).map((e) => {
-        const exercise = exerciseMap[e.id];
-        const displayName = e.name || exercise?.name || e.id;
-        const displayImageUrl = e.imageUrl || exercise?.imageUrl;
-        return {
-          id: e.id,
-          name: displayName,
-          imageUrl: displayImageUrl,
-          sets: e.sets,
-          reps: e.reps,
-          pr: e.pr || null,
-        };
-      });
+      const exList = (userWeekly[dayName] || []).map((e) => ({
+        id: e.id,
+        name: e.name || e.id,
+        imageUrl: e.imageUrl,
+        sets: e.sets,
+        reps: e.reps,
+        pr: e.pr || null,
+      }));
       return { name: dayName, day: dayName, exercises: exList };
     }
     return { name: t('workout.restDay'), day: dayName, exercises: [] };
@@ -236,13 +230,12 @@ function WorkoutChecklist() {
                 {todaysWorkout.exercises.map((exercise) => {
                   const isDone = completedToday.includes(exercise.id);
                   const showPR = !!exercise.pr?.weight || editingPR === exercise.id;
-                  const exData = exerciseMap[exercise.id];
 
                   return (
                     <ExerciseItem
                       key={exercise.id}
                       exercise={exercise}
-                      imageUrl={exData?.imageUrl}
+                      imageUrl={exercise.imageUrl}
                       isCompleted={isDone}
                       onToggle={toggleExerciseDone}
                       onEditPR={openEditPR}
