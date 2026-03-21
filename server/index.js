@@ -44,7 +44,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.set('trust proxy', true);
+app.set('trust proxy', 2);
 app.use(express.json({ limit: '1mb' }));
 
 async function connectDB() {
