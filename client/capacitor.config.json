@@ -3,6 +3,10 @@
   "appName": "Iron Log",
   "webDir": "dist",
   "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "hostname": "app.ironlog.local"
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 2000,

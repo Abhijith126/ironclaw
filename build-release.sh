@@ -22,7 +22,7 @@ rm -rf client/public/downloads
 echo ""
 echo "📦 Building web assets..."
 cd client
-npm run build
+VITE_API_URL=${VITE_API_URL:-https://workout-app.abhijith.top/api} npm run build
 cd ..
 
 echo ""
