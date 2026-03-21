@@ -1,20 +1,15 @@
 import { useState, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { userAPI, getExerciseNameMap } from '../services/api';
+import { userAPI, getExercises } from '../services/api';
 import { downloadJSON, readJSONFile } from '../utils';
+import type { Exercise } from '../types';
 
-interface ImportData {
-  [key: string]: Array<{
-    id: string;
-    name?: string;
-    imageUrl?: string;
-    sets: number;
-    reps: number;
-  }>;
+interface ImportSchedule {
+  [day: string]: Exercise[];
 }
 
 interface UseImportExportReturn {
-  importData: ImportData | null;
+  importData: ImportSchedule | null;
   isImporting: boolean;
   error: string | null;
   handleExport: () => Promise<void>;
@@ -25,55 +20,28 @@ interface UseImportExportReturn {
   fileInputRef: React.RefObject<HTMLInputElement | null>;
 }
 
+const VALID_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
 export function useImportExport(): UseImportExportReturn {
   const { t } = useTranslation();
-  const [importData, setImportData] = useState<ImportData | null>(null);
+  const [importData, setImportData] = useState<ImportSchedule | null>(null);
   const [isImporting, setIsImporting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = useCallback(async () => {
     try {
-      const scheduleRes = await userAPI.getWeeklySchedule();
-      const schedule = scheduleRes.data.weeklySchedule;
+      const res = await userAPI.getWeeklySchedule();
+      const schedule = res.data.weeklySchedule || {};
 
-      const scheduleWithNames: Record<
-        string,
-        Array<{
-          id: string;
-          exerciseId: string;
-          name: string;
-          imageUrl?: string;
-          sets: number;
-          reps: number;
-        }>
-      > = {};
-      for (const [day, exercises] of Object.entries(schedule || {})) {
-        const exList =
-          (exercises as Array<{
-            id: string;
-            name?: string;
-            imageUrl?: string;
-            sets: number;
-            reps: number;
-          }>) || [];
-        scheduleWithNames[day] = exList.map((ex) => ({
-          id: ex.id,
-          exerciseId: ex.id,
-          name: ex.name || ex.id,
-          imageUrl: ex.imageUrl,
-          sets: ex.sets,
-          reps: ex.reps,
-        }));
-      }
-
-      const data = {
-        weeklySchedule: scheduleWithNames,
+      const exportData = {
+        weeklySchedule: schedule,
         exportedAt: new Date().toISOString(),
-        version: '2',
+        version: '3',
       };
+
       const filename = `workout-schedule-${new Date().toISOString().split('T')[0]}.json`;
-      downloadJSON(data, filename);
+      downloadJSON(exportData, filename);
     } catch (err) {
       console.error('Export failed:', err);
       setError(t('importExport.importFailed'));
@@ -100,100 +68,52 @@ export function useImportExport(): UseImportExportReturn {
           return;
         }
 
-        const exerciseMap = (await getExerciseNameMap()) as Record<
-          string,
-          { id: string; name: string; imageUrl?: string }
-        >;
-        const exerciseMapById: Record<string, string> = {};
-        Object.values(exerciseMap).forEach((info) => {
-          exerciseMapById[info.id] = info.name;
+        // Build lookup maps from exercise catalog
+        const allExercises = await getExercises();
+        const byId = new Map<string, { id: string; name: string; imageUrl?: string }>();
+        const byName = new Map<string, { id: string; name: string; imageUrl?: string }>();
+        allExercises.forEach((ex) => {
+          byId.set(ex.id, { id: ex.id, name: ex.name, imageUrl: ex.imageUrl });
+          byName.set(ex.name.toLowerCase(), { id: ex.id, name: ex.name, imageUrl: ex.imageUrl });
         });
 
-        const validDays = [
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-          'Sunday',
-        ];
-        const normalized: ImportData = {};
+        const rawSchedule = data.weeklySchedule as Record<string, unknown>;
+        const normalized: ImportSchedule = {};
 
-        for (const day of validDays) {
-          const exercises = (data.weeklySchedule as Record<string, unknown>)[day];
-          if (Array.isArray(exercises)) {
-            normalized[day] = (
-              exercises as Array<{
-                id?: string;
-                exerciseId?: string;
-                name?: string;
-                imageUrl?: string;
-                sets: number;
-                reps: number;
-              }>
-            )
-              .filter((ex) => ex && (ex.id || ex.exerciseId || ex.name) && ex.sets)
-              .map((ex) => {
-                const importedId = ex.id;
-                const importedExerciseId = ex.exerciseId;
-                const importedName = ex.name;
-                const importedImageUrl = ex.imageUrl;
-                let matchedId: string | null = null;
-
-                if (importedExerciseId && exerciseMap[importedExerciseId]) {
-                  matchedId = importedExerciseId;
-                } else if (importedName) {
-                  const nameKey = importedName.toLowerCase().trim();
-                  for (const [name, info] of Object.entries(exerciseMap)) {
-                    if (
-                      name === nameKey ||
-                      name.replace(/\s+/g, '_') === nameKey
-                    ) {
-                      matchedId = info.id;
-                      break;
-                    }
-                  }
-                } else if (importedId) {
-                  if (
-                    importedId.startsWith('wger_') ||
-                    importedId.match(/^[0-9a-f]{24}$/)
-                  ) {
-                    matchedId = importedId;
-                  }
-                }
-
-                const finalId =
-                  matchedId ||
-                  importedId ||
-                  importedExerciseId ||
-                  importedName ||
-                  'unknown';
-                const finalImageUrl =
-                  importedImageUrl ||
-                  (finalId !== 'unknown' ? exerciseMap[finalId]?.imageUrl : undefined);
-
-                return {
-                  id: finalId,
-                  name: importedName,
-                  imageUrl: finalImageUrl,
-                  sets: ex.sets,
-                  reps: ex.reps,
-                };
-              });
-          } else {
+        for (const day of VALID_DAYS) {
+          const exercises = rawSchedule[day];
+          if (!Array.isArray(exercises)) {
             normalized[day] = [];
+            continue;
           }
+
+          normalized[day] = exercises
+            .filter((ex: Record<string, unknown>) => ex && (ex.id || ex.name) && ex.sets)
+            .map((ex: Record<string, unknown>) => {
+              // Try matching by ID first, then by name
+              const match =
+                (ex.id && byId.get(ex.id as string)) ||
+                (ex.name && byName.get((ex.name as string).toLowerCase()));
+
+              return {
+                id: match?.id || (ex.id as string) || 'unknown',
+                name: match?.name || (ex.name as string),
+                imageUrl: match?.imageUrl || (ex.imageUrl as string),
+                sets: ex.sets as number,
+                reps: ex.reps as number | string,
+                pr: (ex.pr as { weight: number; reps: number }) || null,
+              };
+            });
         }
 
         setImportData(normalized);
       } catch (err) {
         console.error('Import failed:', err);
         setError(t('importExport.invalidFormatMessage'));
+      } finally {
+        e.target.value = '';
+        setIsImporting(false);
       }
-
-      e.target.value = '';
-      setIsImporting(false);
     },
     [t]
   );

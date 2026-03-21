@@ -1,30 +1,25 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, Edit, Dumbbell } from 'lucide-react';
 import ManageWorkouts from './ManageWorkouts';
+import ExerciseItem from './components/ExerciseItem';
+import DayCarousel from './components/DayCarousel';
+import { useDayCarousel } from './hooks/useDayCarousel';
 import { userAPI } from '../../services/api';
-import {
-  PageHeader,
-  ExerciseItem,
-  Button,
-  Card,
-  Badge,
-  TipBox,
-  DayCarousel,
-} from '../../components/ui';
+import { PageHeader, Button, Card, Badge, TipBox } from '../../components/ui';
 import { getTodayName, getTomorrowName, getDateKey } from '../../utils';
-import { useDayCarousel } from '../../hooks';
+import type { ScheduleExercise } from './types';
 
 function WorkoutChecklist() {
   const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
-  const [userWeekly, setUserWeekly] = useState<Record<string, Array<{id: string; name?: string; imageUrl?: string; sets: number; reps: string; pr?: {weight: number; reps: number} | null}>> | null>(null);
+  const [userWeekly, setUserWeekly] = useState<Record<string, ScheduleExercise[]> | null>(null);
   const [completedMap, setCompletedMap] = useState<Record<string, string[]>>({});
   const [editingPR, setEditingPR] = useState<string | null>(null);
   const [prValues, setPrValues] = useState({ weight: '', reps: '' });
 
-  const todayName = useMemo(() => getTodayName(), []);
-  const tomorrowName = useMemo(() => getTomorrowName(), []);
+  const todayName = getTodayName();
+  const tomorrowName = getTomorrowName();
   const { selectedDay, carouselPos, animated, selectDay, handleTouchStart, handleTouchEnd } =
     useDayCarousel(todayName);
 
@@ -82,7 +77,7 @@ function WorkoutChecklist() {
     setEditing(false);
   };
 
-  const getWorkoutByName = (dayName) => {
+  const getWorkoutByName = (dayName: string) => {
     if (userWeekly && userWeekly[dayName]) {
       const exList = (userWeekly[dayName] || []).map((e) => ({
         id: e.id,
@@ -108,7 +103,7 @@ function WorkoutChecklist() {
   const totalCount = todaysWorkout.exercises.length;
   const isAllComplete = totalCount > 0 && completedCount === totalCount;
 
-  const toggleExerciseDone = async (exId) => {
+  const toggleExerciseDone = async (exId: string) => {
     const dayKey = getDateKey();
     const copy = { ...completedMap };
     const list = new Set(copy[dayKey] || []);
@@ -123,7 +118,7 @@ function WorkoutChecklist() {
     setCompletedMap(copy);
 
     try {
-      await userAPI.logWorkout(exId, list.size > 0);
+      await userAPI.logWorkout(exId, list.has(exId));
     } catch (error) {
       console.error('Error logging workout:', error);
     }
@@ -147,35 +142,33 @@ function WorkoutChecklist() {
     }
   };
 
-  const openEditPR = (exercise) => {
+  const openEditPR = (exercise: { id: string; pr?: { weight: number; reps: number } | null }) => {
     setEditingPR(exercise.id);
     setPrValues({
-      weight: exercise.pr?.weight || '',
-      reps: exercise.pr?.reps || '',
+      weight: exercise.pr?.weight ? String(exercise.pr.weight) : '',
+      reps: exercise.pr?.reps ? String(exercise.pr.reps) : '',
     });
   };
 
-  const handlePRChange = (_id, field, value) => {
+  const handlePRChange = (_id: string, field: string, value: string) => {
     setPrValues((prev) => ({ ...prev, [field]: value }));
   };
 
-  const savePR = async (exerciseId) => {
-    const next = { ...userWeekly };
-    const dayExercises = next[todayName] || [];
-    const idx = dayExercises.findIndex((e) => e.id === exerciseId);
-    if (idx !== -1) {
-      dayExercises[idx] = {
-        ...dayExercises[idx],
-        pr: { weight: Number(prValues.weight) || null, reps: Number(prValues.reps) || null },
-      };
-      next[todayName] = dayExercises;
-      setUserWeekly(next);
+  const savePR = async (exerciseId: string) => {
+    if (!userWeekly) return;
+    const dayExercises = userWeekly[todayName] || [];
+    const updatedExercises = dayExercises.map((e) =>
+      e.id === exerciseId
+        ? { ...e, pr: { weight: Number(prValues.weight) || 0, reps: Number(prValues.reps) || 0 } }
+        : e
+    );
+    const next = { ...userWeekly, [todayName]: updatedExercises };
+    setUserWeekly(next);
 
-      try {
-        await userAPI.updateWeeklySchedule({ weeklySchedule: next });
-      } catch (err) {
-        console.error('Failed to save PR:', err);
-      }
+    try {
+      await userAPI.updateWeeklySchedule({ weeklySchedule: next });
+    } catch (err) {
+      console.error('Failed to save PR:', err);
     }
     setEditingPR(null);
   };

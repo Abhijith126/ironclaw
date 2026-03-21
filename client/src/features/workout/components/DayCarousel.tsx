@@ -1,8 +1,8 @@
-import { DAYS_OF_WEEK } from '../../constants';
-import { getTodayName } from '../../utils';
+import { DAYS_OF_WEEK } from '../../../constants';
+import { getTodayName } from '../../../utils';
 
 const BUFFER_HALF = 24;
-const ITEM_WIDTH = 68; // 60px button + 8px gap
+const ITEM_WIDTH = 68;
 
 interface DayCarouselProps {
   carouselPos: number;

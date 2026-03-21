@@ -106,6 +106,10 @@
       "cardiovascular": "Cardio",
       "full body": "Volledig Lichaam"
     },
+    "musclesTab": "Spieren",
+    "primaryMuscles": "Primaire spieren",
+    "secondaryMuscles": "Secundaire spieren",
+    "equipmentNeeded": "Benodigde apparatuur",
     "equipmentFilter": {
       "all": "Alle",
       "dumbbells": "Dumbbells",

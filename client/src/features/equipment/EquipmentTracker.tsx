@@ -1,34 +1,17 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Play, Dumbbell } from 'lucide-react';
+import { Dumbbell } from 'lucide-react';
 import { equipmentAPI } from '../../services/api';
-import {
-  PageHeader,
-  Card,
-  SearchInput,
-  Badge,
-  Modal,
-  Loader,
-  EmptyState,
-} from '../../components/ui';
+import { PageHeader, Card, SearchInput, Loader, EmptyState } from '../../components/ui';
 import { EQUIPMENT_CATEGORIES } from '../../constants';
 import { groupBy } from '../../utils';
-
-interface Equipment {
-  _id: string;
-  machineName: string;
-  category: string;
-  difficultyLevel?: string;
-  primaryMuscles?: string[];
-  secondaryMuscles?: string[];
-  movementPattern?: string;
-  notes?: string;
-  videoUrl?: string;
-}
+import EquipmentCard from './components/EquipmentCard';
+import VideoModal from './components/VideoModal';
+import type { Equipment } from './types';
 
 const CATEGORY_ORDER = EQUIPMENT_CATEGORIES;
 
-function EquipmentTracker() {
+export default function EquipmentTracker() {
   const { t } = useTranslation();
   const [equipment, setEquipment] = useState<Equipment[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
@@ -38,35 +21,36 @@ function EquipmentTracker() {
   const [selectedEquipment, setSelectedEquipment] = useState<Equipment | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
   useEffect(() => {
-    fetchEquipment();
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    fetchEquipment();
-  }, [search, selectedCategory]);
-
-  const fetchEquipment = async () => {
-    try {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
       const params: Record<string, string> = {};
       if (search) params.search = search;
       if (selectedCategory) params.category = selectedCategory;
 
-      const res = await equipmentAPI.getAll(params);
-      setEquipment(res.data?.equipment || []);
-    } catch (err) {
-      console.error('Failed to fetch equipment:', err);
-      setEquipment([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+      equipmentAPI.getAll(params)
+        .then((res) => setEquipment(res.data?.equipment || []))
+        .catch((err) => {
+          console.error('Failed to fetch equipment:', err);
+          setEquipment([]);
+        })
+        .finally(() => setLoading(false));
+    }, 300);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [search, selectedCategory]);
 
   const fetchCategories = async () => {
     try {
       const res = await equipmentAPI.getCategories();
-      const sorted = (res.data?.categories || []).sort((a, b) => {
+      const sorted = (res.data?.categories || []).sort((a: string, b: string) => {
         return CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b);
       });
       setCategories(sorted);
@@ -91,11 +75,7 @@ function EquipmentTracker() {
       <PageHeader title={t('equipment.title')} subtitle={t('equipment.learnEquipment')} />
 
       <div className="flex flex-col gap-3">
-        <SearchInput
-          value={search}
-          onChange={setSearch}
-          placeholder={t('equipment.searchEquipment')}
-        />
+        <SearchInput value={search} onChange={setSearch} placeholder={t('equipment.searchEquipment')} />
 
         <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
           <button
@@ -127,11 +107,7 @@ function EquipmentTracker() {
           <Loader size="lg" />
         </div>
       ) : equipment.length === 0 ? (
-        <EmptyState
-          icon={Dumbbell}
-          title={t('equipment.noEquipment')}
-          message={t('equipment.noEquipmentMessage')}
-        />
+        <EmptyState icon={Dumbbell} title={t('equipment.noEquipment')} message={t('equipment.noEquipmentMessage')} />
       ) : (
         <div className="flex flex-col gap-4">
           {sortedCategories.map((category) => (
@@ -150,7 +126,7 @@ function EquipmentTracker() {
                 <div className="divide-y divide-steel/50">
                   {groupedEquipment[category].map((item: Equipment) => (
                     <EquipmentCard
-                      key={String(item._id)}
+                      key={item.id}
                       item={item}
                       onVideoClick={() => setSelectedEquipment(item)}
                     />
@@ -166,132 +142,3 @@ function EquipmentTracker() {
     </div>
   );
 }
-
-function EquipmentCard({ item, onVideoClick }: { item: Equipment; onVideoClick: () => void }) {
-  const { t } = useTranslation();
-  const getDifficultyVariant = (level?: string) => {
-    if (!level) return 'default';
-    if (level.includes('Beginner')) return 'success';
-    if (level.includes('Intermediate')) return 'primary';
-    return 'danger';
-  };
-
-  return (
-    <div className="p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-white">{item.machineName}</h3>
-
-          {item.difficultyLevel && (
-            <span
-              className={`inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                item.difficultyLevel.includes('Beginner')
-                  ? 'bg-success/15 text-success'
-                  : item.difficultyLevel.includes('Intermediate')
-                    ? 'bg-lime/15 text-lime'
-                    : 'bg-danger/15 text-danger'
-              }`}
-            >
-              {item.difficultyLevel}
-            </span>
-          )}
-
-          {item.primaryMuscles?.length > 0 && (
-            <div className="mt-2">
-              <p className="text-[10px] text-silver uppercase tracking-wider mb-1">{t('equipment.primary')}</p>
-              <div className="flex flex-wrap gap-1">
-                {item.primaryMuscles.map((muscle) => (
-                  <span key={muscle} className="px-2 py-1 bg-lime/10 text-lime text-xs rounded">
-                    {muscle}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {item.secondaryMuscles?.length > 0 && (
-            <div className="mt-2">
-              <p className="text-[10px] text-silver uppercase tracking-wider mb-1">{t('equipment.secondary')}</p>
-              <div className="flex flex-wrap gap-1">
-                {item.secondaryMuscles.map((muscle) => (
-                  <span key={muscle} className="px-2 py-1 bg-steel text-silver text-xs rounded">
-                    {muscle}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {item.movementPattern && (
-            <p className="mt-2 text-xs text-silver">
-              <span className="text-silver/60">{t('equipment.movement')}: </span>
-              {item.movementPattern}
-            </p>
-          )}
-
-          {item.notes && <p className="mt-2 text-xs text-silver/70 line-clamp-2">{item.notes}</p>}
-        </div>
-
-        {item.videoUrl && (
-          <button
-            onClick={onVideoClick}
-            className="shrink-0 w-10 h-10 rounded-full bg-lime flex items-center justify-center hover:bg-lime-dim transition-colors"
-          >
-            <Play size={16} className="text-obsidian ml-0.5" fill="currentColor" />
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function VideoModal({ equipment, onClose }: { equipment: Equipment | null; onClose: () => void }) {
-  const { t } = useTranslation();
-  if (!equipment) return null;
-
-  const videoId = equipment.videoUrl?.includes('youtube.com')
-    ? equipment.videoUrl.split('v=')[1]?.split('&')[0]
-    : null;
-
-  return (
-    <Modal isOpen={!!equipment} onClose={onClose}>
-      <div className="flex flex-col">
-        <div className="p-4 border-b border-steel">
-          <h3 className="font-display text-lg font-bold text-white">{equipment.machineName}</h3>
-          <p className="text-xs text-silver mt-1">{equipment.category}</p>
-        </div>
-
-        <div className="aspect-video bg-obsidian">
-          {videoId ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}`}
-              title={equipment.machineName}
-              className="w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-silver">
-              <p>{t('equipment.videoNotAvailable')}</p>
-            </div>
-          )}
-        </div>
-
-        <div className="p-4">
-          {equipment.notes && <p className="text-sm text-silver">{equipment.notes}</p>}
-        </div>
-
-        <div className="p-4 pt-0">
-          <button
-            onClick={onClose}
-            className="w-full py-3 bg-steel text-chalk font-semibold rounded-xl hover:bg-iron transition-colors"
-          >
-            {t('common.close')}
-          </button>
-        </div>
-      </div>
-    </Modal>
-  );
-}
-
-export default EquipmentTracker;

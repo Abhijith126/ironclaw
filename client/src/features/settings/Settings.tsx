@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -57,6 +57,14 @@ const Settings = ({
     confirm: '',
   });
 
+  const messageTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -83,17 +91,23 @@ const Settings = ({
     fetchProfile();
   }, [setUser]);
 
-  const handleProfileChange = (e) => {
+  const showTimedMessage = (type: string, text: string) => {
+    setMessage({ type, text });
+    if (messageTimerRef.current) clearTimeout(messageTimerRef.current);
+    messageTimerRef.current = setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+  };
+
+  const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPasswords((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleProfileSubmit = async (e) => {
+  const handleProfileSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ type: '', text: '' });
@@ -107,22 +121,21 @@ const Settings = ({
         weightUnit: profile.weightUnit,
       });
 
-      setMessage({ type: 'success', text: t('settings.profileUpdated') });
-      if (setUser && response.data?.user) {
+      showTimedMessage('success', t('settings.profileUpdated'));
+      if (response.data?.user) {
         setUser(response.data.user);
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
-      setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Profile update error:', err);
-      const errorMsg = err.response?.data?.message || err.message || t('settings.updateFailed');
-      setMessage({ type: 'error', text: errorMsg });
+      const axiosErr = err as { response?: { data?: { message?: string } }; message?: string };
+      showTimedMessage('error', axiosErr.response?.data?.message || axiosErr.message || t('settings.updateFailed'));
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePasswordSubmit = async (e) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage({ type: '', text: '' });
 
@@ -140,15 +153,12 @@ const Settings = ({
 
     try {
       await userAPI.changePassword(passwords.current, passwords.new);
-      setMessage({ type: 'success', text: t('settings.passwordChanged') });
+      showTimedMessage('success', t('settings.passwordChanged'));
       setPasswords({ current: '', new: '', confirm: '' });
       setShowPasswordForm(false);
-      setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-    } catch (err) {
-      setMessage({
-        type: 'error',
-        text: err.response?.data?.message || t('settings.passwordFailed'),
-      });
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { data?: { message?: string } } };
+      showTimedMessage('error', axiosErr.response?.data?.message || t('settings.passwordFailed'));
     } finally {
       setLoading(false);
     }

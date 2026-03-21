@@ -110,18 +110,8 @@ userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, 12);
 });
 
-// Method to compare password
 userSchema.methods.comparePassword = async function (candidatePassword) {
-  // Check if password is a hash
-  if (this.password.startsWith('$2')) {
-    return bcrypt.compare(candidatePassword, this.password);
-  }
-  // Fallback for plaintext passwords
-  if (candidatePassword === this.password) {
-    this.password = await bcrypt.hash(candidatePassword, 12);
-    return true;
-  }
-  return false;
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
 module.exports = mongoose.model('User', userSchema);

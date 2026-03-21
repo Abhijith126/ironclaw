@@ -106,6 +106,10 @@
       "cardiovascular": "Cardio",
       "full body": "Cuerpo Completo"
     },
+    "musclesTab": "Musculos",
+    "primaryMuscles": "Musculos Primarios",
+    "secondaryMuscles": "Musculos Secundarios",
+    "equipmentNeeded": "Equipo Necesario",
     "equipmentFilter": {
       "all": "Todos",
       "dumbbells": "Mancuernas",

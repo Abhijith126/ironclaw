@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import { getExerciseMap } from '../../services/api';
@@ -27,22 +27,23 @@ function ExercisePicker({ onSelect, onClose, selectedIds = [] }: ExercisePickerP
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const backdropRef = useRef<HTMLDivElement>(null);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     fetchExercises();
-    // Trigger enter animation
     requestAnimationFrame(() => setIsVisible(true));
-    // Prevent body scroll
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
     };
   }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false);
-    setTimeout(onClose, 300);
-  };
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(onClose, 300);
+  }, [onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === backdropRef.current) {

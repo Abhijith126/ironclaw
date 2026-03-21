@@ -106,6 +106,10 @@
       "calves": "Calves",
       "cardio": "Cardio"
     },
+    "musclesTab": "Muscles",
+    "primaryMuscles": "Primary Muscles",
+    "secondaryMuscles": "Secondary Muscles",
+    "equipmentNeeded": "Equipment Needed",
     "equipmentFilter": {
       "all": "All",
       "dumbbells": "Dumbbells",

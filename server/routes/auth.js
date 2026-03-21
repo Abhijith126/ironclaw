@@ -1,37 +1,52 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 const router = express.Router();
 
+const JWT_OPTIONS = { expiresIn: '7d', algorithm: 'HS256' };
+
+// Rate limiting for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  message: { message: 'Too many attempts, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5,
+  message: { message: 'Too many accounts created, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Register a new user
-router.post('/register', async (req, res) => {
+router.post('/register', registerLimiter, async (req, res) => {
   try {
     const { email, password, name, age, height, weight } = req.body;
 
-    // Check if user already exists
+    if (!email || !password || !name) {
+      return res.status(400).json({ message: 'Email, password, and name are required' });
+    }
+
+    if (typeof password !== 'string' || password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters' });
+    }
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
-    // Create new user
-    const user = new User({
-      email,
-      password,
-      name,
-      age,
-      height,
-      weight
-    });
-
+    const user = new User({ email, password, name, age, height, weight });
     await user.save();
 
-    // Create JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d'
-    });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, JWT_OPTIONS);
 
     res.status(201).json({
       message: 'User registered successfully',
@@ -42,8 +57,8 @@ router.post('/register', async (req, res) => {
         name: user.name,
         age: user.age,
         height: user.height,
-        weight: user.weight
-      }
+        weight: user.weight,
+      },
     });
   } catch (error) {
     console.error('Registration error:', error);
@@ -52,46 +67,32 @@ router.post('/register', async (req, res) => {
 });
 
 // Login user
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate required fields
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
-    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Reject email/password login for Google OAuth users
-    if (user.googleId) {
+    if (user.googleId && !user.password.startsWith('$2')) {
       return res.status(400).json({ message: 'Please sign in with Google' });
     }
 
-    // Check password
     const isMatch = await user.comparePassword(password);
-
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Save if password was migrated from plaintext to hash
-    if (user.isModified('password')) {
-      await user.save();
-    }
-
-    // Update last login
     user.lastLogin = new Date();
     await user.save();
 
-    // Create JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d'
-    });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, JWT_OPTIONS);
 
     res.json({
       message: 'Login successful',
@@ -103,8 +104,8 @@ router.post('/login', async (req, res) => {
         age: user.age,
         height: user.height,
         weight: user.weight,
-        profilePicture: user.profilePicture
-      }
+        profilePicture: user.profilePicture,
+      },
     });
   } catch (error) {
     console.error('Login error:', error);
@@ -112,38 +113,61 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Google OAuth callback (placeholder for now)
-router.post('/google', async (req, res) => {
+// Google OAuth - verify ID token server-side
+router.post('/google', authLimiter, async (req, res) => {
   try {
-    const { googleId, email, name } = req.body;
+    const { credential } = req.body;
 
-    // Find user by Google ID
+    if (!credential) {
+      return res.status(400).json({ message: 'Google credential is required' });
+    }
+
+    // Verify the Google ID token
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    if (!clientId) {
+      return res.status(500).json({ message: 'Google OAuth is not configured' });
+    }
+
+    const client = new OAuth2Client(clientId);
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: clientId,
+    });
+    const payload = ticket.getPayload();
+
+    if (!payload || !payload.sub || !payload.email) {
+      return res.status(400).json({ message: 'Invalid Google token' });
+    }
+
+    const { sub: googleId, email, name, picture } = payload;
+
     let user = await User.findOne({ googleId });
 
     if (!user) {
-      // Check if user exists with this email
       user = await User.findOne({ email });
 
       if (user) {
-        // Update existing user with Google ID
         user.googleId = googleId;
+        if (picture && !user.profilePicture) {
+          user.profilePicture = picture;
+        }
       } else {
-        // Create new user
         user = new User({
           googleId,
           email,
-          name,
-          password: crypto.randomBytes(32).toString('hex') // Random unguessable password for OAuth users
+          name: name || email.split('@')[0],
+          password: crypto.randomBytes(32).toString('hex'),
+          profilePicture: picture || null,
         });
       }
 
       await user.save();
     }
 
-    // Create JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d'
-    });
+    user.lastLogin = new Date();
+    await user.save();
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, JWT_OPTIONS);
 
     res.json({
       message: 'Google login successful',
@@ -155,11 +179,14 @@ router.post('/google', async (req, res) => {
         age: user.age,
         height: user.height,
         weight: user.weight,
-        profilePicture: user.profilePicture
-      }
+        profilePicture: user.profilePicture,
+      },
     });
   } catch (error) {
     console.error('Google auth error:', error);
+    if (error.message?.includes('Token used too late') || error.message?.includes('Invalid token')) {
+      return res.status(400).json({ message: 'Invalid or expired Google token' });
+    }
     res.status(500).json({ message: 'Server error during Google authentication' });
   }
 });
@@ -173,11 +200,11 @@ router.get('/verify', async (req, res) => {
       return res.status(401).json({ message: 'No token provided' });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET, { algorithms: ['HS256'] });
     const user = await User.findById(decoded.userId);
 
     if (!user) {
-      return res.status(401).json({ message: 'Invalid token - user not found' });
+      return res.status(401).json({ message: 'Invalid token' });
     }
 
     res.json({
@@ -189,8 +216,8 @@ router.get('/verify', async (req, res) => {
         age: user.age,
         height: user.height,
         weight: user.weight,
-        profilePicture: user.profilePicture
-      }
+        profilePicture: user.profilePicture,
+      },
     });
   } catch (error) {
     res.status(401).json({ message: 'Invalid token' });

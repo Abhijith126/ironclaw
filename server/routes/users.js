@@ -303,15 +303,16 @@ router.post('/workout-log', auth, async (req, res) => {
     );
 
     if (existingIndex >= 0) {
-      user.workoutLog[existingIndex].completed = completed;
+      user.workoutLog[existingIndex].completed = completed !== false;
     } else {
       user.workoutLog.push({
         date: new Date(),
-        exerciseId: exerciseId,
-        completed: completed !== false
+        exerciseId,
+        completed: completed !== false,
       });
     }
 
+    user.markModified('workoutLog');
     user.currentStreak = calculateStreak(user.workoutLog);
 
     await user.save();

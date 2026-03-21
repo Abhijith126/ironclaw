@@ -53,27 +53,6 @@ export const getInitials = (name: string) => {
     .toUpperCase() || 'U';
 };
 
-export const debounce = <T extends (...args: unknown[]) => unknown>(
-  func: T,
-  wait: number
-) => {
-  let timeout: ReturnType<typeof setTimeout>;
-  return function executedFunction(...args: Parameters<T>) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-
-export const isToday = (date: Date | string) => {
-  const today = new Date();
-  const d = new Date(date);
-  return d.toDateString() === today.toDateString();
-};
-
 export const groupBy = <T>(array: T[], key: string | ((item: T) => string)) => {
   return array.reduce((result: Record<string, T[]>, item) => {
     const groupKey = typeof key === 'function' ? key(item) : String(item[key as keyof T]);
@@ -95,10 +74,6 @@ export const sortByDate = <T extends Record<string, unknown>>(
     const dateB = new Date(b[key] as string);
     return ascending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
   });
-};
-
-export const capitalizeFirst = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 export const downloadJSON = (data: unknown, filename: string) => {
@@ -124,8 +99,4 @@ export const readJSONFile = (file: File) => {
     reader.onerror = reject;
     reader.readAsText(file);
   });
-};
-
-export const generateId = () => {
-  return Math.random().toString(36).substring(2, 15);
 };

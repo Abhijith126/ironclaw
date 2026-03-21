@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { memo, useCallback } from 'react';
 import { CheckCircle, Edit, Dumbbell } from 'lucide-react';
-import type { Exercise } from '../../types';
+import type { Exercise } from '../../../types';
 
 interface ExerciseItemProps {
   exercise: Exercise;
